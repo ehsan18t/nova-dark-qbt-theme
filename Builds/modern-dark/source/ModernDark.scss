@@ -1,10 +1,10 @@
 /*
  * Nova Dark Theme for qBittorrent
  * --------------------------------
- * Uses the proven Mumble base theme for widget geometry and behavior,
+ * Uses the shared BaseTheme for widget geometry and behavior,
  * while layering a refreshed palette and queue-state colors on top.
  */
 
 @import "Imports/Nova Definitions";
-@import "../../mumble-theme/source/Imports/Base Theme";
+@import "../../common/styles/BaseTheme";
 @import "Imports/Nova Overrides";

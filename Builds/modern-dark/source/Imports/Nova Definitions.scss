@@ -1,4 +1,4 @@
-// Nova Dark color definitions built on top of the Mumble base theme structure.
+// Nova Dark color definitions built on top of the shared BaseTheme structure.
 // Update the values here to iterate on the palette while keeping layout and spacing identical.
 
 $base-padding: 4px;
@@ -65,10 +65,10 @@ $button-focus-hover-bg: #26486f;
 $button-focus-hover-border: #5c8dff;
 $button-border: 1px solid #2b394e;
 $button-hover-border: #34465d;
-$radio: url(:/uitheme/controls/radio_check_dark.svg);
-$radio_disabled: url(:/uitheme/controls/radio_check_disabled.svg);
-$checkbox: url(:/uitheme/controls/checkbox_check_dark.svg);
-$checkbox-disabled: url(:/uitheme/controls/checkbox_check_disabled.svg);
+$radio: url(:/uitheme/common/controls/radio_check_dark.svg);
+$radio_disabled: url(:/uitheme/common/controls/radio_check_disabled.svg);
+$checkbox: url(:/uitheme/common/controls/checkbox_check_dark.svg);
+$checkbox-disabled: url(:/uitheme/common/controls/checkbox_check_disabled.svg);
 $link: #5cafff;
 
 $font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",

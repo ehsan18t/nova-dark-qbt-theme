@@ -1,6 +1,6 @@
 # Nova Dark Theme
 
-Nova Dark ships a refreshed color story on top of the battle-tested Mumble dark stylesheet. By importing `mumble-theme`'s base rules we inherit the exact same spacing, padding, focus rings, and widget geometry while swapping in a new palette and transfer-state colors.
+Nova Dark ships a refreshed color story on top of a shared base stylesheet (`Builds/common/styles/BaseTheme.scss`) that was extracted from the original Mumble dark theme. The common layer preserves widget geometry, spacing, focus rings, and behaviour while Nova swaps in a new palette and transfer-state colors.
 
 ## Layout
 
@@ -13,7 +13,7 @@ modern-dark/
   scripts/
     generate_icon_manifest.py
   source/
-    ModernDark.scss         # imports Nova Definitions + Mumble Base Theme
+  ModernDark.scss         # imports Nova Definitions + shared BaseTheme
     Imports/
       Nova Definitions.scss # palette values consumed by the base stylesheet
       Nova Overrides.scss   # qproperty/QPalette tweaks layered on top
@@ -33,6 +33,6 @@ Each script compiles `ModernDark.scss`, then packages two variants into `Builds/
 
 ## Icons
 
-If you want the Nova theme to look identical to Mumble Dark, copy the SVG set from `Builds/mumble-theme` (or rerun the original recolor pipeline) into `icons/modern` before building. The optional `scripts/generate_icon_manifest.py` can still produce a checklist from qBittorrent's `iconconfig.json` if you plan to curate a brand-new icon pack.
+If you want the Nova theme to look identical to Mumble Dark, copy the SVG set from `Builds/mumble-theme` (or rerun the original recolor pipeline) into `icons/modern` before building. The shared controls (checkboxes, radios, tree toggles, etc.) live in `Builds/common/controls` and already use Nova's accent hue.
 
 > Tip: Because Nova reuses the base stylesheet, keeping the icon filenames identical to Mumble's guarantees all lookups resolve without further tweaks.

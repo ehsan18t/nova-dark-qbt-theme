@@ -8,6 +8,7 @@ DIST_DIR="${ROOT_DIR}/dist"
 ICONS_DIR="${THEME_ROOT}/icons/modern"
 CONFIG_FILE="${THEME_ROOT}/modern-dark-config.json"
 OUTPUT_PREFIX="nova-dark"
+COMMON_DIR="${ROOT_DIR}/common"
 
 mkdir -p "${DIST_DIR}"
 
@@ -27,6 +28,7 @@ python "${ROOT_DIR}/make-resource.py" \
   -find-files \
   -config "${CONFIG_FILE}" \
   -icons-dir "${ICONS_DIR}" \
+  -include-dir "${COMMON_DIR}" \
   -output "${DIST_DIR}/${OUTPUT_PREFIX}-modern" \
   -style ModernDark.qss
 
@@ -34,5 +36,6 @@ python "${ROOT_DIR}/make-resource.py" \
   -base-dir "${THEME_ROOT}" \
   -find-files \
   -config "${CONFIG_FILE}" \
+  -include-dir "${COMMON_DIR}" \
   -output "${DIST_DIR}/${OUTPUT_PREFIX}-no-icons" \
   -style ModernDark.qss

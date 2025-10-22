@@ -15,7 +15,7 @@
 ## Breeze-Dark.qbtheme
 ![mumble-lite.qbtheme](screenshots/breeze-dark.JPG)
 ## Nova-Dark.qbtheme *(coming soon)*
-Nova now layers a new palette on top of the Mumble base stylesheet. Geometry, spacing, and focus behavior are identical to Mumble Dark, while colors and transfer-state accents are refreshed. Assets live under `Builds/modern-dark`.
+Nova now layers a new palette on top of a shared base stylesheet (`Builds/common/styles/BaseTheme.scss`) extracted from the Mumble theme. Geometry, spacing, and focus behavior stay identical to Mumble Dark while colors and transfer-state accents are refreshed. Assets live under `Builds/modern-dark`, with shared controls/icons in `Builds/common`.
 
 This repo contains different stylesheed edited to run with qbittorrent's style system  
 DarkStyleSheet theme is based on https://github.com/ColinDuquesnoy/QDarkStyleSheet  
