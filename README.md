@@ -25,3 +25,12 @@ Icons used in dark themes are from nowshed-imran. They are meant to be icons for
 ## How to create your own theme file?
 This repo also contains different tool to create your own qbittorrent theme files.
 You can check the source of above style in `Builds` folder
+
+## Build With Docker
+
+If you have Docker installed you can compile the Mumble Dark theme without setting up the native toolchain:
+
+- `docker build -t qbt-theme-builder .`
+- `docker run --rm -v ${PWD}/Builds/dist:/workspace/Builds/dist qbt-theme-builder`
+
+The generated `.qbtheme` files will appear in `Builds/dist`.
