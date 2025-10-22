@@ -14,6 +14,8 @@
 ![mumble-lite.qbtheme](screenshots/mumble-lite.JPG)
 ## Breeze-Dark.qbtheme
 ![mumble-lite.qbtheme](screenshots/breeze-dark.JPG)
+## Nova-Dark.qbtheme *(coming soon)*
+Nova now layers a new palette on top of the Mumble base stylesheet. Geometry, spacing, and focus behavior are identical to Mumble Dark, while colors and transfer-state accents are refreshed. Assets live under `Builds/modern-dark`.
 
 This repo contains different stylesheed edited to run with qbittorrent's style system  
 DarkStyleSheet theme is based on https://github.com/ColinDuquesnoy/QDarkStyleSheet  
@@ -34,3 +36,17 @@ If you have Docker installed you can compile the Mumble Dark theme without setti
 - `docker run --rm -v ${PWD}/Builds/dist:/workspace/Builds/dist qbt-theme-builder`
 
 The generated `.qbtheme` files will appear in `Builds/dist`.
+
+## Build the Nova Dark theme locally
+
+To build Nova, copy the Mumble dark SVG icon set (or your replacement artwork) into `Builds/modern-dark/icons/modern`, then run one of:
+
+- `Builds\build-modern-dark.bat`
+- `./Builds/build-modern-dark.sh`
+
+The build will emit two archives in `Builds/dist`:
+
+- `nova-dark-modern.qbtheme` – includes the icons sitting in `icons/modern`
+- `nova-dark-no-icons.qbtheme` – ships only the stylesheet and configuration, allowing qBittorrent's stock icons to remain in place
+
+> Tip: A dedicated Dockerfile lives at `Builds/modern-dark/Dockerfile`. Build it with `docker build -t nova-dark-builder -f Builds/modern-dark/Dockerfile .`, then run `docker run --rm -v ${PWD}/Builds/dist:/workspace/Builds/dist nova-dark-builder` to generate the theme archives. Mount `Builds/modern-dark/icons/modern` so your copied Mumble icons (or custom set) are packaged.

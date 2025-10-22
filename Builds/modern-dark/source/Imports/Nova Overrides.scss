@@ -1,0 +1,23 @@
+// Focused overrides for Nova Dark that are not covered by the base theme.
+
+TransferListWidget {
+  qproperty-downloadingstateforeground: rgb(93, 189, 255);
+  qproperty-forceddownloadingstateforeground: rgb(93, 189, 255);
+  qproperty-downloadingmetadatastateforeground: rgb(77, 163, 255);
+  qproperty-allocatingstateforeground: rgb(160, 178, 206);
+  qproperty-stalleddownloadingstateforeground: rgb(124, 138, 161);
+  qproperty-stalleduploadingstateforeground: rgb(124, 138, 161);
+  qproperty-uploadingstateforeground: rgb(147, 110, 255);
+  qproperty-forceduploadingstateforeground: rgb(147, 110, 255);
+  qproperty-pauseddownloadingstateforeground: rgb(255, 155, 115);
+  qproperty-pauseduploadingstateforeground: rgb(242, 196, 73);
+  qproperty-errorstateforeground: rgb(255, 107, 122);
+  qproperty-missingfilesstateforeground: rgb(255, 107, 122);
+  qproperty-queueddownloadingstateforeground: rgb(77, 163, 255);
+  qproperty-queueduploadingstateforeground: rgb(77, 163, 255);
+  qproperty-checkingdownloadingstateforeground: rgb(109, 211, 200);
+  qproperty-checkinguploadingstateforeground: rgb(109, 211, 200);
+  qproperty-checkingresumedatastateforeground: rgb(205, 180, 255);
+  qproperty-movingstateforeground: rgb(94, 205, 178);
+  qproperty-unknownstateforeground: rgb(255, 107, 122);
+}
