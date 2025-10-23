@@ -1,1 +1,5 @@
 Builds/*.qbtheme
+*.qbtheme
+*.qbtheme
+*.qbtheme
+/Builds/dist

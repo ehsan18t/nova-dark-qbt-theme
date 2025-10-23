@@ -30,12 +30,16 @@ You can check the source of above style in `Builds` folder
 
 ## Build With Docker
 
-If you have Docker installed you can compile the Mumble Dark theme without setting up the native toolchain:
+If you have Docker installed you can compile every theme without setting up the native toolchain:
 
 - `docker build -t qbt-theme-builder .`
-- `docker run --rm -v ${PWD}/Builds/dist:/workspace/Builds/dist qbt-theme-builder`
+- `docker run --rm -v ${PWD}:/workspace qbt-theme-builder`
 
-The generated `.qbtheme` files will appear in `Builds/dist`.
+The container binds the whole repository, so changes to the source are picked up immediately. Every build script listed below runs in order, and the generated `.qbtheme` files land in `Builds/dist` on your host.
+
+Need just one theme? Override the entrypoint target, for example:
+
+- `docker run --rm -e THEME_BUILD_SCRIPT=build-modern-dark.sh -v ${PWD}:/workspace qbt-theme-builder`
 
 ## Build the Nova Dark theme locally
 
@@ -49,4 +53,4 @@ The build will emit two archives in `Builds/dist`:
 - `nova-dark-modern.qbtheme` – includes the icons sitting in `icons/modern`
 - `nova-dark-no-icons.qbtheme` – ships only the stylesheet and configuration, allowing qBittorrent's stock icons to remain in place
 
-> Tip: A dedicated Dockerfile lives at `Builds/modern-dark/Dockerfile`. Build it with `docker build -t nova-dark-builder -f Builds/modern-dark/Dockerfile .`, then run `docker run --rm -v ${PWD}/Builds/dist:/workspace/Builds/dist nova-dark-builder` to generate the theme archives. Mount `Builds/modern-dark/icons/modern` so your copied Mumble icons (or custom set) are packaged.
+> Tip: Use `THEME_BUILD_SCRIPT=build-modern-dark.sh` with the command above to rebuild Nova repeatedly while iterating on icons or palette tweaks; the same container can run any of the other build scripts (see `Builds/build-all.sh`).

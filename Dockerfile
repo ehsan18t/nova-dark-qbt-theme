@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.11-slim AS builder
+FROM python:3.11-slim
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1
@@ -11,12 +11,12 @@ RUN apt-get update \
 RUN pip install --no-cache-dir qtsass
 
 WORKDIR /workspace
-COPY . .
 
-WORKDIR /workspace/Builds
-RUN ln -sf "$(command -v rcc)" tools/rcc \
-    && chmod +x build-mumble-dark.sh
+COPY Builds/docker-entrypoint.sh /usr/local/bin/qbt-theme-entrypoint.sh
+RUN chmod +x /usr/local/bin/qbt-theme-entrypoint.sh
+
+ENV THEME_BUILD_SCRIPT=build-all.sh
 
 VOLUME ["/workspace/Builds/dist"]
 
-ENTRYPOINT ["/workspace/Builds/build-mumble-dark.sh"]
+ENTRYPOINT ["/usr/local/bin/qbt-theme-entrypoint.sh"]
