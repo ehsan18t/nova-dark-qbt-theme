@@ -2,6 +2,6 @@ src/*.qbtheme
 *.qbtheme
 *.qbtheme
 *.qbtheme
-/src/dist
+/**/dist
 *.qss
 *.qrc
