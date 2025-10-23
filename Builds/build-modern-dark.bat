@@ -6,13 +6,10 @@ set ROOT_DIR=%ROOT_DIR:~0,-1%
 set THEME_ROOT=%ROOT_DIR%\modern-dark
 set SRC_DIR=%THEME_ROOT%\source
 set ICONS_DIR=%THEME_ROOT%\icons\modern
-set TEMP_ICONS_DIR=%THEME_ROOT%\.icons-recolored
-set TEMP_COMMON_DIR=%ROOT_DIR%\.common-recolored
 set CONFIG_FILE=%THEME_ROOT%\modern-dark-config.json
 set DIST_DIR=%ROOT_DIR%\dist
 set OUTPUT_PREFIX=nova-dark
 set COMMON_DIR=%ROOT_DIR%\common
-set DEFINITIONS_FILE=%SRC_DIR%\Imports\Nova Definitions.scss
 
 if not exist "%DIST_DIR%" mkdir "%DIST_DIR%"
 
@@ -26,20 +23,12 @@ pushd "%SRC_DIR%"
 qtsass -o ..\ModernDark.qss ModernDark.scss
 popd
 
-echo [info] Recoloring icons based on theme accent color...
-python "%ROOT_DIR%\recolor-icons.py" "%DEFINITIONS_FILE%" "%ICONS_DIR%" "%TEMP_ICONS_DIR%"
-python "%ROOT_DIR%\recolor-icons.py" "%DEFINITIONS_FILE%" "%COMMON_DIR%\controls" "%TEMP_COMMON_DIR%\controls"
-
-echo [info] Recoloring icons based on theme accent color...
-python "%ROOT_DIR%\recolor-icons.py" "%DEFINITIONS_FILE%" "%ICONS_DIR%" "%TEMP_ICONS_DIR%"
-python "%ROOT_DIR%\recolor-icons.py" "%DEFINITIONS_FILE%" "%COMMON_DIR%\controls" "%TEMP_COMMON_DIR%\controls"
-
 python "%ROOT_DIR%\make-resource.py" ^
   -base-dir "%THEME_ROOT%" ^
   -find-files ^
   -config "%CONFIG_FILE%" ^
-  -icons-dir "%TEMP_ICONS_DIR%" ^
-  -include-dir "%TEMP_COMMON_DIR%" ^
+  -icons-dir "%ICONS_DIR%" ^
+  -include-dir "%COMMON_DIR%" ^
   -output "%DIST_DIR%\%OUTPUT_PREFIX%-modern" ^
   -style ModernDark.qss
 
@@ -47,9 +36,6 @@ python "%ROOT_DIR%\make-resource.py" ^
   -base-dir "%THEME_ROOT%" ^
   -find-files ^
   -config "%CONFIG_FILE%" ^
-  -include-dir "%TEMP_COMMON_DIR%" ^
+  -include-dir "%COMMON_DIR%" ^
   -output "%DIST_DIR%\%OUTPUT_PREFIX%-no-icons" ^
   -style ModernDark.qss
-
-if exist "%TEMP_ICONS_DIR%" rd /s /q "%TEMP_ICONS_DIR%"
-if exist "%TEMP_COMMON_DIR%" rd /s /q "%TEMP_COMMON_DIR%"
