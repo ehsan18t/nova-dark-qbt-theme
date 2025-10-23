@@ -175,6 +175,10 @@ QMenu::item {
   border-radius: $base-border-radius;
 }
 
+QMenu::icon {
+  margin-left: 12px;
+}
+
 QMenu::item:selected {
   background: $menuitem-hover;
   border: 1px solid $menuitem-border;
