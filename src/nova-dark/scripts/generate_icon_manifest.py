@@ -58,7 +58,7 @@ def main() -> None:
     lines.append(
         "This list is generated from qBittorrent's iconconfig.json. Place the final SVG artwork")
     lines.append(
-        "inside `Builds/modern-dark/icons/modern` using the filenames below (preserving subdirectories).")
+        "inside `src/nova-dark/icons/modern` using the filenames below (preserving subdirectories).")
     lines.append("")
 
     missing: list[str] = []

@@ -19,4 +19,4 @@ run_builder() {
 }
 
 run_builder "build-mumble-dark.sh"
-run_builder "build-modern-dark.sh"
+run_builder "build-nova-dark.sh"

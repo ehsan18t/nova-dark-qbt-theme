@@ -1,6 +1,6 @@
 # Nova Dark Icon Checklist
 
-Run `../scripts/generate_icon_manifest.py` against a local qBittorrent source tree if you plan to craft a bespoke icon set. For a drop-in experience that mirrors Mumble Dark, simply copy the SVGs from `Builds/mumble-theme` (or the recolored `mumble-icons` output) into this folder before running the build script.
+Run `../scripts/generate_icon_manifest.py` against a local qBittorrent source tree if you plan to craft a bespoke icon set. For a drop-in experience that mirrors Mumble Dark, simply copy the SVGs from `src/mumble-theme` (or the recolored `mumble-icons` output) into this folder before running the build script.
 
 Key controls referenced by `Nova Overrides.scss` include:
 

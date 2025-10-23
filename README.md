@@ -1,12 +1,12 @@
 # Nova Dark Theme for qBittorrent
 
-Nova Dark refreshes qBittorrent’s interface with a Catppuccin-inspired palette while keeping widget geometry and behavior consistent with the original Mumble-derived base theme. All source files for Nova live under `Builds/modern-dark`, and the shared scaffolding resides in `Builds/common`.
+Nova Dark refreshes qBittorrent’s interface with a Catppuccin-inspired palette while keeping widget geometry and behavior consistent with the original Mumble-derived base theme. All source files for Nova live under `src/nova-dark`, and the shared scaffolding resides in `src/common`.
 
 ![Nova Dark screenshot](screenshots/nova-dark.png)
 
 ## Install
 
-1. Download the Nova `.qbtheme` archive you prefer from `Builds/dist` (either the version with icons or without).
+1. Download the Nova `.qbtheme` archive you prefer from `src/dist` (either the version with icons or without).
 2. In **qBittorrent**, open *Tools → Options → Behavior* and enable **Use custom UI Theme**.
 3. Browse to the downloaded `.qbtheme` file, click **Apply**, then **OK**.
 4. Restart qBittorrent to load the new styling.
@@ -15,10 +15,10 @@ Nova Dark refreshes qBittorrent’s interface with a Catppuccin-inspired palette
 
 You can rebuild the theme locally while iterating on colors or icons:
 
-- Copy the desired SVG icons into `Builds/modern-dark/icons/modern/` (optional if you prefer stock icons).
-- Run `Builds\build-modern-dark.bat` on Windows or `./Builds/build-modern-dark.sh` on macOS/Linux.
+- Copy the desired SVG icons into `src/nova-dark/icons/modern/` (optional if you prefer stock icons).
+- Run `src\build-nova-dark.bat` on Windows or `./src/build-nova-dark.sh` on macOS/Linux.
 
-The scripts emit two artifacts in `Builds/dist/`:
+The scripts emit two artifacts in `src/dist/`:
 
 - `nova-dark-modern.qbtheme` – includes the custom icon set.
 - `nova-dark-no-icons.qbtheme` – ships only the stylesheet and palette configuration.
@@ -28,6 +28,6 @@ The scripts emit two artifacts in `Builds/dist/`:
 If Docker is available, you can build without installing the native toolchain:
 
 - `docker build -t qbt-theme-builder .`
-- `docker run --rm -e THEME_BUILD_SCRIPT=build-modern-dark.sh -v ${PWD}:/workspace qbt-theme-builder`
+- `docker run --rm -e THEME_BUILD_SCRIPT=build-nova-dark.sh -v ${PWD}:/workspace qbt-theme-builder`
 
-The container mounts the repository, runs the Nova build script, and drops the resulting `.qbtheme` archives into `Builds/dist` on the host.
+The container mounts the repository, runs the Nova build script, and drops the resulting `.qbtheme` archives into `src/dist` on the host.

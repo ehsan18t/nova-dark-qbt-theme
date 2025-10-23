@@ -1,7 +1,7 @@
-Builds/*.qbtheme
+src/*.qbtheme
 *.qbtheme
 *.qbtheme
 *.qbtheme
-/Builds/dist
+/src/dist
 *.qss
 *.qrc

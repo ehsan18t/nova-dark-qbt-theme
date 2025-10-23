@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir qtsass
 
 WORKDIR /workspace
 
-COPY Builds/docker-entrypoint.sh /usr/local/bin/qbt-theme-entrypoint.sh
+COPY src/docker-entrypoint.sh /usr/local/bin/qbt-theme-entrypoint.sh
 RUN chmod +x /usr/local/bin/qbt-theme-entrypoint.sh
 
 ENV THEME_BUILD_SCRIPT=build-all.sh
