@@ -2,7 +2,7 @@
   "colors": {
     "Palette.Window": "#121925",
     "Palette.WindowText": "#f2f6fb",
-  "Palette.Base": "#181926",
+    "Palette.Base": "#181926",
     "Palette.AlternateBase": "#182231",
     "Palette.Text": "#f2f6fb",
     "Palette.ToolTipBase": "#182231",
@@ -17,7 +17,7 @@
     "Palette.Light": "#1d2836",
     "Palette.Midlight": "#1f2c3f",
     "Palette.Mid": "#25354b",
-  "Palette.Dark": "#181926",
+    "Palette.Dark": "#181926",
     "Palette.Shadow": "#0b0f15",
     "Palette.WindowTextDisabled": "#536171",
     "Palette.TextDisabled": "#536171",
