@@ -5,3 +5,7 @@ Builds/*.qbtheme
 /Builds/dist
 *.qss
 *.qrc
+
+# Temporary recolored icon directories
+Builds/.common-recolored/
+Builds/modern-dark/.icons-recolored/
