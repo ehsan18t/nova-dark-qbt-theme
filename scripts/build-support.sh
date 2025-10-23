@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SRC_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}" )" && pwd)"
-PROJECT_ROOT="$(cd "${SRC_ROOT}/.." && pwd)"
+SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPTS_DIR}/.." && pwd)"
+SRC_ROOT="${PROJECT_ROOT}/src"
 DIST_DIR="${PROJECT_ROOT}/dist"
 
 ensure_dist_dir() {
@@ -12,7 +13,7 @@ ensure_dist_dir() {
 run_build_script() {
   local script="$1"
   shift || true
-  local script_path="${SRC_ROOT}/${script}"
+  local script_path="${SCRIPTS_DIR}/${script}"
 
   if [[ ! -f "${script_path}" ]]; then
     echo "[warn] Skipping missing build script: ${script}" >&2

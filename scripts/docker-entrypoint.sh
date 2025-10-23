@@ -3,11 +3,11 @@ set -euo pipefail
 
 WORKSPACE=${WORKSPACE:-/workspace}
 BUILD_SCRIPT=${THEME_BUILD_SCRIPT:-build-all.sh}
-TARGET="${WORKSPACE}/src/${BUILD_SCRIPT}"
+TARGET="${WORKSPACE}/scripts/${BUILD_SCRIPT}"
 
-if [[ ! -d "${WORKSPACE}/src" ]]; then
+if [[ ! -d "${WORKSPACE}/scripts" ]] || [[ ! -d "${WORKSPACE}/src" ]]; then
   cat >&2 <<'EOF'
-[error] Expected to find the repository mounted at /workspace.
+[error] Expected to find the repository mounted at /workspace with src/ and scripts/ directories.
         Run the container with -v ${PWD}:/workspace.
 EOF
   exit 1
@@ -21,5 +21,5 @@ EOF
   exit 2
 fi
 
-cd "${WORKSPACE}/src"
+cd "${WORKSPACE}/scripts"
 exec bash "${TARGET}" "$@"

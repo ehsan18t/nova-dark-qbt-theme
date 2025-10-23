@@ -16,7 +16,7 @@ Nova Dark refreshes qBittorrent’s interface with a Catppuccin-inspired palette
 You can rebuild the theme locally while iterating on colors or icons:
 
 - Copy the desired SVG icons into `src/nova-dark/icons/modern/` (optional if you prefer stock icons).
-- Run `src\build-nova-dark.bat` on Windows or `./src/build-nova-dark.sh` on macOS/Linux.
+- Run `scripts\build-nova-dark.bat` on Windows or `./scripts/build-nova-dark.sh` on macOS/Linux.
 
 The scripts emit two artifacts in `dist/`:
 
