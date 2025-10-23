@@ -1,23 +1,38 @@
 // Focused overrides for Nova Dark that are not covered by the base theme.
 
 TransferListWidget {
-  qproperty-downloadingstateforeground: rgb(93, 189, 255);
-  qproperty-forceddownloadingstateforeground: rgb(93, 189, 255);
-  qproperty-downloadingmetadatastateforeground: rgb(77, 163, 255);
-  qproperty-allocatingstateforeground: rgb(160, 178, 206);
-  qproperty-stalleddownloadingstateforeground: rgb(124, 138, 161);
-  qproperty-stalleduploadingstateforeground: rgb(124, 138, 161);
-  qproperty-uploadingstateforeground: rgb(147, 110, 255);
-  qproperty-forceduploadingstateforeground: rgb(147, 110, 255);
-  qproperty-pauseddownloadingstateforeground: rgb(255, 155, 115);
-  qproperty-pauseduploadingstateforeground: rgb(242, 196, 73);
-  qproperty-errorstateforeground: rgb(255, 107, 122);
-  qproperty-missingfilesstateforeground: rgb(255, 107, 122);
-  qproperty-queueddownloadingstateforeground: rgb(77, 163, 255);
-  qproperty-queueduploadingstateforeground: rgb(77, 163, 255);
-  qproperty-checkingdownloadingstateforeground: rgb(109, 211, 200);
-  qproperty-checkinguploadingstateforeground: rgb(109, 211, 200);
-  qproperty-checkingresumedatastateforeground: rgb(205, 180, 255);
-  qproperty-movingstateforeground: rgb(94, 205, 178);
-  qproperty-unknownstateforeground: rgb(255, 107, 122);
+  qproperty-downloadingstateforeground: rgb(138, 173, 244);
+  qproperty-forceddownloadingstateforeground: rgb(125, 196, 228);
+  qproperty-downloadingmetadatastateforeground: rgb(145, 215, 227);
+  qproperty-allocatingstateforeground: rgb(91, 96, 120);
+  qproperty-stalleddownloadingstateforeground: rgb(110, 115, 141);
+  qproperty-stalleduploadingstateforeground: rgb(128, 135, 162);
+  qproperty-uploadingstateforeground: rgb(139, 213, 202);
+  qproperty-forceduploadingstateforeground: rgb(110, 193, 190);
+  qproperty-pauseddownloadingstateforeground: rgb(184, 192, 224);
+  qproperty-pauseduploadingstateforeground: rgb(165, 173, 203);
+  qproperty-errorstateforeground: rgb(237, 135, 150);
+  qproperty-missingfilesstateforeground: rgb(238, 153, 160);
+  qproperty-queueddownloadingstateforeground: rgb(122, 162, 247);
+  qproperty-queueduploadingstateforeground: rgb(109, 170, 242);
+  qproperty-checkingdownloadingstateforeground: rgb(145, 215, 227);
+  qproperty-checkinguploadingstateforeground: rgb(125, 196, 228);
+  qproperty-checkingresumedatastateforeground: rgb(163, 201, 249);
+  qproperty-movingstateforeground: rgb(154, 216, 206);
+  qproperty-unknownstateforeground: rgb(198, 208, 245);
+}
+
+QProgressBar {
+  background-color: #1e2030;
+  border: 1px solid #2f3858;
+  border-radius: 4px;
+  color: #c6d0f5;
+  padding: 2px;
+}
+
+QProgressBar::chunk {
+  background-color: #6e80c5;
+  color: #151820;
+  border-radius: 3px;
+  border: 1px solid #4f5d8c;
 }
