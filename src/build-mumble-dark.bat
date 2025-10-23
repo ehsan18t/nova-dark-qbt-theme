@@ -1,15 +1,16 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set ROOT_DIR=%~dp0
-set ROOT_DIR=%ROOT_DIR:~0,-1%
+set SCRIPT_DIR=%~dp0
+set SCRIPT_DIR=%SCRIPT_DIR:~0,-1%
+
+call "%SCRIPT_DIR%\build-support.bat"
+
+set ROOT_DIR=%SRC_ROOT%
 set THEME_DIR=%ROOT_DIR%\mumble-theme
 set SRC_DIR=%THEME_DIR%\source
-set DIST_DIR=%ROOT_DIR%\dist
 set CONFIG_FILE=%ROOT_DIR%\dark-config.json
 set OUTPUT_BASE=mumble-dark
-
-if not exist "%DIST_DIR%" mkdir "%DIST_DIR%"
 
 pushd "%SRC_DIR%"
 qtsass -o ..\Dark.qss Dark.scss

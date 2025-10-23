@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-THEME_ROOT="${ROOT_DIR}/nova-dark"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/build-support.sh"
+
+THEME_ROOT="${SRC_ROOT}/nova-dark"
 SRC_DIR="${THEME_ROOT}/source"
-DIST_DIR="${ROOT_DIR}/dist"
 ICONS_DIR="${THEME_ROOT}/icons/modern"
 CONFIG_FILE="${THEME_ROOT}/nova-dark-config.json"
 OUTPUT_PREFIX="nova-dark"
-COMMON_DIR="${ROOT_DIR}/common"
+COMMON_DIR="${SRC_ROOT}/common"
 
-mkdir -p "${DIST_DIR}"
+ensure_dist_dir
 
 if [[ ! -d "${ICONS_DIR}" ]] || [[ -z "$(find "${ICONS_DIR}" -maxdepth 1 -name '*.svg' -print -quit 2>/dev/null)" ]]; then
   cat >&2 <<'EOF'
@@ -23,7 +23,7 @@ pushd "${SRC_DIR}" > /dev/null
 qtsass -o ../NovaDark.qss NovaDark.scss
 popd > /dev/null
 
-python "${ROOT_DIR}/make-resource.py" \
+python "${SRC_ROOT}/make-resource.py" \
   -base-dir "${THEME_ROOT}" \
   -find-files \
   -config "${CONFIG_FILE}" \
@@ -32,7 +32,7 @@ python "${ROOT_DIR}/make-resource.py" \
   -output "${DIST_DIR}/${OUTPUT_PREFIX}-modern" \
   -style NovaDark.qss
 
-python "${ROOT_DIR}/make-resource.py" \
+python "${SRC_ROOT}/make-resource.py" \
   -base-dir "${THEME_ROOT}" \
   -find-files \
   -config "${CONFIG_FILE}" \
