@@ -1,10 +1,12 @@
 import subprocess
 import glob
 import argparse
+import os
 import os.path
 import sys
 import fnmatch
 import re
+import shutil
 
 
 def allFiles(glob):
@@ -112,8 +114,33 @@ with open('resources.qrc', 'w') as rcc:
     rcc.write('</RCC>')
 
 
-cmd = [os.path.join(os.path.dirname(os.path.realpath(__file__)),
-                    'tools/rcc'), '-binary', '-o', args.output, 'resources.qrc']
+rcc_candidates = []
+
+env_rcc = os.environ.get('QBT_THEME_RCC')
+if env_rcc:
+    rcc_candidates.append(env_rcc)
+
+for which_name in ('rcc', 'rcc.exe'):
+    resolved = shutil.which(which_name)
+    if resolved and resolved not in rcc_candidates:
+        rcc_candidates.append(resolved)
+
+tools_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'tools')
+tools_rcc = os.path.join(tools_dir, 'rcc')
+tools_rcc_exe = tools_rcc + '.exe'
+
+for candidate in (tools_rcc, tools_rcc_exe):
+    if candidate not in rcc_candidates:
+        rcc_candidates.append(candidate)
+
+rcc_path = next((c for c in rcc_candidates if c and os.path.exists(c)), None)
+
+if not rcc_path:
+    sys.stderr.write(
+        '[error] Qt rcc tool not found. Install Qt tools or set QBT_THEME_RCC to the executable path.\n')
+    sys.exit(1)
+
+cmd = [rcc_path, '-binary', '-o', args.output, 'resources.qrc']
 print(' '.join(cmd))
 
 if not subprocess.call(cmd):

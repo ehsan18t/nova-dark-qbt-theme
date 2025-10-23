@@ -4,3 +4,4 @@ Builds/*.qbtheme
 *.qbtheme
 /Builds/dist
 *.qss
+*.qrc

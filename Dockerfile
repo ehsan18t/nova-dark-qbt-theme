@@ -17,6 +17,4 @@ RUN chmod +x /usr/local/bin/qbt-theme-entrypoint.sh
 
 ENV THEME_BUILD_SCRIPT=build-all.sh
 
-VOLUME ["/workspace/Builds/dist"]
-
 ENTRYPOINT ["/usr/local/bin/qbt-theme-entrypoint.sh"]

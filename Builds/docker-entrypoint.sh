@@ -21,8 +21,5 @@ EOF
   exit 2
 fi
 
-mkdir -p "${WORKSPACE}/Builds/tools"
-ln -sf "$(command -v rcc)" "${WORKSPACE}/Builds/tools/rcc"
-
 cd "${WORKSPACE}/Builds"
 exec bash "${TARGET}" "$@"
