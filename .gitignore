@@ -3,3 +3,4 @@ Builds/*.qbtheme
 *.qbtheme
 *.qbtheme
 /Builds/dist
+*.qss
