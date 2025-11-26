@@ -6,46 +6,6 @@
 // ============================================================================
 
 // ----------------------------------------------------------------------------
-// TRANSFER LIST WIDGET - Torrent State Colors
-// ----------------------------------------------------------------------------
-TransferListWidget {
-  // Active downloading - vibrant blues
-  qproperty-downloadingstateforeground: #89b4fa;
-  qproperty-forceddownloadingstateforeground: #74c7ec;
-  qproperty-downloadingmetadatastateforeground: #89dceb;
-
-  // Stalled/Allocating - muted tones
-  qproperty-allocatingstateforeground: #6c7086;
-  qproperty-stalleddownloadingstateforeground: #8991ae;
-  qproperty-stalleduploadingstateforeground: #939bb8;
-
-  // Uploading - teals and greens
-  qproperty-uploadingstateforeground: #94e2d5;
-  qproperty-forceduploadingstateforeground: #a6e3a1;
-
-  // Paused - muted lavender
-  qproperty-pauseddownloadingstateforeground: #a6adc8;
-  qproperty-pauseduploadingstateforeground: #939ab5;
-
-  // Errors - warm reds
-  qproperty-errorstateforeground: #f38ba8;
-  qproperty-missingfilesstateforeground: #fab387;
-
-  // Queued - purple tones
-  qproperty-queueddownloadingstateforeground: #b4befe;
-  qproperty-queueduploadingstateforeground: #cba6f7;
-
-  // Checking - cyan
-  qproperty-checkingdownloadingstateforeground: #89dceb;
-  qproperty-checkinguploadingstateforeground: #74c7ec;
-  qproperty-checkingresumedatastateforeground: #94e2d5;
-
-  // Other
-  qproperty-movingstateforeground: #f9e2af;
-  qproperty-unknownstateforeground: #bac2de;
-}
-
-// ----------------------------------------------------------------------------
 // PROGRESS BAR - Clean Modern Style
 // ----------------------------------------------------------------------------
 // Reset the base theme's weird font setting and fix all progress bar issues
@@ -363,9 +323,9 @@ QTreeView {
 }
 
 // Base item style - COMPLETE property reset
+// NOTE: Do NOT set 'color' here - it overrides TransferListWidget state colors!
 QTreeView::item {
   background-color: $sidebar-item-bg;
-  color: $sidebar-item-text;
   border: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -433,7 +393,6 @@ QTreeView::item:focus {
 // Selected (inactive)
 QTreeView::item:selected {
   background-color: $sidebar-item-selected-bg;
-  color: $sidebar-item-selected-text;
   border: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -460,14 +419,12 @@ QTreeView::item:selected:only-one {
 
 QTreeView::item:selected:!active {
   background-color: $sidebar-item-selected-bg;
-  color: $sidebar-item-selected-text;
   border: 0px solid transparent;
 }
 
 // Selected (active)
 QTreeView::item:selected:active {
   background-color: $sidebar-item-selected-active-bg;
-  color: $sidebar-item-selected-text;
   border: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -840,3 +797,6 @@ QTextEdit:focus,
 QPlainTextEdit:focus {
   border-color: #89b4fa;
 }
+
+// NOTE: TransferList colors are defined in nova-dark-config.json (config.json)
+// The config.json approach works for qBittorrent 5.x, not QSS qproperty-*
