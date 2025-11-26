@@ -314,16 +314,16 @@ def main():
     # Download control icons (checkboxes, radio buttons) to common/controls/
     controls_dir = script_dir.parent.parent.parent / "common" / "controls"
     ensure_dir(controls_dir)
-    
+
     print()
     print(f"  Downloading control icons to {controls_dir}...")
-    
+
     for ctrl_name, (phosphor_name, color_key) in CONTROL_ICONS.items():
         url = get_icon_url(phosphor_name, args.weight)
         color = COLORS.get(color_key, COLORS["default"])
-        
+
         print(f"    {ctrl_name} ← {phosphor_name} ({color})...", end=" ")
-        
+
         svg_content = download_icon(url)
         if svg_content:
             svg_content = recolor_svg(svg_content, color)
