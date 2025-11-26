@@ -46,37 +46,29 @@ TransferListWidget {
 }
 
 // ----------------------------------------------------------------------------
-// PROGRESS BAR - Gradient Style
+// PROGRESS BAR - Clean Modern Style
 // ----------------------------------------------------------------------------
 // Reset the base theme's weird font setting and fix all progress bar issues
 QProgressBar {
-  background-color: #45475a;
-  border: none;
-  border-radius: 2px;
+  background-color: #2a2e3d;
+  border: 1px solid #3a3f52;
+  border-radius: 3px;
   color: #ffffff;
   text-align: center;
   font-family: "Segoe UI", sans-serif;
   font-size: 11px;
   font-weight: bold;
   font-style: normal;
-  min-height: 14px;
-  max-height: 14px;
+  min-height: 16px;
+  max-height: 16px;
   padding: 0px;
   margin: 0px;
 }
 
 QProgressBar::chunk {
-  background: qlineargradient(
-    x1: 0,
-    y1: 0,
-    x2: 1,
-    y2: 0,
-    stop: 0 #74c7ec,
-    stop: 0.5 #89b4fa,
-    stop: 1 #b4befe
-  );
+  background-color: #4a9eff;
   border-radius: 2px;
-  margin: 0px;
+  margin: 1px;
 }
 
 // ----------------------------------------------------------------------------
@@ -322,46 +314,58 @@ QTableView::item:selected {
 }
 
 // ----------------------------------------------------------------------------
-// LIST VIEW
+// LIST VIEW - Sidebar items (Tags, Trackers, etc.)
 // ----------------------------------------------------------------------------
 QListView {
-  background-color: #1e1e2e;
+  background-color: $sub-bg;
+  outline: none;
 }
 
 QListView::item {
-  background-color: transparent;
+  background-color: $sidebar-item-bg;
+  color: $sidebar-item-text;
   border: none;
   border-radius: 0;
-  padding: 2px 4px;
+  padding: $sidebar-item-padding;
+  min-height: $sidebar-item-min-height;
 }
 
 QListView::item:hover {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
 }
 
 QListView::item:selected {
-  background-color: #3d4663;
-  color: #ffffff;
+  background-color: $sidebar-item-selected-bg;
+  color: $sidebar-item-selected-text;
+}
+
+QListView::item:selected:active {
+  background-color: $sidebar-item-selected-active-bg;
+  color: $sidebar-item-selected-text;
+}
+
+QListView::item:selected:hover {
+  background-color: $sidebar-item-selected-hover-bg;
 }
 
 // ----------------------------------------------------------------------------
-// TREE VIEW - Complete Override (Main Torrent List)
+// TREE VIEW - Complete Override (Main Torrent List & Sidebar)
 // This section completely overrides ALL tree view item styles to ensure
 // consistent appearance without any borders or visual artifacts.
 // ----------------------------------------------------------------------------
 QTreeView {
-  background-color: #1e1e2e;
-  alternate-background-color: #1e1e2e;
-  selection-background-color: #3d4663;
-  selection-color: #ffffff;
+  background-color: $sub-bg;
+  alternate-background-color: $sub-bg;
+  selection-background-color: $sidebar-item-selected-bg;
+  selection-color: $sidebar-item-selected-text;
   outline: none;
   show-decoration-selected: 1;
 }
 
 // Base item style - COMPLETE property reset
 QTreeView::item {
-  background-color: #1e1e2e;
-  color: #cdd6f4;
+  background-color: $sidebar-item-bg;
+  color: $sidebar-item-text;
   border: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -373,8 +377,8 @@ QTreeView::item {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   margin: 0;
-  padding: 2px 4px;
-  min-height: 16px;
+  padding: $sidebar-item-padding;
+  min-height: $sidebar-item-min-height;
 }
 
 // Column position overrides - prevent base theme borders
@@ -399,37 +403,37 @@ QTreeView::item:only-one {
 
 // Hover states
 QTreeView::item:hover {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
   border: 0px solid transparent;
 }
 
 QTreeView::item:hover:first {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
   border: 0px solid transparent;
   border-left: 0px solid transparent;
 }
 
 QTreeView::item:hover:last {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
   border: 0px solid transparent;
   border-right: 0px solid transparent;
 }
 
 QTreeView::item:hover:only-one {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
   border: 0px solid transparent;
 }
 
 // Focus state
 QTreeView::item:focus {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
   border: 0px solid transparent;
 }
 
 // Selected (inactive)
 QTreeView::item:selected {
-  background-color: #333750;
-  color: #ffffff;
+  background-color: $sidebar-item-selected-bg;
+  color: $sidebar-item-selected-text;
   border: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -438,32 +442,32 @@ QTreeView::item:selected {
 }
 
 QTreeView::item:selected:first {
-  background-color: #333750;
+  background-color: $sidebar-item-selected-bg;
   border: 0px solid transparent;
   border-left: 0px solid transparent;
 }
 
 QTreeView::item:selected:last {
-  background-color: #333750;
+  background-color: $sidebar-item-selected-bg;
   border: 0px solid transparent;
   border-right: 0px solid transparent;
 }
 
 QTreeView::item:selected:only-one {
-  background-color: #333750;
+  background-color: $sidebar-item-selected-bg;
   border: 0px solid transparent;
 }
 
 QTreeView::item:selected:!active {
-  background-color: #333750;
-  color: #ffffff;
+  background-color: $sidebar-item-selected-bg;
+  color: $sidebar-item-selected-text;
   border: 0px solid transparent;
 }
 
 // Selected (active)
 QTreeView::item:selected:active {
-  background-color: #3d4663;
-  color: #ffffff;
+  background-color: $sidebar-item-selected-active-bg;
+  color: $sidebar-item-selected-text;
   border: 0px solid transparent;
   border-top: 0px solid transparent;
   border-right: 0px solid transparent;
@@ -472,45 +476,45 @@ QTreeView::item:selected:active {
 }
 
 QTreeView::item:selected:active:first {
-  background-color: #3d4663;
+  background-color: $sidebar-item-selected-active-bg;
   border: 0px solid transparent;
   border-left: 0px solid transparent;
 }
 
 QTreeView::item:selected:active:last {
-  background-color: #3d4663;
+  background-color: $sidebar-item-selected-active-bg;
   border: 0px solid transparent;
   border-right: 0px solid transparent;
 }
 
 QTreeView::item:selected:active:only-one {
-  background-color: #3d4663;
+  background-color: $sidebar-item-selected-active-bg;
   border: 0px solid transparent;
 }
 
 // Selected + Hover
 QTreeView::item:selected:hover {
-  background-color: #454b6b;
+  background-color: $sidebar-item-selected-hover-bg;
   border: 0px solid transparent;
 }
 
 QTreeView::item:selected:active:hover {
-  background-color: #4d5578;
+  background-color: $sidebar-item-selected-hover-bg;
   border: 0px solid transparent;
 }
 
 // Branch indicators
 QTreeView::branch {
-  background-color: #1e1e2e;
+  background-color: $sub-bg;
   border: none;
 }
 
 QTreeView::branch:hover {
-  background-color: #2a2e42;
+  background-color: $sidebar-item-hover-bg;
 }
 
 QTreeView::branch:selected {
-  background-color: #3d4663;
+  background-color: $sidebar-item-selected-bg;
 }
 
 // ----------------------------------------------------------------------------

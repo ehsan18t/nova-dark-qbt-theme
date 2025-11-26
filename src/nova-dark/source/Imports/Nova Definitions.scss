@@ -18,6 +18,17 @@ $item-selected-active-border: none;
 $item-selected-inactive-bg: #333750;
 $item-selected-inactive-border: none;
 
+// Sidebar items (Status, Categories, Tags, Trackers) - Consistent styling
+$sidebar-item-bg: transparent;
+$sidebar-item-text: #cdd6f4;
+$sidebar-item-padding: 2px 4px;
+$sidebar-item-min-height: 20px;
+$sidebar-item-hover-bg: #2a2e42;
+$sidebar-item-selected-bg: #3d4663;
+$sidebar-item-selected-text: #ffffff;
+$sidebar-item-selected-active-bg: #3d4663;
+$sidebar-item-selected-hover-bg: #454b6b;
+
 $sub-bg: #1e1e2e;
 $sub-hover: #2a2e42;
 $sub-text: #cdd6f4;
