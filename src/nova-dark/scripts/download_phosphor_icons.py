@@ -30,6 +30,7 @@ COLORS = {
     "info": "#22d3ee",         # Cyan - info, help, statistics
     "muted": "#6b7280",        # Muted gray - disabled, stopped
     "orange": "#fb923c",       # Orange - force actions, trackers
+    "stalled": "#8cb4b4",      # Teal gray - stalled transfers
 }
 
 # Mapping from qBittorrent icon names to (Phosphor icon name, color key)
@@ -67,7 +68,7 @@ ICON_MAPPING = {
     # Status and State - Muted
     "loading": ("spinner", "muted"),
     "paused": ("pause-circle", "muted"),
-    "stopped": ("stop-circle", "muted"),
+    "stopped": ("stop-circle", "error"),
 
     # Files and Folders
     "directory": ("folder", "warning"),
@@ -79,11 +80,11 @@ ICON_MAPPING = {
     # Downloads (green)
     "download": ("download", "success"),
     "downloading": ("arrow-circle-down", "success"),
-    "stalledDL": ("arrow-down", "muted"),
+    "stalledDL": ("arrow-down", "stalled"),
 
     # Uploads (purple)
     "upload": ("upload", "upload"),
-    "stalledUP": ("arrow-up", "muted"),
+    "stalledUP": ("arrow-up", "stalled"),
 
     # Edit actions
     "edit-clear": ("trash", "error"),
