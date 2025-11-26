@@ -313,6 +313,8 @@ QTableView::item:selected {
 // ----------------------------------------------------------------------------
 QListView {
   background-color: $sub-bg;
+  border: none;
+  // border-top: 1px solid #b4a0ff;
   outline: none;
 }
 
@@ -353,6 +355,8 @@ QTreeView {
   alternate-background-color: $sub-bg;
   selection-background-color: $sidebar-item-selected-bg;
   selection-color: $sidebar-item-selected-text;
+  border: none;
+  // border-top: 1px solid #b4a0ff;
   outline: none;
   show-decoration-selected: 1;
 }
