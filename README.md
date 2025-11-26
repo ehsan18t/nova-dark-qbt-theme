@@ -28,6 +28,6 @@ The scripts emit two artifacts in `dist/`:
 If Docker is available, you can build without installing the native toolchain:
 
 - `docker build -t qbt-theme-builder .`
-- `docker run --rm -e THEME_BUILD_SCRIPT=build-nova-dark.sh -v ${PWD}:/workspace qbt-theme-builder`
+- `docker run --rm -v "${PWD}:/workspace" qbt-theme-builder`
 
 The container mounts the repository, runs the Nova build script, and drops the resulting `.qbtheme` archives into `dist/` on the host.
