@@ -1,16 +1,7 @@
 #!/usr/bin/env python3
 """
 Download and configure Phosphor icons for Nova Dark qBittorrent theme.
-
-This script downloads Phosphor icons from the official repository and maps them
-to qBittorrent's expected icon names. Icons are recolored to match the Nova Dark theme.
-
-Usage:
-    python download_phosphor_icons.py [--weight WEIGHT] [--color COLOR]
-
-Options:
-    --weight    Icon weight: thin, light, regular, bold, fill, duotone (default: regular)
-    --color     Icon color in hex format (default: #e0e0e0 for light gray)
+Icons are colored based on their semantic meaning for a cohesive look.
 """
 
 import os
@@ -28,141 +19,161 @@ WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"]
 # Base URL for Phosphor icons (using jsDelivr CDN)
 PHOSPHOR_CDN_BASE = "https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1"
 
-# Mapping from qBittorrent icon names to Phosphor icon names
-# Format: "qbittorrent-name": "phosphor-name"
+# Color palette for Nova Dark theme
+COLORS = {
+    "default": "#b0b0b0",      # Light gray - default icons
+    "accent": "#6c9eff",       # Blue - primary actions, links
+    "success": "#4ade80",      # Green - downloads, completed, connected
+    "warning": "#fbbf24",      # Amber - warnings, queued
+    "error": "#f87171",        # Red - errors, disconnected, blocked
+    "upload": "#c084fc",       # Purple - uploads
+    "info": "#22d3ee",         # Cyan - info, help, statistics
+    "muted": "#6b7280",        # Muted gray - disabled, stopped
+    "orange": "#fb923c",       # Orange - force actions, trackers
+}
+
+# Mapping from qBittorrent icon names to (Phosphor icon name, color key)
 ICON_MAPPING = {
     # Application and System
-    "application-exit": "sign-out",
-    "application-rss": "rss",
-    "application-url": "link",
-    "browser-cookies": "cookie",
-    "system-log-out": "sign-out",
+    "application-exit": ("sign-out", "error"),
+    "application-rss": ("rss", "orange"),
+    "application-url": ("link", "accent"),
+    "browser-cookies": ("cookie", "warning"),
+    "system-log-out": ("sign-out", "error"),
 
     # Chart and Statistics
-    "chart-line": "chart-line",
-    "view-statistics": "chart-bar",
-    "speedometer": "gauge",
+    "chart-line": ("chart-line", "info"),
+    "view-statistics": ("chart-bar", "info"),
+    "speedometer": ("gauge", "accent"),
 
-    # Status and State
-    "checked-completed": "check-circle",
-    "connected": "wifi-high",
-    "disconnected": "wifi-slash",
-    "error": "warning-circle",
-    "dialog-warning": "warning",
-    "firewalled": "shield-warning",
-    "loading": "spinner",
-    "paused": "pause-circle",
-    "queued": "clock",
-    "stopped": "stop-circle",
+    # Status and State - Success (green)
+    "checked-completed": ("check-circle", "success"),
+    "connected": ("wifi-high", "success"),
+    "task-complete": ("check", "success"),
+
+    # Status and State - Error (red)
+    "disconnected": ("wifi-slash", "error"),
+    "error": ("warning-circle", "error"),
+    "firewalled": ("shield-warning", "error"),
+    "task-reject": ("x", "error"),
+    "ip-blocked": ("prohibit", "error"),
+    "tracker-error": ("warning-octagon", "error"),
+
+    # Status and State - Warning (amber)
+    "dialog-warning": ("warning", "warning"),
+    "tracker-warning": ("warning", "warning"),
+    "queued": ("clock", "warning"),
+
+    # Status and State - Muted
+    "loading": ("spinner", "muted"),
+    "paused": ("pause-circle", "muted"),
+    "stopped": ("stop-circle", "muted"),
 
     # Files and Folders
-    "directory": "folder",
-    "fileicon": "file",
-    "folder-documents": "folder-open",
-    "folder-new": "folder-plus",
-    "folder-remote": "cloud",
+    "directory": ("folder", "warning"),
+    "fileicon": ("file", "default"),
+    "folder-documents": ("folder-open", "warning"),
+    "folder-new": ("folder-plus", "warning"),
+    "folder-remote": ("cloud", "accent"),
 
-    # Downloads and Uploads
-    "download": "download",
-    "downloading": "arrow-circle-down",
-    "upload": "upload",
-    "stalledDL": "arrow-down",
-    "stalledUP": "arrow-up",
+    # Downloads (green)
+    "download": ("download", "success"),
+    "downloading": ("arrow-circle-down", "success"),
+    "stalledDL": ("arrow-down", "muted"),
+
+    # Uploads (purple)
+    "upload": ("upload", "upload"),
+    "stalledUP": ("arrow-up", "muted"),
 
     # Edit actions
-    "edit-clear": "trash",
-    "edit-copy": "copy",
-    "edit-find": "magnifying-glass",
-    "edit-rename": "pencil-simple",
+    "edit-clear": ("trash", "error"),
+    "edit-copy": ("copy", "default"),
+    "edit-find": ("magnifying-glass", "accent"),
+    "edit-rename": ("pencil-simple", "default"),
 
     # Filters
-    "filter-active": "funnel",
-    "filter-all": "list",
-    "filter-inactive": "funnel-simple",
-    "filter-stalled": "hourglass",
+    "filter-active": ("funnel", "success"),
+    "filter-all": ("list", "default"),
+    "filter-inactive": ("funnel-simple", "muted"),
+    "filter-stalled": ("hourglass", "warning"),
 
     # Navigation and Queue
-    "go-bottom": "arrow-line-down",
-    "go-down": "arrow-down",
-    "go-top": "arrow-line-up",
-    "go-up": "arrow-up",
+    "go-bottom": ("arrow-line-down", "accent"),
+    "go-down": ("arrow-down", "accent"),
+    "go-top": ("arrow-line-up", "accent"),
+    "go-up": ("arrow-up", "accent"),
 
     # Actions
-    "force-recheck": "arrows-clockwise",
-    "reannounce": "megaphone",
-    "view-refresh": "arrow-clockwise",
-    "view-preview": "eye",
+    "force-recheck": ("arrows-clockwise", "orange"),
+    "reannounce": ("megaphone", "orange"),
+    "view-refresh": ("arrow-clockwise", "accent"),
+    "view-preview": ("eye", "info"),
 
     # List operations
-    "list-add": "plus-circle",
-    "list-remove": "minus-circle",
-    "insert-link": "link",
+    "list-add": ("plus-circle", "success"),
+    "list-remove": ("minus-circle", "error"),
+    "insert-link": ("link", "accent"),
 
     # Help and Info
-    "help-about": "info",
-    "help-contents": "question",
-    "hash": "hash",
-    "name": "tag",
+    "help-about": ("info", "info"),
+    "help-contents": ("question", "info"),
+    "hash": ("hash", "default"),
+    "name": ("tag", "default"),
 
     # Network
-    "network-connect": "globe",
-    "network-server": "hard-drives",
-    "ip-blocked": "prohibit",
+    "network-connect": ("globe", "accent"),
+    "network-server": ("hard-drives", "default"),
 
     # Peers
-    "peers": "users",
-    "peers-add": "user-plus",
-    "peers-remove": "user-minus",
+    "peers": ("users", "accent"),
+    "peers-add": ("user-plus", "success"),
+    "peers-remove": ("user-minus", "error"),
 
     # Settings and Preferences
-    "configure": "gear",
-    "plugins": "puzzle-piece",
-    "preferences-advanced": "sliders",
-    "preferences-bittorrent": "share-network",
-    "preferences-desktop": "monitor",
-    "preferences-webui": "browser",
+    "configure": ("gear", "default"),
+    "plugins": ("puzzle-piece", "upload"),
+    "preferences-advanced": ("sliders", "default"),
+    "preferences-bittorrent": ("share-network", "accent"),
+    "preferences-desktop": ("monitor", "default"),
+    "preferences-webui": ("browser", "accent"),
 
     # Security
-    "object-locked": "lock",
-    "security-high": "shield-check",
-    "security-low": "shield",
+    "object-locked": ("lock", "warning"),
+    "security-high": ("shield-check", "success"),
+    "security-low": ("shield", "warning"),
 
     # Torrent specific
-    "torrent-creator": "file-plus",
-    "torrent-magnet": "magnet",
-    "torrent-start": "play",
-    "torrent-start-forced": "fast-forward",
-    "torrent-stop": "stop",
-    "pause-session": "pause",
-    "set-location": "map-pin",
+    "torrent-creator": ("file-plus", "accent"),
+    "torrent-magnet": ("magnet", "upload"),
+    "torrent-start": ("play", "success"),
+    "torrent-start-forced": ("fast-forward", "orange"),
+    "torrent-stop": ("stop", "error"),
+    "pause-session": ("pause", "warning"),
+    "set-location": ("map-pin", "accent"),
 
     # Trackers
-    "tracker-error": "warning-octagon",
-    "tracker-warning": "warning",
-    "trackerless": "globe-simple",
-    "trackers": "list-bullets",
+    "trackerless": ("globe-simple", "muted"),
+    "trackers": ("list-bullets", "default"),
 
     # RSS
-    "rss_read_article": "article",
-    "rss_unread_article": "article-medium",
-    "mail-inbox": "envelope",
+    "rss_read_article": ("article", "muted"),
+    "rss_unread_article": ("article-medium", "orange"),
+    "mail-inbox": ("envelope", "accent"),
 
     # Categories and Tags
-    "view-categories": "folders",
-    "tags": "tag",
+    "view-categories": ("folders", "warning"),
+    "tags": ("tag", "accent"),
 
     # Misc
-    "ratio": "scales",
-    "slow": "traffic-cone",
-    "slow_off": "rabbit",
-    "task-complete": "check",
-    "task-reject": "x",
-    "wallet-open": "heart",
+    "ratio": ("scales", "info"),
+    "slow": ("traffic-cone", "warning"),
+    "slow_off": ("rabbit", "success"),
+    "wallet-open": ("heart", "error"),
 
-    # Tray icons (these need special handling - using app icon)
-    "qbittorrent-tray": "download",
-    "qbittorrent-tray-dark": "download",
-    "qbittorrent-tray-light": "download",
+    # Tray icons
+    "qbittorrent-tray": ("download", "accent"),
+    "qbittorrent-tray-dark": ("download", "default"),
+    "qbittorrent-tray-light": ("download", "accent"),
 }
 
 
@@ -198,9 +209,6 @@ def download_icon(url: str) -> str | None:
 
 def recolor_svg(svg_content: str, color: str) -> str:
     """Recolor an SVG to use the specified color."""
-    # Remove any existing fill or stroke colors and replace with our color
-    # Phosphor icons typically use currentColor, so we need to set it
-
     # Add fill color to the SVG root element
     if 'fill="' not in svg_content:
         svg_content = svg_content.replace("<svg ", f'<svg fill="{color}" ')
@@ -223,10 +231,12 @@ def main():
         description="Download Phosphor icons for Nova Dark theme")
     parser.add_argument("--weight", choices=WEIGHTS, default="regular",
                         help="Icon weight (default: regular)")
-    parser.add_argument("--color", default="#e0e0e0",
-                        help="Icon color in hex (default: #e0e0e0)")
     parser.add_argument("--output", default=None,
-                        help="Output directory (default: ../icons)")
+                        help="Output directory (default: ../icons/modern)")
+    parser.add_argument("--mono", action="store_true",
+                        help="Use monochrome icons (single color)")
+    parser.add_argument("--color", default="#e0e0e0",
+                        help="Monochrome color (only used with --mono)")
     args = parser.parse_args()
 
     # Determine output directory
@@ -242,23 +252,36 @@ def main():
     print(f"║  Phosphor Icons Downloader for Nova Dark                     ║")
     print(f"╠══════════════════════════════════════════════════════════════╣")
     print(
-        f"║  Weight: {args.weight:<10}  Color: {args.color:<10}              ║")
+        f"║  Weight: {args.weight:<10}  Colored: {'No' if args.mono else 'Yes':<10}            ║")
     print(f"║  Output: {str(output_dir):<50} ║")
     print(f"╚══════════════════════════════════════════════════════════════╝")
     print()
 
+    if not args.mono:
+        print("  Color Palette:")
+        for name, color in COLORS.items():
+            print(f"    {name:<10} {color}")
+        print()
+
     success_count = 0
     fail_count = 0
 
-    for qbt_name, phosphor_name in ICON_MAPPING.items():
+    for qbt_name, (phosphor_name, color_key) in ICON_MAPPING.items():
         url = get_icon_url(phosphor_name, args.weight)
-        print(f"  {qbt_name} ← {phosphor_name}...", end=" ")
+
+        # Determine color
+        if args.mono:
+            color = args.color
+        else:
+            color = COLORS.get(color_key, COLORS["default"])
+
+        print(f"  {qbt_name} ← {phosphor_name} ({color})...", end=" ")
 
         svg_content = download_icon(url)
 
         if svg_content:
             # Recolor the icon
-            svg_content = recolor_svg(svg_content, args.color)
+            svg_content = recolor_svg(svg_content, color)
 
             # Save the icon
             output_path = output_dir / f"{qbt_name}.svg"
@@ -283,9 +306,10 @@ def main():
         "source": "Phosphor Icons",
         "version": "2.1.1",
         "weight": args.weight,
-        "color": args.color,
-        "icons": list(ICON_MAPPING.keys()),
-        "mapping": ICON_MAPPING
+        "colored": not args.mono,
+        "colors": COLORS if not args.mono else {"mono": args.color},
+        "icons": {k: {"phosphor": v[0], "color": COLORS.get(v[1], COLORS["default"])}
+                  for k, v in ICON_MAPPING.items()}
     }
 
     manifest_path = output_dir / "icon-manifest.json"

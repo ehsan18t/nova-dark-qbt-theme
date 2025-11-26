@@ -2,191 +2,382 @@
   "source": "Phosphor Icons",
   "version": "2.1.1",
   "weight": "regular",
-  "color": "#e0e0e0",
-  "icons": [
-    "application-exit",
-    "application-rss",
-    "application-url",
-    "browser-cookies",
-    "system-log-out",
-    "chart-line",
-    "view-statistics",
-    "speedometer",
-    "checked-completed",
-    "connected",
-    "disconnected",
-    "error",
-    "dialog-warning",
-    "firewalled",
-    "loading",
-    "paused",
-    "queued",
-    "stopped",
-    "directory",
-    "fileicon",
-    "folder-documents",
-    "folder-new",
-    "folder-remote",
-    "download",
-    "downloading",
-    "upload",
-    "stalledDL",
-    "stalledUP",
-    "edit-clear",
-    "edit-copy",
-    "edit-find",
-    "edit-rename",
-    "filter-active",
-    "filter-all",
-    "filter-inactive",
-    "filter-stalled",
-    "go-bottom",
-    "go-down",
-    "go-top",
-    "go-up",
-    "force-recheck",
-    "reannounce",
-    "view-refresh",
-    "view-preview",
-    "list-add",
-    "list-remove",
-    "insert-link",
-    "help-about",
-    "help-contents",
-    "hash",
-    "name",
-    "network-connect",
-    "network-server",
-    "ip-blocked",
-    "peers",
-    "peers-add",
-    "peers-remove",
-    "configure",
-    "plugins",
-    "preferences-advanced",
-    "preferences-bittorrent",
-    "preferences-desktop",
-    "preferences-webui",
-    "object-locked",
-    "security-high",
-    "security-low",
-    "torrent-creator",
-    "torrent-magnet",
-    "torrent-start",
-    "torrent-start-forced",
-    "torrent-stop",
-    "pause-session",
-    "set-location",
-    "tracker-error",
-    "tracker-warning",
-    "trackerless",
-    "trackers",
-    "rss_read_article",
-    "rss_unread_article",
-    "mail-inbox",
-    "view-categories",
-    "tags",
-    "ratio",
-    "slow",
-    "slow_off",
-    "task-complete",
-    "task-reject",
-    "wallet-open",
-    "qbittorrent-tray",
-    "qbittorrent-tray-dark",
-    "qbittorrent-tray-light"
-  ],
-  "mapping": {
-    "application-exit": "sign-out",
-    "application-rss": "rss",
-    "application-url": "link",
-    "browser-cookies": "cookie",
-    "system-log-out": "sign-out",
-    "chart-line": "chart-line",
-    "view-statistics": "chart-bar",
-    "speedometer": "gauge",
-    "checked-completed": "check-circle",
-    "connected": "wifi-high",
-    "disconnected": "wifi-slash",
-    "error": "warning-circle",
-    "dialog-warning": "warning",
-    "firewalled": "shield-warning",
-    "loading": "spinner",
-    "paused": "pause-circle",
-    "queued": "clock",
-    "stopped": "stop-circle",
-    "directory": "folder",
-    "fileicon": "file",
-    "folder-documents": "folder-open",
-    "folder-new": "folder-plus",
-    "folder-remote": "cloud",
-    "download": "download",
-    "downloading": "arrow-circle-down",
-    "upload": "upload",
-    "stalledDL": "arrow-down",
-    "stalledUP": "arrow-up",
-    "edit-clear": "trash",
-    "edit-copy": "copy",
-    "edit-find": "magnifying-glass",
-    "edit-rename": "pencil-simple",
-    "filter-active": "funnel",
-    "filter-all": "list",
-    "filter-inactive": "funnel-simple",
-    "filter-stalled": "hourglass",
-    "go-bottom": "arrow-line-down",
-    "go-down": "arrow-down",
-    "go-top": "arrow-line-up",
-    "go-up": "arrow-up",
-    "force-recheck": "arrows-clockwise",
-    "reannounce": "megaphone",
-    "view-refresh": "arrow-clockwise",
-    "view-preview": "eye",
-    "list-add": "plus-circle",
-    "list-remove": "minus-circle",
-    "insert-link": "link",
-    "help-about": "info",
-    "help-contents": "question",
-    "hash": "hash",
-    "name": "tag",
-    "network-connect": "globe",
-    "network-server": "hard-drives",
-    "ip-blocked": "prohibit",
-    "peers": "users",
-    "peers-add": "user-plus",
-    "peers-remove": "user-minus",
-    "configure": "gear",
-    "plugins": "puzzle-piece",
-    "preferences-advanced": "sliders",
-    "preferences-bittorrent": "share-network",
-    "preferences-desktop": "monitor",
-    "preferences-webui": "browser",
-    "object-locked": "lock",
-    "security-high": "shield-check",
-    "security-low": "shield",
-    "torrent-creator": "file-plus",
-    "torrent-magnet": "magnet",
-    "torrent-start": "play",
-    "torrent-start-forced": "fast-forward",
-    "torrent-stop": "stop",
-    "pause-session": "pause",
-    "set-location": "map-pin",
-    "tracker-error": "warning-octagon",
-    "tracker-warning": "warning",
-    "trackerless": "globe-simple",
-    "trackers": "list-bullets",
-    "rss_read_article": "article",
-    "rss_unread_article": "article-medium",
-    "mail-inbox": "envelope",
-    "view-categories": "folders",
-    "tags": "tag",
-    "ratio": "scales",
-    "slow": "traffic-cone",
-    "slow_off": "rabbit",
-    "task-complete": "check",
-    "task-reject": "x",
-    "wallet-open": "heart",
-    "qbittorrent-tray": "download",
-    "qbittorrent-tray-dark": "download",
-    "qbittorrent-tray-light": "download"
+  "colored": true,
+  "colors": {
+    "default": "#b0b0b0",
+    "accent": "#6c9eff",
+    "success": "#4ade80",
+    "warning": "#fbbf24",
+    "error": "#f87171",
+    "upload": "#c084fc",
+    "info": "#22d3ee",
+    "muted": "#6b7280",
+    "orange": "#fb923c"
+  },
+  "icons": {
+    "application-exit": {
+      "phosphor": "sign-out",
+      "color": "#f87171"
+    },
+    "application-rss": {
+      "phosphor": "rss",
+      "color": "#fb923c"
+    },
+    "application-url": {
+      "phosphor": "link",
+      "color": "#6c9eff"
+    },
+    "browser-cookies": {
+      "phosphor": "cookie",
+      "color": "#fbbf24"
+    },
+    "system-log-out": {
+      "phosphor": "sign-out",
+      "color": "#f87171"
+    },
+    "chart-line": {
+      "phosphor": "chart-line",
+      "color": "#22d3ee"
+    },
+    "view-statistics": {
+      "phosphor": "chart-bar",
+      "color": "#22d3ee"
+    },
+    "speedometer": {
+      "phosphor": "gauge",
+      "color": "#6c9eff"
+    },
+    "checked-completed": {
+      "phosphor": "check-circle",
+      "color": "#4ade80"
+    },
+    "connected": {
+      "phosphor": "wifi-high",
+      "color": "#4ade80"
+    },
+    "task-complete": {
+      "phosphor": "check",
+      "color": "#4ade80"
+    },
+    "disconnected": {
+      "phosphor": "wifi-slash",
+      "color": "#f87171"
+    },
+    "error": {
+      "phosphor": "warning-circle",
+      "color": "#f87171"
+    },
+    "firewalled": {
+      "phosphor": "shield-warning",
+      "color": "#f87171"
+    },
+    "task-reject": {
+      "phosphor": "x",
+      "color": "#f87171"
+    },
+    "ip-blocked": {
+      "phosphor": "prohibit",
+      "color": "#f87171"
+    },
+    "tracker-error": {
+      "phosphor": "warning-octagon",
+      "color": "#f87171"
+    },
+    "dialog-warning": {
+      "phosphor": "warning",
+      "color": "#fbbf24"
+    },
+    "tracker-warning": {
+      "phosphor": "warning",
+      "color": "#fbbf24"
+    },
+    "queued": {
+      "phosphor": "clock",
+      "color": "#fbbf24"
+    },
+    "loading": {
+      "phosphor": "spinner",
+      "color": "#6b7280"
+    },
+    "paused": {
+      "phosphor": "pause-circle",
+      "color": "#6b7280"
+    },
+    "stopped": {
+      "phosphor": "stop-circle",
+      "color": "#6b7280"
+    },
+    "directory": {
+      "phosphor": "folder",
+      "color": "#fbbf24"
+    },
+    "fileicon": {
+      "phosphor": "file",
+      "color": "#b0b0b0"
+    },
+    "folder-documents": {
+      "phosphor": "folder-open",
+      "color": "#fbbf24"
+    },
+    "folder-new": {
+      "phosphor": "folder-plus",
+      "color": "#fbbf24"
+    },
+    "folder-remote": {
+      "phosphor": "cloud",
+      "color": "#6c9eff"
+    },
+    "download": {
+      "phosphor": "download",
+      "color": "#4ade80"
+    },
+    "downloading": {
+      "phosphor": "arrow-circle-down",
+      "color": "#4ade80"
+    },
+    "stalledDL": {
+      "phosphor": "arrow-down",
+      "color": "#6b7280"
+    },
+    "upload": {
+      "phosphor": "upload",
+      "color": "#c084fc"
+    },
+    "stalledUP": {
+      "phosphor": "arrow-up",
+      "color": "#6b7280"
+    },
+    "edit-clear": {
+      "phosphor": "trash",
+      "color": "#f87171"
+    },
+    "edit-copy": {
+      "phosphor": "copy",
+      "color": "#b0b0b0"
+    },
+    "edit-find": {
+      "phosphor": "magnifying-glass",
+      "color": "#6c9eff"
+    },
+    "edit-rename": {
+      "phosphor": "pencil-simple",
+      "color": "#b0b0b0"
+    },
+    "filter-active": {
+      "phosphor": "funnel",
+      "color": "#4ade80"
+    },
+    "filter-all": {
+      "phosphor": "list",
+      "color": "#b0b0b0"
+    },
+    "filter-inactive": {
+      "phosphor": "funnel-simple",
+      "color": "#6b7280"
+    },
+    "filter-stalled": {
+      "phosphor": "hourglass",
+      "color": "#fbbf24"
+    },
+    "go-bottom": {
+      "phosphor": "arrow-line-down",
+      "color": "#6c9eff"
+    },
+    "go-down": {
+      "phosphor": "arrow-down",
+      "color": "#6c9eff"
+    },
+    "go-top": {
+      "phosphor": "arrow-line-up",
+      "color": "#6c9eff"
+    },
+    "go-up": {
+      "phosphor": "arrow-up",
+      "color": "#6c9eff"
+    },
+    "force-recheck": {
+      "phosphor": "arrows-clockwise",
+      "color": "#fb923c"
+    },
+    "reannounce": {
+      "phosphor": "megaphone",
+      "color": "#fb923c"
+    },
+    "view-refresh": {
+      "phosphor": "arrow-clockwise",
+      "color": "#6c9eff"
+    },
+    "view-preview": {
+      "phosphor": "eye",
+      "color": "#22d3ee"
+    },
+    "list-add": {
+      "phosphor": "plus-circle",
+      "color": "#4ade80"
+    },
+    "list-remove": {
+      "phosphor": "minus-circle",
+      "color": "#f87171"
+    },
+    "insert-link": {
+      "phosphor": "link",
+      "color": "#6c9eff"
+    },
+    "help-about": {
+      "phosphor": "info",
+      "color": "#22d3ee"
+    },
+    "help-contents": {
+      "phosphor": "question",
+      "color": "#22d3ee"
+    },
+    "hash": {
+      "phosphor": "hash",
+      "color": "#b0b0b0"
+    },
+    "name": {
+      "phosphor": "tag",
+      "color": "#b0b0b0"
+    },
+    "network-connect": {
+      "phosphor": "globe",
+      "color": "#6c9eff"
+    },
+    "network-server": {
+      "phosphor": "hard-drives",
+      "color": "#b0b0b0"
+    },
+    "peers": {
+      "phosphor": "users",
+      "color": "#6c9eff"
+    },
+    "peers-add": {
+      "phosphor": "user-plus",
+      "color": "#4ade80"
+    },
+    "peers-remove": {
+      "phosphor": "user-minus",
+      "color": "#f87171"
+    },
+    "configure": {
+      "phosphor": "gear",
+      "color": "#b0b0b0"
+    },
+    "plugins": {
+      "phosphor": "puzzle-piece",
+      "color": "#c084fc"
+    },
+    "preferences-advanced": {
+      "phosphor": "sliders",
+      "color": "#b0b0b0"
+    },
+    "preferences-bittorrent": {
+      "phosphor": "share-network",
+      "color": "#6c9eff"
+    },
+    "preferences-desktop": {
+      "phosphor": "monitor",
+      "color": "#b0b0b0"
+    },
+    "preferences-webui": {
+      "phosphor": "browser",
+      "color": "#6c9eff"
+    },
+    "object-locked": {
+      "phosphor": "lock",
+      "color": "#fbbf24"
+    },
+    "security-high": {
+      "phosphor": "shield-check",
+      "color": "#4ade80"
+    },
+    "security-low": {
+      "phosphor": "shield",
+      "color": "#fbbf24"
+    },
+    "torrent-creator": {
+      "phosphor": "file-plus",
+      "color": "#6c9eff"
+    },
+    "torrent-magnet": {
+      "phosphor": "magnet",
+      "color": "#c084fc"
+    },
+    "torrent-start": {
+      "phosphor": "play",
+      "color": "#4ade80"
+    },
+    "torrent-start-forced": {
+      "phosphor": "fast-forward",
+      "color": "#fb923c"
+    },
+    "torrent-stop": {
+      "phosphor": "stop",
+      "color": "#f87171"
+    },
+    "pause-session": {
+      "phosphor": "pause",
+      "color": "#fbbf24"
+    },
+    "set-location": {
+      "phosphor": "map-pin",
+      "color": "#6c9eff"
+    },
+    "trackerless": {
+      "phosphor": "globe-simple",
+      "color": "#6b7280"
+    },
+    "trackers": {
+      "phosphor": "list-bullets",
+      "color": "#b0b0b0"
+    },
+    "rss_read_article": {
+      "phosphor": "article",
+      "color": "#6b7280"
+    },
+    "rss_unread_article": {
+      "phosphor": "article-medium",
+      "color": "#fb923c"
+    },
+    "mail-inbox": {
+      "phosphor": "envelope",
+      "color": "#6c9eff"
+    },
+    "view-categories": {
+      "phosphor": "folders",
+      "color": "#fbbf24"
+    },
+    "tags": {
+      "phosphor": "tag",
+      "color": "#6c9eff"
+    },
+    "ratio": {
+      "phosphor": "scales",
+      "color": "#22d3ee"
+    },
+    "slow": {
+      "phosphor": "traffic-cone",
+      "color": "#fbbf24"
+    },
+    "slow_off": {
+      "phosphor": "rabbit",
+      "color": "#4ade80"
+    },
+    "wallet-open": {
+      "phosphor": "heart",
+      "color": "#f87171"
+    },
+    "qbittorrent-tray": {
+      "phosphor": "download",
+      "color": "#6c9eff"
+    },
+    "qbittorrent-tray-dark": {
+      "phosphor": "download",
+      "color": "#b0b0b0"
+    },
+    "qbittorrent-tray-light": {
+      "phosphor": "download",
+      "color": "#6c9eff"
+    }
   }
 }
