@@ -51,12 +51,10 @@
     "TransferList.CheckingUploading": "#5ecdb2",
     "TransferList.CheckingResumeData": "#cdb4ff",
     "TransferList.Moving": "#5ecdba",
-
-    "PiecesBar.Border": "#25354b",
-    "PiecesBar.Piece": "#5dbdff",
-    "PiecesBar.PartialPiece": "#5ecdb2",
-    "PiecesBar.MissingPiece": "#2a3850",
-
-    "ProgressBar": "#5ecdb2"
+    "PiecesBar.Border": "#3a4055",
+    "PiecesBar.Piece": "#89b4fa",
+    "PiecesBar.PartialPiece": "#94e2d5",
+    "PiecesBar.MissingPiece": "#1e1e2e",
+    "ProgressBar": "#89b4fa"
   }
 }

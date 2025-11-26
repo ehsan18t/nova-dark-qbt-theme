@@ -569,19 +569,27 @@ QComboBox:hover {
 }
 
 QComboBox:focus {
-  border-color: #89b4fa;
+  border-color: #5b6078;
+}
+
+QComboBox:on {
+  background-color: #252738;
+  border-color: #5b6078;
 }
 
 QComboBox::drop-down {
   border: none;
+  background: transparent;
   width: 20px;
 }
 
 QComboBox QAbstractItemView {
-  background-color: #1e1e2e;
-  border: 1px solid #313244;
-  border-radius: 4px;
+  background-color: #252738;
+  border: 1px solid #3d4058;
+  color: #cdd6f4;
   selection-background-color: #3d4663;
+  selection-color: #cdd6f4;
+  outline: none;
 }
 
 // ----------------------------------------------------------------------------
