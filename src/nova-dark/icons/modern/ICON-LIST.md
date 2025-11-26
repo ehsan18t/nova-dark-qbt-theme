@@ -19,4 +19,8 @@ python ..\scripts\generate_icon_manifest.py \
   --output ICON-LIST.md
 ```
 
+```
+py -3 download_phosphor_icons.py --weight regular
+```
+
 After generating the list, mark completed icons by editing the Markdown checkboxes. Place the SVG files alongside this manifest before running the build scripts.
