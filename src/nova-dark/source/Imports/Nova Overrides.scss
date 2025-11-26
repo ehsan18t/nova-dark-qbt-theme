@@ -833,5 +833,22 @@ QPlainTextEdit:focus {
   border-color: #4a9eff;
 }
 
-// NOTE: TransferList colors are defined in nova-dark-config.json (config.json)
-// The config.json approach works for qBittorrent 5.x, not QSS qproperty-*
+
+// Menu Icons Panel
+// QMainWindow {
+//   background-color: #1e1e2e;
+// }
+
+
+// ----------------------------------------------------------------------------
+// INACTIVE WINDOW STATE - Prevent color changes when window loses focus
+// ----------------------------------------------------------------------------
+// Force all widgets to use active colors even when window is inactive
+// This prevents the "grayed out" appearance on window focus loss
+
+// Force same background when inactive
+MainWindow:!active,
+QWidget:!active {
+  background-color: #1e1e2e;
+}
+
