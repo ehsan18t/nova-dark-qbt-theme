@@ -22,7 +22,8 @@ PHOSPHOR_CDN_BASE = "https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1"
 # Color palette for Nova Dark theme
 COLORS = {
     "default": "#b0b0b0",      # Light gray - default icons
-    "accent": "#6c9eff",       # Blue - primary actions, links
+    # Blue - primary actions, links (matches progress bar)
+    "accent": "#4a9eff",
     "success": "#4ade80",      # Green - downloads, completed, connected
     "warning": "#fbbf24",      # Amber - warnings, queued
     "error": "#f87171",        # Red - errors, disconnected, blocked

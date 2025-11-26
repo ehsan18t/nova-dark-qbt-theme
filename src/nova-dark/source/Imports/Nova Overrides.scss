@@ -131,7 +131,7 @@ QSplitter::handle:vertical {
 }
 
 QSplitter::handle:hover {
-  background-color: #89b4fa;
+  background-color: #4a9eff;
 }
 
 // ----------------------------------------------------------------------------
@@ -502,7 +502,7 @@ QLineEdit:hover {
 }
 
 QLineEdit:focus {
-  border-color: #89b4fa;
+  border-color: #4a9eff;
 }
 
 // Search filter field
@@ -515,7 +515,7 @@ QLineEdit#searchFilter {
 }
 
 QLineEdit#searchFilter:focus {
-  border-color: #89b4fa;
+  border-color: #4a9eff;
   background-color: #1e1e2e;
 }
 
@@ -579,7 +579,7 @@ QDoubleSpinBox:hover {
 
 QSpinBox:focus,
 QDoubleSpinBox:focus {
-  border-color: #89b4fa;
+  border-color: #4a9eff;
 }
 
 // ----------------------------------------------------------------------------
@@ -605,7 +605,7 @@ QPushButton:pressed {
 }
 
 QPushButton:focus {
-  border-color: #89b4fa;
+  border-color: #4a9eff;
 }
 
 QPushButton:disabled {
@@ -617,7 +617,7 @@ QPushButton:disabled {
 // Primary/Default button style
 QPushButton:default {
   background-color: #313244;
-  border-color: #89b4fa;
+  border-color: #4a9eff;
 }
 
 QPushButton:default:hover {
@@ -715,19 +715,19 @@ QRadioButton::indicator {
 
 QCheckBox::indicator:hover,
 QRadioButton::indicator:hover {
-  border-color: #89b4fa;
+  border-color: #4a9eff;
   background-color: #313244;
 }
 
 QCheckBox::indicator:checked {
-  background-color: #89b4fa;
-  border-color: #89b4fa;
+  background-color: #4a9eff;
+  border-color: #4a9eff;
   image: url(:/uitheme/common/controls/checkbox_check_dark.svg);
 }
 
 QRadioButton::indicator:checked {
-  background-color: #89b4fa;
-  border-color: #89b4fa;
+  background-color: #4a9eff;
+  border-color: #4a9eff;
   image: url(:/uitheme/common/controls/radio_check_dark.svg);
 }
 
@@ -741,7 +741,7 @@ QSlider::groove:horizontal {
 }
 
 QSlider::handle:horizontal {
-  background-color: #89b4fa;
+  background-color: #4a9eff;
   border: 1px solid #181926;
   border-radius: 6px;
   width: 10px;
@@ -754,7 +754,7 @@ QSlider::handle:horizontal:hover {
 }
 
 QSlider::sub-page:horizontal {
-  background-color: #89b4fa;
+  background-color: #4a9eff;
   border-radius: 3px;
 }
 
@@ -806,7 +806,7 @@ QPlainTextEdit {
 
 QTextEdit:focus,
 QPlainTextEdit:focus {
-  border-color: #89b4fa;
+  border-color: #4a9eff;
 }
 
 // NOTE: TransferList colors are defined in nova-dark-config.json (config.json)
