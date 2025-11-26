@@ -162,6 +162,30 @@ QMenu::separator {
   margin: 2px 6px;
 }
 
+// Menu checkable item indicators (for "Alternative Speed Limits" etc.)
+QMenu::indicator {
+  width: 16px;
+  height: 16px;
+  left: 6px;
+}
+
+QMenu::indicator:non-exclusive:unchecked {
+  image: url(:/uitheme/common/controls/checkbox-unchecked.svg);
+}
+
+QMenu::indicator:non-exclusive:checked {
+  image: url(:/uitheme/common/controls/checkbox-checked.svg);
+}
+
+// Radio button style indicators (exclusive selection)
+QMenu::indicator:exclusive:unchecked {
+  image: url(:/uitheme/common/controls/radio-unchecked.svg);
+}
+
+QMenu::indicator:exclusive:checked {
+  image: url(:/uitheme/common/controls/radio-checked.svg);
+}
+
 // ----------------------------------------------------------------------------
 // TOOLTIP IMPROVEMENTS
 // ----------------------------------------------------------------------------

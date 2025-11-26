@@ -34,6 +34,14 @@ COLORS = {
     "stalled": "#8cb4b4",      # Teal gray - stalled transfers
 }
 
+# Control icons (checkboxes, radio buttons) - saved to common/controls/
+CONTROL_ICONS = {
+    "checkbox-unchecked": ("square", "default"),
+    "checkbox-checked": ("check-square", "success"),
+    "radio-unchecked": ("circle", "default"),
+    "radio-checked": ("radio-button", "success"),
+}
+
 # Mapping from qBittorrent icon names to (Phosphor icon name, color key)
 ICON_MAPPING = {
     # Application and System
@@ -302,6 +310,29 @@ def main():
         print(f"  Failed: {fail_count} icons")
     print(f"  Location: {output_dir}")
     print(f"═══════════════════════════════════════════════════════════════")
+
+    # Download control icons (checkboxes, radio buttons) to common/controls/
+    controls_dir = script_dir.parent.parent.parent / "common" / "controls"
+    ensure_dir(controls_dir)
+    
+    print()
+    print(f"  Downloading control icons to {controls_dir}...")
+    
+    for ctrl_name, (phosphor_name, color_key) in CONTROL_ICONS.items():
+        url = get_icon_url(phosphor_name, args.weight)
+        color = COLORS.get(color_key, COLORS["default"])
+        
+        print(f"    {ctrl_name} ← {phosphor_name} ({color})...", end=" ")
+        
+        svg_content = download_icon(url)
+        if svg_content:
+            svg_content = recolor_svg(svg_content, color)
+            output_path = controls_dir / f"{ctrl_name}.svg"
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(svg_content)
+            print("✓")
+        else:
+            print("✗")
 
     # Generate a manifest file
     manifest = {
