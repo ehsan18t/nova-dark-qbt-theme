@@ -71,6 +71,17 @@ QStatusBar QPushButton:pressed {
 }
 
 // ----------------------------------------------------------------------------
+// TOOLBAR BUTTONS - Hide menu arrows/indicators
+// ----------------------------------------------------------------------------
+QToolButton::menu-arrow,
+QToolButton::menu-indicator,
+QPushButton::menu-arrow,
+QPushButton::menu-indicator {
+  image: none;
+  width: 0px;
+}
+
+// ----------------------------------------------------------------------------
 // DOCK WIDGETS
 // ----------------------------------------------------------------------------
 QDockWidget {
