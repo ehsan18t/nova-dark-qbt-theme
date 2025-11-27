@@ -1,38 +1,83 @@
 # Nova Dark Theme
 
-Nova Dark ships a refreshed color story on top of a shared base stylesheet (`src/common/styles/BaseTheme.scss`) that was extracted from the original Mumble dark theme. The common layer preserves widget geometry, spacing, focus rings, and behaviour while Nova swaps in a new palette and transfer-state colors.
+A modern, carefully crafted dark theme for qBittorrent featuring a refined color palette, semantic status colors, and a custom icon set built with Phosphor Icons.
 
-## Layout
+## Features
+
+- **Modern Dark Palette** – Deep, easy-on-the-eyes background with excellent contrast
+- **Semantic Status Colors** – Distinct, meaningful colors for each torrent state:
+  - Blue for downloading
+  - Green for uploading/seeding
+  - Orange for forced transfers
+  - Gray for stopped/stalled
+  - Red for errors
+- **Custom Icon Set** – 90+ carefully colored Phosphor icons
+- **Consistent UI** – Polished look across all widgets, dialogs, and panels
+
+## Project Structure
 
 ```
 nova-dark/
-  README.md
-  nova-dark-config.json   # qB palette used by the application chrome
-  icons/
-    modern/                 # drop SVG icons here (defaults to Mumble's set)
-  scripts/
-    generate_icon_manifest.py
-  source/
-  NovaDark.scss         # imports Nova Definitions + shared BaseTheme
-    Imports/
-      Nova Definitions.scss # palette values consumed by the base stylesheet
-      Nova Overrides.scss   # qproperty/QPalette tweaks layered on top
+├── nova-dark-config.json      # Color palette configuration
+├── NovaDark.qss               # Compiled stylesheet
+├── icons/
+│   └── modern/                # Custom Phosphor icon set
+│       └── icon-manifest.json # Icon color definitions
+├── scripts/
+│   └── download_phosphor_icons.py  # Icon generator script
+└── source/
+    ├── NovaDark.scss          # Main stylesheet source
+    └── Imports/
+        ├── Nova Definitions.scss   # Color variables
+        └── Nova Overrides.scss     # Custom overrides
 ```
 
-## Build Steps
+## Build
 
-Run the helper scripts from `src/`:
+### Using Docker (Recommended)
 
-- `../build-nova-dark.bat`
-- `../build-nova-dark.sh`
+```bash
+docker build -t qbt-theme-builder .
+docker run --rm -v "${PWD}:/workspace" qbt-theme-builder
+```
 
-Each script compiles `NovaDark.scss`, then packages two variants into `src/dist`:
+### Manual Build
 
-- `nova-dark-modern.qbtheme` – includes whatever icons live in `icons/modern`
-- `nova-dark-no-icons.qbtheme` – relies on qBittorrent's stock icons
+Run from the repository root:
+- **Windows:** `scripts\build-nova-dark.bat`
+- **Linux/macOS:** `./scripts/build-nova-dark.sh`
 
-## Icons
+### Output
 
-If you want the Nova theme to look identical to Mumble Dark, copy the SVG set from `src/mumble-theme` (or rerun the original recolor pipeline) into `icons/modern` before building. The shared controls (checkboxes, radios, tree toggles, etc.) live in `src/common/controls` and already use Nova's accent hue.
+Two theme variants are generated in `dist/`:
+- `nova-dark-modern.qbtheme` – Full theme with custom icons
+- `nova-dark-no-icons.qbtheme` – Stylesheet only (uses qBittorrent's default icons)
 
-> Tip: Because Nova reuses the base stylesheet, keeping the icon filenames identical to Mumble's guarantees all lookups resolve without further tweaks.
+## Regenerating Icons
+
+To regenerate the icon set with custom colors:
+
+```bash
+cd src/nova-dark/scripts
+python download_phosphor_icons.py
+```
+
+The script downloads Phosphor icons and applies the color palette defined in the script. Edit `COLORS` and `ICON_MAPPING` to customize.
+
+## Status Text Colors
+
+| Status        | Color     | Hex       |
+| ------------- | --------- | --------- |
+| Downloading   | Blue      | `#5cb8ff` |
+| Uploading     | Green     | `#50e0a0` |
+| Forced        | Orange    | `#ffb86c` |
+| Stalled       | Gray      | `#8899aa` |
+| Stopped       | Dark Gray | `#707888` |
+| Queued        | Lavender  | `#b8a0d8` |
+| Moving        | Gold      | `#e0c060` |
+| Error         | Red       | `#ff5555` |
+| Missing Files | Red       | `#f87171` |
+
+## License
+
+MIT License
