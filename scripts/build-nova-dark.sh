@@ -12,17 +12,18 @@ COMMON_DIR="${SRC_ROOT}/common"
 
 ensure_dist_dir
 
+# Check for icons
 if [[ ! -d "${ICONS_DIR}" ]] || [[ -z "$(find "${ICONS_DIR}" -maxdepth 1 -name '*.svg' -print -quit 2>/dev/null)" ]]; then
-  cat >&2 <<'EOF'
-[warn] No SVG icons detected in src/nova-dark/icons/modern
-  Copy the Mumble Dark icon set here (or provide your own) before packaging.
-EOF
+  log_warn "No SVG icons detected in src/nova-dark/icons/modern"
 fi
 
+# Compile SCSS to QSS
+log_info "Compiling NovaDark.scss..."
 pushd "${SRC_DIR}" > /dev/null
 qtsass -o ../NovaDark.qss NovaDark.scss
 popd > /dev/null
 
+# Build theme with icons
 python "${SRC_ROOT}/make-resource.py" \
   -base-dir "${THEME_ROOT}" \
   -find-files \
@@ -32,6 +33,7 @@ python "${SRC_ROOT}/make-resource.py" \
   -output "${DIST_DIR}/${OUTPUT_PREFIX}-modern" \
   -style NovaDark.qss
 
+# Build theme without icons
 python "${SRC_ROOT}/make-resource.py" \
   -base-dir "${THEME_ROOT}" \
   -find-files \

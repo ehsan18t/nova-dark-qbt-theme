@@ -29,6 +29,8 @@ docker build -t qbt-theme-builder .
 docker run --rm -v "${PWD}:/workspace" qbt-theme-builder
 ```
 
+> **Windows (PowerShell):** Use `${PWD}` as shown above, or the full path like `-v "C:\path\to\qbt-theme:/workspace"`
+
 ### Manual Build
 
 - **Windows:** `scripts\build-nova-dark.bat`
@@ -40,14 +42,14 @@ Output files are generated in `dist/`:
 
 ## Status Colors
 
-| Status | Color |
-|--------|-------|
-| Downloading | 🔵 Blue |
-| Uploading/Seeding | 🟢 Green |
-| Forced | 🟠 Orange |
-| Stalled | ⚪ Gray |
-| Queued | 🟣 Lavender |
-| Error/Missing | 🔴 Red |
+| Status            | Color      |
+| ----------------- | ---------- |
+| Downloading       | 🔵 Blue     |
+| Uploading/Seeding | 🟢 Green    |
+| Forced            | 🟠 Orange   |
+| Stalled           | ⚪ Gray     |
+| Queued            | 🟣 Lavender |
+| Error/Missing     | 🔴 Red      |
 
 ## License
 
