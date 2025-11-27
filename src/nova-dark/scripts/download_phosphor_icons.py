@@ -180,10 +180,10 @@ ICON_MAPPING = {
     "slow_off": ("rabbit", "success"),
     "wallet-open": ("heart", "error"),
 
-    # Tray icons
-    "qbittorrent-tray": ("download", "accent"),
-    "qbittorrent-tray-dark": ("download", "default"),
-    "qbittorrent-tray-light": ("download", "accent"),
+    # Tray icons - manually customized with qBittorrent logo, not auto-generated
+    # "qbittorrent-tray": custom
+    # "qbittorrent-tray-dark": custom
+    # "qbittorrent-tray-light": custom
 }
 
 
