@@ -133,7 +133,7 @@
     },
     "downloading": {
       "phosphor": "arrow-circle-down",
-      "color": "#4ade80"
+      "color": "#22d3ee"
     },
     "stalledDL": {
       "phosphor": "arrow-down",
@@ -305,7 +305,7 @@
     },
     "torrent-start": {
       "phosphor": "play",
-      "color": "#4ade80"
+      "color": "#4a9eff"
     },
     "torrent-start-forced": {
       "phosphor": "fast-forward",

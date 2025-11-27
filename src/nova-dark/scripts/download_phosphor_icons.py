@@ -77,7 +77,7 @@ ICON_MAPPING = {
     # Status and State - Muted
     "loading": ("spinner", "muted"),
     "paused": ("pause-circle", "muted"),
-    "stopped": ("stop-circle", "error"),
+    "stopped": ("stop-circle", "muted"),
 
     # Files and Folders
     "directory": ("folder", "warning"),
@@ -86,9 +86,9 @@ ICON_MAPPING = {
     "folder-new": ("folder-plus", "warning"),
     "folder-remote": ("cloud", "accent"),
 
-    # Downloads (green)
+    # Downloads (cyan for active, green for completed)
     "download": ("download", "success"),
-    "downloading": ("arrow-circle-down", "success"),
+    "downloading": ("arrow-circle-down", "info"),
     "stalledDL": ("arrow-down", "stalled"),
 
     # Uploads (purple)
@@ -155,7 +155,7 @@ ICON_MAPPING = {
     # Torrent specific
     "torrent-creator": ("file-plus", "accent"),
     "torrent-magnet": ("magnet", "upload"),
-    "torrent-start": ("play", "success"),
+    "torrent-start": ("play", "accent"),
     "torrent-start-forced": ("fast-forward", "orange"),
     "torrent-stop": ("stop", "error"),
     "pause-session": ("pause", "warning"),
