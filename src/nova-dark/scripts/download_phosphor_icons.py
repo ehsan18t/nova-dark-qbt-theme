@@ -54,7 +54,7 @@ ICON_MAPPING = {
     # Chart and Statistics
     "chart-line": ("chart-line", "info"),
     "view-statistics": ("chart-bar", "info"),
-    "speedometer": ("gauge", "accent"),
+    "speedometer": ("gauge", "warning"),
 
     # Status and State - Success (green)
     "checked-completed": ("check-circle", "success"),
@@ -98,7 +98,7 @@ ICON_MAPPING = {
     # Edit actions
     "edit-clear": ("trash", "error"),
     "edit-copy": ("copy", "default"),
-    "edit-find": ("magnifying-glass", "accent"),
+    "edit-find": ("magnifying-glass", "upload"),
     "edit-rename": ("pencil-simple", "default"),
 
     # Filters
@@ -131,7 +131,7 @@ ICON_MAPPING = {
     "name": ("tag", "default"),
 
     # Network
-    "network-connect": ("globe", "accent"),
+    "network-connect": ("globe", "info"),
     "network-server": ("hard-drives", "default"),
 
     # Peers
@@ -142,10 +142,10 @@ ICON_MAPPING = {
     # Settings and Preferences
     "configure": ("gear", "default"),
     "plugins": ("puzzle-piece", "upload"),
-    "preferences-advanced": ("sliders", "default"),
-    "preferences-bittorrent": ("share-network", "accent"),
-    "preferences-desktop": ("monitor", "default"),
-    "preferences-webui": ("browser", "accent"),
+    "preferences-advanced": ("sliders", "upload"),
+    "preferences-bittorrent": ("share-network", "success"),
+    "preferences-desktop": ("monitor", "accent"),
+    "preferences-webui": ("browser", "info"),
 
     # Security
     "object-locked": ("lock", "warning"),

@@ -46,7 +46,7 @@
     },
     "speedometer": {
       "phosphor": "gauge",
-      "color": "#4a9eff"
+      "color": "#fbbf24"
     },
     "checked-completed": {
       "phosphor": "check-circle",
@@ -158,7 +158,7 @@
     },
     "edit-find": {
       "phosphor": "magnifying-glass",
-      "color": "#4a9eff"
+      "color": "#c084fc"
     },
     "edit-rename": {
       "phosphor": "pencil-simple",
@@ -242,7 +242,7 @@
     },
     "network-connect": {
       "phosphor": "globe",
-      "color": "#4a9eff"
+      "color": "#22d3ee"
     },
     "network-server": {
       "phosphor": "hard-drives",
@@ -270,19 +270,19 @@
     },
     "preferences-advanced": {
       "phosphor": "sliders",
-      "color": "#b0b0b0"
+      "color": "#c084fc"
     },
     "preferences-bittorrent": {
       "phosphor": "share-network",
-      "color": "#4a9eff"
+      "color": "#4ade80"
     },
     "preferences-desktop": {
       "phosphor": "monitor",
-      "color": "#b0b0b0"
+      "color": "#4a9eff"
     },
     "preferences-webui": {
       "phosphor": "browser",
-      "color": "#4a9eff"
+      "color": "#22d3ee"
     },
     "object-locked": {
       "phosphor": "lock",
@@ -367,18 +367,6 @@
     "wallet-open": {
       "phosphor": "heart",
       "color": "#f87171"
-    },
-    "qbittorrent-tray": {
-      "phosphor": "download",
-      "color": "#4a9eff"
-    },
-    "qbittorrent-tray-dark": {
-      "phosphor": "download",
-      "color": "#b0b0b0"
-    },
-    "qbittorrent-tray-light": {
-      "phosphor": "download",
-      "color": "#4a9eff"
     }
   }
 }
