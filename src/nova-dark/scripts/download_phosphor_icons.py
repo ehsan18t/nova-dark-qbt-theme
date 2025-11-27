@@ -32,6 +32,8 @@ COLORS = {
     "muted": "#6b7280",        # Muted gray - disabled, stopped
     "orange": "#fb923c",       # Orange - force actions, trackers
     "stalled": "#8cb4b4",      # Teal gray - stalled transfers
+    "white": "#ffffff",        # Pure white - for dark backgrounds
+    "dark": "#1e1e2e",         # Dark - for light backgrounds
 }
 
 # Control icons (checkboxes, radio buttons) - saved to common/controls/
@@ -40,6 +42,19 @@ CONTROL_ICONS = {
     "checkbox-checked": ("check-square", "success"),
     "radio-unchecked": ("circle", "default"),
     "radio-checked": ("radio-button", "success"),
+}
+
+# Inner check/radio marks - these use bold weight for visibility
+# Saved to src/common/controls/ (different from CONTROL_ICONS which go to common/controls/)
+INNER_CHECK_ICONS = {
+    # White check for dark backgrounds
+    "checkbox_check_dark": ("check", "white"),
+    # Dark check for light backgrounds
+    "checkbox_check_lite": ("check", "dark"),
+    # White dot for dark backgrounds
+    "radio_check_dark": ("circle", "white"),
+    # Dark dot for light backgrounds
+    "radio_check_lite": ("circle", "dark"),
 }
 
 # Mapping from qBittorrent icon names to (Phosphor icon name, color key)
@@ -407,6 +422,30 @@ def main():
         if svg_content:
             svg_content = recolor_svg(svg_content, color)
             output_path = controls_dir / f"{ctrl_name}.svg"
+            with open(output_path, "w", encoding="utf-8") as f:
+                f.write(svg_content)
+            print("OK")
+        else:
+            print("FAILED")
+
+    # Download inner check icons (bold weight for visibility) to src/common/controls/
+    src_controls_dir = script_dir.parent.parent.parent / "src" / "common" / "controls"
+    ensure_dir(src_controls_dir)
+
+    print()
+    print(f"  Downloading inner check icons (bold) to {src_controls_dir}...")
+
+    for icon_name, (phosphor_name, color_key) in INNER_CHECK_ICONS.items():
+        # Always use bold for visibility
+        url = get_icon_url(phosphor_name, "bold")
+        color = COLORS.get(color_key, COLORS["default"])
+
+        print(f"    {icon_name} ← {phosphor_name}-bold ({color})...", end=" ")
+
+        svg_content = download_icon(url)
+        if svg_content:
+            svg_content = recolor_svg(svg_content, color)
+            output_path = src_controls_dir / f"{icon_name}.svg"
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(svg_content)
             print("OK")

@@ -36,6 +36,8 @@ python download_phosphor_icons.py
 | muted | ![#6b7280](https://via.placeholder.com/16/6b7280/6b7280?text=+) | `#6b7280` | Disabled, stopped |
 | orange | ![#fb923c](https://via.placeholder.com/16/fb923c/fb923c?text=+) | `#fb923c` | Force actions |
 | stalled | ![#8cb4b4](https://via.placeholder.com/16/8cb4b4/8cb4b4?text=+) | `#8cb4b4` | Stalled transfers |
+| white | ![#ffffff](https://via.placeholder.com/16/ffffff/ffffff?text=+) | `#ffffff` |  |
+| dark | ![#1e1e2e](https://via.placeholder.com/16/1e1e2e/1e1e2e?text=+) | `#1e1e2e` |  |
 
 ## Icon List
 

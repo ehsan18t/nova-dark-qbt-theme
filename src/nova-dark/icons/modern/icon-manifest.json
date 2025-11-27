@@ -13,7 +13,9 @@
     "info": "#22d3ee",
     "muted": "#6b7280",
     "orange": "#fb923c",
-    "stalled": "#8cb4b4"
+    "stalled": "#8cb4b4",
+    "white": "#ffffff",
+    "dark": "#1e1e2e"
   },
   "icons": {
     "application-exit": {
