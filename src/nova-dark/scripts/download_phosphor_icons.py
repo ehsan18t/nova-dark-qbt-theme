@@ -279,9 +279,18 @@ def generate_icon_list_md(output_dir: Path, weight: str, mono: bool, mono_color:
         "",
         "## Color Palette",
         "",
-        "| Name | Color | Hex | Usage |",
-        "|------|-------|-----|-------|",
     ]
+
+    if mono:
+        lines.extend([
+            f"Generated in mono mode - every icon uses `{mono_color}`.",
+            "",
+        ])
+
+    lines.extend([
+        "| Name | Hex | Usage |",
+        "|------|-----|-------|",
+    ])
 
     color_usage = {
         "default": "Default icons",
@@ -296,10 +305,10 @@ def generate_icon_list_md(output_dir: Path, weight: str, mono: bool, mono_color:
         "stalled": "Stalled transfers",
     }
 
-    for name, color in COLORS.items():
-        usage = color_usage.get(name, "")
-        lines.append(
-            f"| {name} | ![{color}](https://via.placeholder.com/16/{color[1:]}/{color[1:]}?text=+) | `{color}` | {usage} |")
+    palette = {"mono": mono_color} if mono else COLORS
+    for name, color in palette.items():
+        usage = "All icons" if mono else color_usage.get(name, "")
+        lines.append(f"| {name} | `{color}` | {usage} |")
 
     lines.extend([
         "",
@@ -310,8 +319,8 @@ def generate_icon_list_md(output_dir: Path, weight: str, mono: bool, mono_color:
     ])
 
     for qbt_name, (phosphor_name, color_key) in sorted(ICON_MAPPING.items()):
-        color = COLORS.get(color_key, COLORS["default"])
-        lines.append(f"| `{qbt_name}` | {phosphor_name} | {color_key} |")
+        color = mono_color if mono else COLORS.get(color_key, COLORS["default"])
+        lines.append(f"| `{qbt_name}` | {phosphor_name} | `{color}` |")
 
     lines.extend([
         "",
@@ -458,7 +467,9 @@ def main():
         "weight": args.weight,
         "colored": not args.mono,
         "colors": COLORS if not args.mono else {"mono": args.color},
-        "icons": {k: {"phosphor": v[0], "color": COLORS.get(v[1], COLORS["default"])}
+        "icons": {k: {"phosphor": v[0],
+                      "color": args.color if args.mono
+                      else COLORS.get(v[1], COLORS["default"])}
                   for k, v in ICON_MAPPING.items()}
     }
 

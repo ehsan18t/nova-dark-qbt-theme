@@ -22,6 +22,11 @@ if not defined FOUND_ICON (
 
 pushd "%SRC_DIR%"
 qtsass -o ..\NovaDark.qss NovaDark.scss
+if errorlevel 1 (
+  popd
+  1>&2 echo [error] qtsass failed to compile NovaDark.scss
+  exit /b 1
+)
 popd
 
 python "%SRC_ROOT%\make-resource.py" ^
@@ -32,6 +37,10 @@ python "%SRC_ROOT%\make-resource.py" ^
   -include-dir "%COMMON_DIR%" ^
   -output "%DIST_DIR%\%OUTPUT_PREFIX%-modern" ^
   -style NovaDark.qss
+if errorlevel 1 (
+  1>&2 echo [error] Failed to build %OUTPUT_PREFIX%-modern
+  exit /b 1
+)
 
 python "%SRC_ROOT%\make-resource.py" ^
   -base-dir "%THEME_ROOT%" ^
@@ -40,5 +49,9 @@ python "%SRC_ROOT%\make-resource.py" ^
   -include-dir "%COMMON_DIR%" ^
   -output "%DIST_DIR%\%OUTPUT_PREFIX%-no-icons" ^
   -style NovaDark.qss
+if errorlevel 1 (
+  1>&2 echo [error] Failed to build %OUTPUT_PREFIX%-no-icons
+  exit /b 1
+)
 
 endlocal

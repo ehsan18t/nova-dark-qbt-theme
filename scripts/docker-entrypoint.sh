@@ -22,4 +22,14 @@ EOF
 fi
 
 cd "${WORKSPACE}/scripts"
-exec bash "${TARGET}" "$@"
+bash "${TARGET}" "$@"
+status=$?
+
+# The container runs as root, so anything written into the bind-mounted tree
+# lands root-owned and the host user cannot overwrite it on their next build.
+# Hand dist/ back to whoever owns the mount.
+if [[ -d "${WORKSPACE}/dist" ]]; then
+  chown -R "$(stat -c '%u:%g' "${WORKSPACE}")" "${WORKSPACE}/dist" 2>/dev/null || true
+fi
+
+exit "${status}"

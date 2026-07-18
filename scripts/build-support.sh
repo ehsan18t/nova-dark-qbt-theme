@@ -32,8 +32,8 @@ run_build_script() {
   local script_path="${SCRIPTS_DIR}/${script}"
 
   if [[ ! -f "${script_path}" ]]; then
-    log_warn "Skipping missing build script: ${script}"
-    return 0
+    log_error "Build script not found: ${script}"
+    return 1
   fi
 
   if [[ ! -x "${script_path}" ]]; then

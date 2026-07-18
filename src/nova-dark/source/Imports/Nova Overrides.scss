@@ -533,8 +533,10 @@ QLineEdit:focus {
   border-color: #4a9eff;
 }
 
-// Search filter field
-QLineEdit#searchFilter {
+// Search pattern field
+// searchwidget.ui:20 - <widget class="LineEdit" name="lineEditSearchPattern"/>
+// (LineEdit extends QLineEdit, searchwidget.ui:152-153)
+LineEdit#lineEditSearchPattern {
   background-color: #181926;
   border: 1px solid #313244;
   border-radius: 6px;
@@ -542,7 +544,7 @@ QLineEdit#searchFilter {
   min-width: 200px;
 }
 
-QLineEdit#searchFilter:focus {
+LineEdit#lineEditSearchPattern:focus {
   border-color: #4a9eff;
   background-color: #1e1e2e;
 }
@@ -789,7 +791,9 @@ QSlider::sub-page:horizontal {
 // ----------------------------------------------------------------------------
 // EXECUTION LOG
 // ----------------------------------------------------------------------------
-QPlainTextEdit#executionLogTextEdit {
+// qBittorrent builds both log panes as LogListView (a QListView subclass,
+// executionlogwidget.cpp:51/60) with no objectName - not a QPlainTextEdit.
+LogListView {
   background-color: #11111b;
   color: #a6adc8;
   font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", "Consolas",
@@ -803,21 +807,13 @@ QPlainTextEdit#executionLogTextEdit {
 // ----------------------------------------------------------------------------
 // RSS FEED STYLING
 // ----------------------------------------------------------------------------
-QTreeView#rssFeedsList {
+// rsswidget.ui:97 - <widget class="FeedListWidget" name="feedListWidget"/>
+FeedListWidget {
   background-color: #1e1e2e;
 }
 
-QTreeView#rssFeedsList::item {
+FeedListWidget::item {
   padding: 3px 4px;
-}
-
-// ----------------------------------------------------------------------------
-// TOOLBAR LABELS
-// ----------------------------------------------------------------------------
-QLabel#speedLimitLabel {
-  color: #f9e2af;
-  font-weight: bold;
-  padding: 0 4px;
 }
 
 // ----------------------------------------------------------------------------
@@ -845,14 +841,16 @@ QPlainTextEdit:focus {
 
 
 // ----------------------------------------------------------------------------
-// INACTIVE WINDOW STATE - Prevent color changes when window loses focus
+// INACTIVE WINDOW STATE
 // ----------------------------------------------------------------------------
-// Force all widgets to use active colors even when window is inactive
-// This prevents the "grayed out" appearance on window focus loss
-
-// Force same background when inactive
-MainWindow:!active,
-QWidget:!active {
-  background-color: #1e1e2e;
-}
+// Deliberately empty. A blanket `QWidget:!active { background-color: ... }`
+// used to live here to stop widgets "graying out" on focus loss, but it did
+// the opposite: Qt type selectors match subclasses, so it repainted EVERY
+// widget - including the ones declared `background: transparent` - and being
+// the last rule in the sheet it won every equal-specificity tie.
+//
+// It was also unnecessary: the graying-out it targeted comes from
+// QPalette::Inactive, which stylesheet-set backgrounds already bypass. If a
+// real inactive-state regression ever shows up, restate the exact per-widget
+// backgrounds (e.g. `QToolBar:!active`) rather than reaching for QWidget.
 

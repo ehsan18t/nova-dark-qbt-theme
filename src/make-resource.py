@@ -82,14 +82,34 @@ if args.config:
         config_file = args.config
     elif os.path.exists(os.path.join(args.baseDir, args.config)):
         config_file = os.path.join(args.baseDir, args.config)
+    else:
+        sys.stderr.write(
+            "[error] config file '%s' not found (tried as given and relative to %s)\n"
+            % (args.config, args.baseDir))
+        sys.exit(1)
 
 ResourceFiles = list()
+matched_patterns = set()
 for alias, path in files:
     for pattern in args.files:
         if fnmatch.fnmatch(alias, pattern):
             ResourceFiles.append((alias, path))
+            matched_patterns.add(pattern)
             print('adding ' + path)
             break
+
+# A stylesheet reference that resolves to no file is silently dropped by the
+# fnmatch above, so the theme ships with that asset missing and the widget
+# renders blank. Surface it instead.
+# -find-files yields one entry per occurrence, so de-duplicate before counting;
+# otherwise an asset referenced five times is reported as five failures.
+unmatched = sorted(set(args.files) - matched_patterns)
+if args.findFiles and unmatched:
+    sys.stderr.write(
+        '[error] %d stylesheet resource reference(s) matched no file:\n' % len(unmatched))
+    for pattern in unmatched:
+        sys.stderr.write("          :/uitheme/%s\n" % pattern)
+    sys.exit(1)
 
 IconFiles = list() if not args.iconsDir else [
     f for f in glob.glob(os.path.join(args.iconsDir, '*'))]
@@ -143,5 +163,11 @@ if not rcc_path:
 cmd = [rcc_path, '-binary', '-o', args.output, 'resources.qrc']
 print(' '.join(cmd))
 
-if not subprocess.call(cmd):
+returncode = subprocess.call(cmd)
+
+if os.path.exists('resources.qrc'):
     os.remove('resources.qrc')
+
+if returncode != 0:
+    sys.stderr.write('[error] rcc failed with exit code %d\n' % returncode)
+    sys.exit(returncode)
