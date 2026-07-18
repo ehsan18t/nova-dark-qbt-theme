@@ -1,7 +1,11 @@
-src/*.qbtheme
+# Build output
+dist/
 *.qbtheme
-*.qbtheme
-*.qbtheme
-/**/dist
+
+# Build intermediates
 *.qss
 *.qrc
+
+# Python
+__pycache__/
+*.pyc

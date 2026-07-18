@@ -36,12 +36,15 @@ COLORS = {
     "dark": "#1e1e2e",         # Dark - for light backgrounds
 }
 
-# Control icons (checkboxes, radio buttons) - saved to src/common/controls/
+# Control icons (checkboxes, radios, dock titlebar) - saved to src/common/controls/
 CONTROL_ICONS = {
     "checkbox-unchecked": ("square", "default"),
     "checkbox-checked": ("check-square", "success"),
     "radio-unchecked": ("circle", "default"),
     "radio-checked": ("radio-button", "success"),
+    # QDockWidget titlebar buttons (see Nova Overrides.scss)
+    "close": ("x", "default"),
+    "undock": ("arrow-square-out", "default"),
 }
 
 # Inner check/radio marks - these use bold weight for visibility
