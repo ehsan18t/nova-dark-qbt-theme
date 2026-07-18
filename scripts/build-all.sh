@@ -6,7 +6,6 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/build-support.sh"
 SCRIPTS=("$@")
 if [[ ${#SCRIPTS[@]} -eq 0 ]]; then
   SCRIPTS=(
-    "build-mumble-dark.sh"
     "build-nova-dark.sh"
   )
 fi

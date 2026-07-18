@@ -17,7 +17,7 @@ set FOUND_ICON=
 for /f %%G in ('dir /b "%ICONS_DIR%\*.svg" 2^>nul') do set FOUND_ICON=1
 if not defined FOUND_ICON (
   1>&2 echo [warn] No SVG icons detected in src\nova-dark\icons\modern
-  1>&2 echo [warn] Copy the Mumble Dark icon set here ^(or provide your own^) before packaging.
+  1>&2 echo [warn] Run src\nova-dark\scripts\download_phosphor_icons.py ^(or provide your own^) before packaging.
 )
 
 pushd "%SRC_DIR%"

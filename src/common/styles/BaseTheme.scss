@@ -1,5 +1,5 @@
 /*
- * Shared base stylesheet derived from the historical Mumble theme.
+ * Shared base stylesheet for qBittorrent widgets.
  * Keeps widget geometry, spacing, and behavior consistent across themes.
  * Prefer adjusting palette tokens (e.g. Nova Definitions) instead of
  * tweaking selectors in this file.
@@ -930,112 +930,11 @@ QDialogButtonBox {
   dialogbuttonbox-buttons-have-icons: 0;
 }
 
-/* Mumble Specifics */
-
-LogTextBrowser,
-#qdsChat {
-  margin: 0 2px;
-  min-height: 120px;
-  min-width: 40px;
-  border-color: $base-border;
-}
-
-UserView {
-  margin: 0 2px;
-  min-height: 120px;
-  min-width: 40px;
-}
-
-UserView::item {
-  padding: 0;
-  padding-top: -1px;
-}
-
-#qdwChat > QTextEdit {
-  padding: -2px;
-  margin: 0 2px;
-  margin-bottom: 2px;
-}
-
-#qtIconToolbar QComboBox {
-}
-
-.log-time {
-  background-color: transparent;
-  color: #95a5a6;
-}
-
-.log-server {
-  background-color: transparent;
-  color: #f9655d;
-  font-weight: bold;
-}
-
-.log-channel {
-  background-color: transparent;
-  color: #e67e22;
-  font-weight: bold;
-}
-
-.log-privilege {
-  background-color: transparent;
-  color: #c0392b;
-  font-weight: bold;
-}
-
-.log-target {
-  background-color: transparent;
-  color: #27ae60;
-  font-weight: bold;
-}
-
-.log-source {
-  background-color: transparent;
-  color: #27ae60;
-  font-weight: bold;
-}
-
-QListView#qlwIcons {
-  padding: 0;
-  background-color: transparent;
-  border: 0;
-
-  min-width: 165%;
-  margin-left: $base-padding;
-  margin-top: $base-padding + 8;
-}
-
-QListView#qlwIcons::item {
-  margin-bottom: 1px;
-  padding: 5px $base-padding * 2 - 1;
-}
-
-QListView#qlwIcons::item:hover {
-  border-color: $base-hover;
-  background-color: $base-hover;
-}
-
-QListView#qlwIcons::item:selected {
-  background-color: $toolbutton-on;
-  border: 1px solid $toolbutton-border;
-}
-
-QListView#qlwIcons::item:focus {
-  background-color: $item-selected-active-bg;
-  border: $item-selected-active-border;
-}
+/* Misc Widgets */
 
 QSlider {
   margin-left: 30px;
   margin-right: 30px;
-}
-
-#qswPages > * > * > QScrollBar {
-  margin: 0;
-}
-
-#qswPages > * > QWidget {
-  margin: $base-padding / 2;
 }
 
 QListView::item QListWidgetItem,
@@ -1060,21 +959,4 @@ QTreeView::item QLineEdit:hover {
 AboutDialog > QTextBrowser,
 AboutDialog QTextEdit {
   border: 0;
-}
-
-#qtbToolBar {
-  border: 1px solid transparent;
-  background: transparent;
-}
-
-#BanEditor {
-  min-width: 600px;
-}
-
-#GlobalShortcutTarget {
-  min-height: 600px;
-}
-
-ViewCert {
-  min-height: 600px;
 }

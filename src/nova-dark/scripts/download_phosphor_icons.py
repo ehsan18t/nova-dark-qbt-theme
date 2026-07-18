@@ -36,7 +36,7 @@ COLORS = {
     "dark": "#1e1e2e",         # Dark - for light backgrounds
 }
 
-# Control icons (checkboxes, radio buttons) - saved to common/controls/
+# Control icons (checkboxes, radio buttons) - saved to src/common/controls/
 CONTROL_ICONS = {
     "checkbox-unchecked": ("square", "default"),
     "checkbox-checked": ("check-square", "success"),
@@ -45,16 +45,12 @@ CONTROL_ICONS = {
 }
 
 # Inner check/radio marks - these use bold weight for visibility
-# Saved to src/common/controls/ (different from CONTROL_ICONS which go to common/controls/)
+# Saved to src/common/controls/ alongside CONTROL_ICONS
 INNER_CHECK_ICONS = {
     # White check for dark backgrounds
     "checkbox_check_dark": ("check", "white"),
-    # Dark check for light backgrounds
-    "checkbox_check_lite": ("check", "dark"),
     # White dot for dark backgrounds
     "radio_check_dark": ("circle", "white"),
-    # Dark dot for light backgrounds
-    "radio_check_lite": ("circle", "dark"),
 }
 
 # Mapping from qBittorrent icon names to (Phosphor icon name, color key)
@@ -405,8 +401,8 @@ def main():
     print(f"  Location: {output_dir}")
     print("=" * 64)
 
-    # Download control icons (checkboxes, radio buttons) to common/controls/
-    controls_dir = script_dir.parent.parent.parent / "common" / "controls"
+    # Download control icons (checkboxes, radio buttons) to src/common/controls/
+    controls_dir = script_dir.parent.parent.parent / "src" / "common" / "controls"
     ensure_dir(controls_dir)
 
     print()
