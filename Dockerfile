@@ -1,27 +1,26 @@
 # syntax=docker/dockerfile:1
 FROM python:3.11-slim
 
-LABEL org.opencontainers.image.source="https://github.com/ehsan18t/qbt-theme"
-LABEL org.opencontainers.image.description="Build environment for qBittorrent themes"
+LABEL org.opencontainers.image.source="https://github.com/ehsan18t/qbt-theme" \
+      org.opencontainers.image.description="Build toolchain for the Nova Dark qBittorrent theme" \
+      org.opencontainers.image.licenses="MIT"
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
-# Install Qt tools and Python dependencies in single layer
+# qtbase5-dev-tools provides rcc, which packs the .qbtheme resource bundle.
+# qtsass compiles the SCSS sources down to Qt-flavoured QSS.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        bash \
         qtbase5-dev-tools \
-    && pip install --no-cache-dir qtsass \
+    && pip install --no-cache-dir qtsass==0.4.0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /workspace
 
-COPY scripts/docker-entrypoint.sh /usr/local/bin/qbt-theme-entrypoint.sh
-RUN chmod +x /usr/local/bin/qbt-theme-entrypoint.sh
-
-# Default to building all themes; override with THEME_BUILD_SCRIPT env var
-ENV THEME_BUILD_SCRIPT=build-all.sh
-
-ENTRYPOINT ["/usr/local/bin/qbt-theme-entrypoint.sh"]
+# Nothing is COPYed in: the repo is bind-mounted at /workspace by compose.yaml.
+# That keeps this image a pure toolchain, so editing a build script, stylesheet
+# or icon never invalidates a layer or triggers an image rebuild.
+CMD ["bash", "scripts/build.sh"]

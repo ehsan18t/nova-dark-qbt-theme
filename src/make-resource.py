@@ -43,16 +43,21 @@ parser.add_argument('-find-files', action='store_true', dest='findFiles',
                     help='find files included in qss and only include those')
 parser.add_argument('-include-dir', action='append', dest='includeDirs', default=[],
                     help='additional directories to scan for resources; aliases are prefixed by the directory name')
+parser.add_argument('-v', '--verbose', action='store_true',
+                    help='list every embedded file instead of a summary')
 parser.add_argument('files', metavar='files', type=str,
                     nargs='*', default=['*'], help='files to include in resources from baseDir, supports glob patterns')
 
 args = parser.parse_args()
 
+
+def verbose(message):
+    if args.verbose:
+        print(message)
+
+
 if not args.output.endswith('.qbtheme'):
     args.output += '.qbtheme'
-
-if os.path.exists(args.output):
-    print("WARNING! %s already exists. overwriting" % (args.output))
 
 
 files = collect_files(args.baseDir)
@@ -70,7 +75,7 @@ for extra_dir in args.includeDirs:
     prefix = os.path.basename(os.path.normpath(candidate))
     files.extend(collect_files(candidate, prefix))
 if args.findFiles:
-    print('finding files')
+    verbose('finding files referenced by the stylesheet')
     args.files = []
     stylesheet = open(os.path.join(args.baseDir, args.style)).read()
     for match in re.findall(r':/uitheme/(.*?)\)', stylesheet):
@@ -95,7 +100,7 @@ for alias, path in files:
         if fnmatch.fnmatch(alias, pattern):
             ResourceFiles.append((alias, path))
             matched_patterns.add(pattern)
-            print('adding ' + path)
+            verbose('  + ' + alias)
             break
 
 # A stylesheet reference that resolves to no file is silently dropped by the
@@ -112,8 +117,13 @@ if args.findFiles and unmatched:
     sys.exit(1)
 
 IconFiles = list() if not args.iconsDir else [
-    f for f in glob.glob(os.path.join(args.iconsDir, '*'))]
-print(IconFiles)
+    f for f in glob.glob(os.path.join(args.iconsDir, '*'))
+    if f.endswith('.svg') or f.endswith('.png')]
+for icon in sorted(IconFiles):
+    verbose('  + icons/' + os.path.basename(icon))
+
+print('packing %d resource(s) and %d icon(s) into %s'
+      % (len(ResourceFiles), len(IconFiles), os.path.basename(args.output)))
 
 with open('resources.qrc', 'w') as rcc:
     rcc.write('<!DOCTYPE RCC><RCC version="1.0">\n')
@@ -126,7 +136,7 @@ with open('resources.qrc', 'w') as rcc:
     rcc.write('\t\t<file alias=\'stylesheet.qss\'>%s</file>\n' %
               (os.path.join(args.baseDir, args.style)))
     rcc.writelines(['\t\t<file alias=\'icons/%s\'>%s</file>\n' %
-                   (os.path.split(x)[1], x) for x in IconFiles if x.endswith('.svg') or x.endswith('.png')])
+                   (os.path.split(x)[1], x) for x in IconFiles])
     if config_file:
         rcc.write('\t\t<file alias=\'config.json\'>%s</file>\n' %
                   (config_file))
@@ -161,7 +171,7 @@ if not rcc_path:
     sys.exit(1)
 
 cmd = [rcc_path, '-binary', '-o', args.output, 'resources.qrc']
-print(' '.join(cmd))
+verbose(' '.join(cmd))
 
 returncode = subprocess.call(cmd)
 

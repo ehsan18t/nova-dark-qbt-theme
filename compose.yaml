@@ -1,0 +1,17 @@
+# Build the theme with:
+#
+#     docker compose run --rm build
+#
+# Use `run`, not `up`. `docker compose up` exits 0 even when the container
+# fails, so a broken build would report success -- verified: with a missing
+# asset, `up` exits 0 while `run` exits 1. If you must use `up`, pass
+# --exit-code-from build.
+services:
+  build:
+    build:
+      context: .
+    image: nova-dark-builder
+    # The repo is mounted rather than copied, so the image stays a reusable
+    # toolchain and source edits take effect on the next run with no rebuild.
+    volumes:
+      - .:/workspace

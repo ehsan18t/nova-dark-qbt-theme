@@ -1,30 +1,8 @@
-# Git
-.git
-.gitignore
-.gitattributes
+# The Dockerfile COPYs nothing -- sources reach the container through the
+# bind mount in compose.yaml -- so this file only trims the context uploaded
+# to the daemon on `docker compose build`. Excluding the sources here is safe
+# and keeps that upload near-empty; if a COPY is ever added, re-check this list.
+*
 
-# Build output
-dist/
-*.qbtheme
-
-# IDE and editor files
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Documentation (not needed for build)
-*.md
-LICENSE
-screenshots/
-
-# Temporary files
-*.tmp
-*.log
-__pycache__/
-*.pyc
+# Keep only what the image build itself reads.
+!Dockerfile
