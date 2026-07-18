@@ -841,16 +841,21 @@ QPlainTextEdit:focus {
 
 
 // ----------------------------------------------------------------------------
-// INACTIVE WINDOW STATE
+// INACTIVE WINDOW STATE - Prevent color changes when window loses focus
 // ----------------------------------------------------------------------------
-// Deliberately empty. A blanket `QWidget:!active { background-color: ... }`
-// used to live here to stop widgets "graying out" on focus loss, but it did
-// the opposite: Qt type selectors match subclasses, so it repainted EVERY
-// widget - including the ones declared `background: transparent` - and being
-// the last rule in the sheet it won every equal-specificity tie.
+// Force all widgets to use active colors even when window is inactive
+// This prevents the "grayed out" appearance on window focus loss
 //
-// It was also unnecessary: the graying-out it targeted comes from
-// QPalette::Inactive, which stylesheet-set backgrounds already bypass. If a
-// real inactive-state regression ever shows up, restate the exact per-widget
-// backgrounds (e.g. `QToolBar:!active`) rather than reaching for QWidget.
+// DO NOT DELETE. Qt derives the QPalette::Inactive colour group itself, and
+// any widget whose background is NOT set by an explicit QSS rule falls back to
+// it on focus loss -- most visibly the filter sidebar, which washes out to a
+// pale grey-navy. This rule is what holds those widgets at the theme colour.
+// Verified against the real app: removing it regresses the sidebar. If it
+// needs adjusting, change the colour -- do not remove the rule.
+
+// Force same background when inactive
+MainWindow:!active,
+QWidget:!active {
+  background-color: #1e1e2e;
+}
 
