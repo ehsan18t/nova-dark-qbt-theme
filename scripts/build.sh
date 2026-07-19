@@ -44,9 +44,16 @@ require() {
 require qtsass "Install it with: pip install qtsass"
 require python "Install Python 3."
 
+# Fatal, not a warning. make-resource.py globs this directory and silently packs
+# zero icons if it is empty or misnamed: the build stays green, rcc succeeds, and
+# the theme installs with every icon falling back to qBittorrent's stock set.
+# That is the same silent-success failure as the stale-stylesheet bug above, and
+# it is the reason a "safe" rename of the icons directory is the most dangerous
+# move in this repo.
 if ! find "${ICONS_DIR}" -maxdepth 1 -name '*.svg' -print -quit 2>/dev/null | grep -q .; then
-  log_warn "No SVG icons found in src/nova-dark/icons/modern"
-  log_warn "Fetch them with: python src/nova-dark/scripts/download_phosphor_icons.py"
+  log_error "No SVG icons found in ${ICONS_DIR#"${PROJECT_ROOT}/"}"
+  log_error "Fetch them with: python src/nova-dark/scripts/download_phosphor_icons.py"
+  exit 1
 fi
 
 mkdir -p "${DIST_DIR}"

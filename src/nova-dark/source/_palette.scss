@@ -100,6 +100,36 @@ $status-stopped:           #7e8195;  // paused; dimmest readable
 $piece-border:             #3a4055;
 
 // ---------------------------------------------------------------------------
+// ICONS - the colours the 91 Phosphor SVGs are tinted with.
+//
+// Read by scripts/download_phosphor_icons.py, which recolours each icon as it
+// downloads it. The SVGs are checked in, so nothing here takes effect until you
+// re-run that script; a normal build never touches the network.
+//
+// This is its own ramp on purpose. Icons are read at 16px against the toolbar
+// and sidebar rather than as chrome, so they are tuned brighter and more
+// saturated than the $accent family. They are here so a change lands in ONE
+// file, not so they match the chrome.
+//
+// The script checks that every colour its mappings ask for is defined here, so
+// deleting one of these fails loudly instead of silently regenerating those
+// icons in grey. An unused entry is fine; $icon-dark is currently one, kept for
+// a dark-glyph-on-light-fill icon.
+// ---------------------------------------------------------------------------
+$icon-default:             #b0b0b0;  // default glyph
+$icon-accent:              #4a9eff;  // primary actions, links
+$icon-success:             #4ade80;  // downloads, completed, connected
+$icon-warning:             #fbbf24;  // warnings, queued
+$icon-error:               #f87171;  // errors, disconnected, blocked
+$icon-upload:              #c084fc;  // uploads
+$icon-info:                #22d3ee;  // info, help, statistics
+$icon-muted:               #6b7280;  // disabled, stopped
+$icon-orange:              #fb923c;  // force actions, trackers
+$icon-stalled:             #8cb4b4;  // stalled transfers
+$icon-white:               #ffffff;  // on dark backgrounds
+$icon-dark:                #1e1e2e;  // on light backgrounds
+
+// ---------------------------------------------------------------------------
 // NOVA - values with no Catppuccin equivalent.
 // ---------------------------------------------------------------------------
 $nova-button:              #252738;

@@ -19,22 +19,48 @@ WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"]
 # Base URL for Phosphor icons (using jsDelivr CDN)
 PHOSPHOR_CDN_BASE = "https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1"
 
-# Color palette for Nova Dark theme
-COLORS = {
-    "default": "#b0b0b0",      # Light gray - default icons
-    # Blue - primary actions, links (matches progress bar)
-    "accent": "#4a9eff",
-    "success": "#4ade80",      # Green - downloads, completed, connected
-    "warning": "#fbbf24",      # Amber - warnings, queued
-    "error": "#f87171",        # Red - errors, disconnected, blocked
-    "upload": "#c084fc",       # Purple - uploads
-    "info": "#22d3ee",         # Cyan - info, help, statistics
-    "muted": "#6b7280",        # Muted gray - disabled, stopped
-    "orange": "#fb923c",       # Orange - force actions, trackers
-    "stalled": "#8cb4b4",      # Teal gray - stalled transfers
-    "white": "#ffffff",        # Pure white - for dark backgrounds
-    "dark": "#1e1e2e",         # Dark - for light backgrounds
-}
+# Icon colours come from the palette, not from this file.
+#
+# They used to be hardcoded here, which made this a second source of truth --
+# and it had already drifted: 10 of the 12 values no longer existed anywhere in
+# _palette.scss, including #4a9eff, the accent the theme replaced. The build's
+# hex-literal guard did not catch it because that guard only scans the source/
+# directory, and this script lives outside it.
+#
+# Now every colour is read from _palette.scss under the $icon- prefix, so
+# changing an icon colour is a one-line edit in the same file as everything
+# else. Re-run this script afterwards to regenerate the SVGs.
+PALETTE = Path(__file__).resolve().parent.parent / "source" / "_palette.scss"
+
+
+def load_colors() -> dict[str, str]:
+    """Read $icon-<name> declarations out of _palette.scss.
+
+    Same parsing approach as generate-config.py, kept deliberately simple: a
+    line like `$icon-accent: #4a9eff;  // comment` yields {"accent": "#4a9eff"}.
+    """
+    if not PALETTE.exists():
+        sys.stderr.write(f"[error] palette not found: {PALETTE}\n")
+        sys.exit(1)
+
+    colors = {}
+    for line in PALETTE.read_text(encoding="utf-8").splitlines():
+        code = line.split("//")[0]
+        match = re.match(r"\s*\$icon-([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;", code)
+        if match:
+            colors[match.group(1)] = match.group(2).lower()
+
+    if not colors:
+        sys.stderr.write(
+            f"[error] no $icon-* colours found in {PALETTE.name}.\n"
+            "        Icon colours are defined there under the $icon- prefix.\n"
+        )
+        sys.exit(1)
+
+    return colors
+
+
+COLORS = load_colors()
 
 # Control icons (checkboxes, radios, dock titlebar) - saved to src/common/controls/
 CONTROL_ICONS = {
@@ -199,6 +225,36 @@ ICON_MAPPING = {
     # "qbittorrent-tray-dark": custom
     # "qbittorrent-tray-light": custom
 }
+
+
+def check_colors() -> None:
+    """Fail if a mapping asks for a colour the palette does not define.
+
+    Every lookup below is COLORS.get(key, COLORS["default"]), so a key that
+    disappears from _palette.scss does not raise -- the icons that referenced it
+    are silently regenerated in default grey and the build stays green. Renaming
+    $icon-orange, for instance, repaints 5 icons and reports nothing.
+
+    That is the same silent-success failure as an empty icons directory, which
+    scripts/build.sh now treats as fatal for exactly this reason. Checked here
+    rather than in load_colors() because the mappings do not exist yet at the
+    point the palette is read.
+    """
+    used = {color for mapping in (ICON_MAPPING, CONTROL_ICONS, INNER_CHECK_ICONS)
+            for _, color in mapping.values()}
+    used.add("default")  # the fallback itself, indexed directly below
+
+    missing = sorted(used - set(COLORS))
+    if missing:
+        sys.stderr.write(
+            "[error] icon colours referenced but not defined in "
+            f"{PALETTE.name}: {', '.join('$icon-' + m for m in missing)}\n"
+            "        Define them there, or update the mapping in this file.\n"
+        )
+        sys.exit(1)
+
+
+check_colors()
 
 
 def get_icon_url(icon_name: str, weight: str = "regular") -> str:
