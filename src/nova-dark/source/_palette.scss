@@ -23,6 +23,7 @@
 // own background. The status bar top rule and dock title underline depend on
 // the same relationship. This is a deliberate ramp, not duplication.
 // ---------------------------------------------------------------------------
+$shadow:                   #0b0f15;  // below the ramp; QPalette::Shadow only
 $crust-0:                  #11111b;  // hairlines, splitter, deepest pane (log)   [Mocha crust]
 $crust-1:                  #181926;  // window / toolbar / header / statusbar     [Macchiato crust]
 $crust-2:                  #232634;  // chrome hover                              [Frappe crust]
@@ -58,6 +59,35 @@ $accent-success:           #a6e3a1;                                            /
 $accent-warning:           #f9e2af;                                            // [Mocha yellow]
 $accent-error:             #f38ba8;                                            // [Mocha red]
 $accent-lavender:          #b4befe;                                            // [Mocha lavender]
+
+// ---------------------------------------------------------------------------
+// STATUS - torrent transfer states and piece-map colours.
+//
+// These reach qBittorrent through config.json, which is GENERATED from this
+// file (scripts/generate-config.py) -- QSS cannot reference a config.json
+// colour, so the generator is what keeps the two from drifting apart.
+//
+// They intentionally do NOT come from the Catppuccin accent ramp. Accents
+// signal severity in chrome; these encode a torrent's state and are read
+// side-by-side down a column, so they are tuned for mutual distinguishability
+// rather than for matching the window.
+// ---------------------------------------------------------------------------
+$status-downloading:       #5cb8ff;
+$status-downloading-meta:  #88c8ff;
+$status-forced:            #ffb86c;  // shared by all three forced states
+$status-uploading:         #50e0a0;
+$status-stalled:           #8899aa;
+$status-stopped:           #707888;
+$status-queued:            #b8a0d8;
+$status-checking:          #70c0e0;
+$status-checking-up:       #70d8b0;
+$status-moving:            #e0c060;
+$status-missing:           #f87171;
+$status-error:             #ff5555;
+
+$piece-complete:           #89b4fa;  //                                          [Mocha blue]
+$piece-partial:            #94e2d5;  //                                          [Mocha teal]
+$piece-border:             #3a4055;
 
 // ---------------------------------------------------------------------------
 // NOVA - values with no Catppuccin equivalent.

@@ -68,6 +68,13 @@ if [[ -n "${stray_hex}" ]]; then
   exit 1
 fi
 
+# nova-dark-config.json carries the colours qBittorrent paints itself (QPalette,
+# transfer-list states, log levels). QSS cannot reference them, so they have to
+# be duplicated -- this regenerates them from _palette.scss so the duplicate
+# cannot drift. It is checked in, so any change shows up in `git status`.
+log_info "Generating nova-dark-config.json from the palette"
+python "${THEME_ROOT}/scripts/generate-config.py"
+
 log_info "Compiling NovaDark.scss"
 (cd "${SOURCE_DIR}" && qtsass -o ../NovaDark.qss NovaDark.scss)
 
