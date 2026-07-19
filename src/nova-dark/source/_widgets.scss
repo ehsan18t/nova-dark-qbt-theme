@@ -368,11 +368,14 @@ QHeaderView::section {
   border-radius: 0;
 }
 
+// The sort indicator is painted INSIDE the section rect, so it lands on top of
+// the label unless the section reserves right padding for it. Keep this
+// footprint and the `padding-right` on QHeaderView::section in sync.
 QHeaderView::down-arrow,
 QHeaderView::up-arrow {
   margin: 1px;
   top: 1px;
-  right: 5px;
+  right: 1px;
   width: 14px;
 }
 
@@ -1115,7 +1118,20 @@ QHeaderView::section {
   border-bottom: 1px solid $crust-0;
   color: $text-0;
   font-weight: 500;
-  padding: 3px 6px;
+  // Tight left padding buys back room for narrow columns. The "#" column is
+  // only ~25px wide, so every pixel of horizontal padding comes straight out
+  // of its label.
+  padding: 3px 4px;
+  // MUST come after the shorthand above. `padding: 3px 6px` used to sit here
+  // with no explicit right padding, and that shorthand reset all four sides --
+  // silently dropping the space the earlier QHeaderView::section rule reserved
+  // and leaving the sort indicator drawn on top of the column label.
+  //
+  // 16px clears the arrow footprint above (14px + 1px offset + 1px margin).
+  // Qt cannot hide a subcontrol when a section is too narrow -- there is no
+  // width query in QSS -- so this is a budget, not a rule: enough for the
+  // indicator, little enough that "#" still fits beside it.
+  padding-right: 16px;
 }
 
 QHeaderView::section:hover {
