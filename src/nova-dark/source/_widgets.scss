@@ -1529,11 +1529,22 @@ QLineEdit:focus {
 // Search pattern field
 // searchwidget.ui:20 - <widget class="LineEdit" name="lineEditSearchPattern"/>
 // (LineEdit extends QLineEdit, searchwidget.ui:152-153)
+// Sits directly beside the "Filter by" combo, so its vertical box is kept
+// IDENTICAL to QComboBox's: same padding top/bottom, same border, same
+// min-height. Matching the totals on paper is not enough -- QComboBox and
+// QLineEdit derive their content height differently (QComboBox's sizeHint
+// accounts for the drop-down), so equal arithmetic still renders unequal.
+// Equal boxes render equal whatever Qt computes.
+//
+// Only the horizontal padding and the corner radius differ, and neither
+// affects height. Change QComboBox's vertical padding or min-height and this
+// must change with it.
 LineEdit#lineEditSearchPattern {
   background-color: $crust-1;
   border: 1px solid $surface-0;
   border-radius: 6px;
-  padding: 6px 12px;
+  padding: 4px 12px;
+  min-height: 20px;
   min-width: 200px;
 }
 
@@ -1568,10 +1579,26 @@ QComboBox:on {
   border-color: $surface-2;
 }
 
+// `margin: 0` is load-bearing. The shared drop-down rule further up sets
+// margin-left 4 / margin-right 12 / margin-top 5, and this override previously
+// reset only border, background and width -- so those margins survived and held
+// the arrow 12px in from the right edge and 5px low. Zeroing them puts it flush
+// at the end of the combo, which is where a dropdown arrow belongs.
 QComboBox::drop-down {
+  subcontrol-origin: padding;
+  subcontrol-position: center right;
   border: none;
   background: transparent;
+  margin: 0;
   width: 20px;
+}
+
+// Same story: the shared rule nudges the glyph up by 2px to compensate for the
+// old drop-down margins. With those gone the nudge just misaligns it.
+QComboBox::down-arrow {
+  margin: 0;
+  width: 10px;
+  height: 10px;
 }
 
 QComboBox QAbstractItemView {
