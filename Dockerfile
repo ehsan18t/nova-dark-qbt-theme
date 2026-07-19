@@ -23,4 +23,4 @@ WORKDIR /workspace
 # Nothing is COPYed in: the repo is bind-mounted at /workspace by compose.yaml.
 # That keeps this image a pure toolchain, so editing a build script, stylesheet
 # or icon never invalidates a layer or triggers an image rebuild.
-CMD ["bash", "scripts/build.sh"]
+CMD ["python", "scripts/build.py"]
