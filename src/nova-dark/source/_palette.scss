@@ -1,50 +1,74 @@
 // ============================================================================
 // PRIMITIVE PALETTE - the single source of truth for colour
 // ============================================================================
-// This is the ONLY file permitted to contain a hex literal. Everything else
-// refers to these names, so a colour is changed in exactly one place.
+// The ONLY file permitted to contain a hex literal; the build fails otherwise.
+// Everything else refers to these names, so a colour changes in one place.
 //
-// Names describe where a value CAME FROM, not what it is used for. That is
-// deliberate: the palette accumulated values from three different Catppuccin
-// flavours, and component-shaped names (`$toolbutton-hover`) hid it. Semantic
-// meaning belongs in _tokens.scss, one layer up.
+// Names encode RAMP POSITION, not provenance. The number is the anti-confusion
+// device: 0 < 1 < 2 is unambiguously the lightness order, so "which of these
+// two is lighter" stops being a question you have to look up. Catppuccin origin
+// is kept as a trailing comment for reference only -- nobody styles a widget by
+// which flavour a colour came from.
 //
-// PALETTE NOTES - same role, two values. These are almost certainly accidental
-// drift rather than intent. Resolving them is a VISIBLE change, so it is
-// deliberately not done here:
-//   surface2  $mocha-surface2 #585b70  vs  $macchiato-surface2 #5b6078
-//   surface0  $mocha-surface0 #313244  vs  $macchiato-surface0 #363a4f
-//   crust     $mocha-crust    #11111b  vs  $macchiato-crust    #181926
-//                                      vs  $frappe-crust       #232634
+// Role belongs one layer up, in _tokens.scss. Ramp position belongs here.
 // ============================================================================
 
-// Catppuccin Mocha - the dominant flavour (14 of 18 Catppuccin values)
-$mocha-crust:              #11111b;
-$mocha-base:               #1e1e2e;
-$mocha-surface0:           #313244;
-$mocha-surface1:           #45475a;
-$mocha-surface2:           #585b70;
-$mocha-overlay0:           #6c7086;
-$mocha-subtext0:           #a6adc8;
-$mocha-subtext1:           #bac2de;
-$mocha-text:               #cdd6f4;
-$mocha-sky:                #89dceb;
-$mocha-green:              #a6e3a1;
-$mocha-yellow:             #f9e2af;
-$mocha-red:                #f38ba8;
-$mocha-lavender:           #b4befe;
+// ---------------------------------------------------------------------------
+// CRUST - window chrome, from deepest to lightest.
+//
+// INVARIANT: $crust-0 is drawn ON $crust-1 as a 1px hairline. They must never
+// be made equal. QHeaderView::section uses all three at once -- $crust-1 as the
+// section fill, $crust-0 as the column/row separators drawn on it, $crust-2 as
+// the hover fill -- so collapsing any pair makes real borders vanish into their
+// own background. The status bar top rule and dock title underline depend on
+// the same relationship. This is a deliberate ramp, not duplication.
+// ---------------------------------------------------------------------------
+$crust-0:                  #11111b;  // hairlines, splitter, deepest pane (log)   [Mocha crust]
+$crust-1:                  #181926;  // window / toolbar / header / statusbar     [Macchiato crust]
+$crust-2:                  #232634;  // chrome hover                              [Frappe crust]
 
-// Catppuccin Macchiato - mixed in alongside Mocha. Each of these collides
-// with a Mocha value playing the same role; see PALETTE NOTES below.
-$macchiato-crust:          #181926;
-$macchiato-surface0:       #363a4f;
-$macchiato-surface2:       #5b6078;
+// ---------------------------------------------------------------------------
+// SURFACE - interactive control fills and strokes, lightest-ascending.
+// L* 21.40 / 30.66 / 39.12 / 47.62 -- steps of 9.26 / 8.46 / 8.50, a regular
+// scale. It only became regular once the stray Macchiato near-duplicates were
+// folded in; mixing flavours is what had prevented a usable ramp.
+// ---------------------------------------------------------------------------
+$surface-0:                #313244;  // control hover fill; input/groupbox border [Mocha surface0]
+$surface-1:                #45475a;  // pressed fill; scrollbar handle rest       [Mocha surface1]
+$surface-2:                #585b70;  // selection fill; hover stroke              [Mocha surface2]
+$surface-3:                #6c7086;  // scrollbar handle pressed                  [Mocha overlay0]
 
-// Catppuccin Frappe - a single stray value
-$frappe-crust:             #232634;
+// Two stray Macchiato near-duplicates that sit between the steps above. Each
+// has a single consumer and is within ~2-3 dE of its Mocha neighbour, i.e.
+// drift rather than a designed step -- but folding them in shifts real pixels,
+// so they are kept here to keep the rename that introduced this file a pure
+// rename. Removed in the commit that follows.
+$surface-0-macchiato:      #363a4f;  // only: QToolButton:hover fill            [Macchiato surface0]
+$surface-2-macchiato:      #5b6078;  // only: scrollbar hover, button hover border [Macchiato surface2]
 
-// Nova originals - not from any Catppuccin flavour
-$nova-accent:              #4a9eff;
+// ---------------------------------------------------------------------------
+// CONTENT - the panel background and text ramp.
+// ---------------------------------------------------------------------------
+$panel:                    #1e1e2e;  // panel / menu / input background           [Mocha base]
+$text-0:                   #a6adc8;  // dimmest                                   [Mocha subtext0]
+$text-1:                   #bac2de;                                            // [Mocha subtext1]
+$text-2:                   #cdd6f4;  // primary                                   [Mocha text]
+$text-bright:              #f5f5f5;
+$white:                    #ffffff;
+
+// ---------------------------------------------------------------------------
+// ACCENT - semantic colours.
+// ---------------------------------------------------------------------------
+$accent:                   #4a9eff;  // primary blue; focus rings                 [Nova]
+$accent-info:              #89dceb;                                            // [Mocha sky]
+$accent-success:           #a6e3a1;                                            // [Mocha green]
+$accent-warning:           #f9e2af;                                            // [Mocha yellow]
+$accent-error:             #f38ba8;                                            // [Mocha red]
+$accent-lavender:          #b4befe;                                            // [Mocha lavender]
+
+// ---------------------------------------------------------------------------
+// NOVA - values with no Catppuccin equivalent.
+// ---------------------------------------------------------------------------
 $nova-button:              #252738;
 $nova-button-border:       #3d4058;
 $nova-elevated:            #2a2e42;
@@ -55,5 +79,3 @@ $nova-tab-inactive:        #14151f;
 $nova-disabled:            #1a1b26;
 $nova-progress-trough:     #2a2e3d;
 $nova-progress-border:     #3a3f52;
-$white:                    #ffffff;
-$white-bright:             #f5f5f5;

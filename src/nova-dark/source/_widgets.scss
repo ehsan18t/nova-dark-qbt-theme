@@ -928,7 +928,7 @@ QProgressBar {
 }
 
 QProgressBar::chunk {
-  background-color: $nova-accent;
+  background-color: $accent;
   border-radius: 2px;
   margin: 1px;
 }
@@ -937,9 +937,9 @@ QProgressBar::chunk {
 // STATUS BAR
 // ----------------------------------------------------------------------------
 QStatusBar {
-  background-color: $macchiato-crust;
-  border-top: 1px solid $mocha-crust;
-  color: $mocha-subtext0;
+  background-color: $crust-1;
+  border-top: 1px solid $crust-0;
+  color: $text-0;
   font-size: 8pt;
   padding: 2px 8px;
   min-height: 24px;
@@ -950,13 +950,13 @@ QStatusBar::item {
 }
 
 QStatusBar QLabel {
-  color: $mocha-subtext0;
+  color: $text-0;
   padding: 2px 6px;
   margin: 0px;
 }
 
 QStatusBar QPushButton {
-  color: $mocha-subtext0;
+  color: $text-0;
   background: transparent;
   border: none;
   border-radius: 3px;
@@ -993,8 +993,8 @@ QDockWidget {
 }
 
 QDockWidget::title {
-  background-color: $macchiato-crust;
-  border-bottom: 1px solid $mocha-crust;
+  background-color: $crust-1;
+  border-bottom: 1px solid $crust-0;
   padding: 4px 8px;
   text-align: left;
 }
@@ -1009,19 +1009,19 @@ QDockWidget::float-button {
 
 QDockWidget::close-button:hover,
 QDockWidget::float-button:hover {
-  background-color: $mocha-surface0;
+  background-color: $surface-0;
 }
 
 QDockWidget::close-button:pressed,
 QDockWidget::float-button:pressed {
-  background-color: $mocha-surface1;
+  background-color: $surface-1;
 }
 
 // ----------------------------------------------------------------------------
 // SPLITTER HANDLES
 // ----------------------------------------------------------------------------
 QSplitter::handle {
-  background-color: $mocha-crust;
+  background-color: $crust-0;
 }
 
 QSplitter::handle:horizontal {
@@ -1033,15 +1033,15 @@ QSplitter::handle:vertical {
 }
 
 QSplitter::handle:hover {
-  background-color: $nova-accent;
+  background-color: $accent;
 }
 
 // ----------------------------------------------------------------------------
 // MENU IMPROVEMENTS
 // ----------------------------------------------------------------------------
 QMenu {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-surface0;
+  background-color: $panel;
+  border: 1px solid $surface-0;
   border-radius: 6px;
   padding: 4px;
 }
@@ -1049,17 +1049,17 @@ QMenu {
 QMenu::item {
   background-color: transparent;
   border-radius: 3px;
-  color: $mocha-text;
+  color: $text-2;
   padding: 4px 20px 4px 6px;
   margin: 1px 2px;
 }
 
 QMenu::item:selected {
-  background-color: $mocha-surface0;
+  background-color: $surface-0;
 }
 
 QMenu::separator {
-  background-color: $mocha-surface0;
+  background-color: $surface-0;
   height: 1px;
   margin: 2px 6px;
 }
@@ -1092,10 +1092,10 @@ QMenu::indicator:exclusive:checked {
 // TOOLTIP IMPROVEMENTS
 // ----------------------------------------------------------------------------
 QToolTip {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-surface1;
+  background-color: $panel;
+  border: 1px solid $surface-1;
   border-radius: 4px;
-  color: $mocha-text;
+  color: $text-2;
   padding: 4px 8px;
   font-size: 8pt;
 }
@@ -1104,23 +1104,23 @@ QToolTip {
 // HEADER VIEW (Column Headers)
 // ----------------------------------------------------------------------------
 QHeaderView {
-  background-color: $macchiato-crust;
+  background-color: $crust-1;
   border: none;
 }
 
 QHeaderView::section {
-  background-color: $macchiato-crust;
+  background-color: $crust-1;
   border: none;
-  border-right: 1px solid $mocha-crust;
-  border-bottom: 1px solid $mocha-crust;
-  color: $mocha-subtext0;
+  border-right: 1px solid $crust-0;
+  border-bottom: 1px solid $crust-0;
+  color: $text-0;
   font-weight: 500;
   padding: 3px 6px;
 }
 
 QHeaderView::section:hover {
-  background-color: $frappe-crust;
-  color: $mocha-text;
+  background-color: $crust-2;
+  color: $text-2;
 }
 
 QHeaderView::section:pressed {
@@ -1131,14 +1131,14 @@ QHeaderView::section:pressed {
 // SCROLL BAR IMPROVEMENTS
 // ----------------------------------------------------------------------------
 QScrollBar:vertical {
-  background-color: $macchiato-crust;
+  background-color: $crust-1;
   border: none;
   width: 10px;
   margin: 0;
 }
 
 QScrollBar:horizontal {
-  background-color: $macchiato-crust;
+  background-color: $crust-1;
   border: none;
   height: 10px;
   margin: 0;
@@ -1146,7 +1146,7 @@ QScrollBar:horizontal {
 
 QScrollBar::handle:vertical,
 QScrollBar::handle:horizontal {
-  background-color: $mocha-surface1;
+  background-color: $surface-1;
   border-radius: 3px;
   min-height: 20px;
   min-width: 20px;
@@ -1154,11 +1154,11 @@ QScrollBar::handle:horizontal {
 }
 
 QScrollBar::handle:hover {
-  background-color: $macchiato-surface2;
+  background-color: $surface-2-macchiato;
 }
 
 QScrollBar::handle:pressed {
-  background-color: $mocha-overlay0;
+  background-color: $surface-3;
 }
 
 QScrollBar::add-line,
@@ -1175,9 +1175,9 @@ QScrollBar::sub-page {
 // ABSTRACT ITEM VIEWS - Global Reset
 // ----------------------------------------------------------------------------
 QAbstractItemView {
-  background-color: $mocha-base;
-  alternate-background-color: $mocha-base;
-  border: 1px solid $mocha-crust;
+  background-color: $panel;
+  alternate-background-color: $panel;
+  border: 1px solid $crust-0;
   outline: none;
 }
 
@@ -1189,14 +1189,14 @@ QAbstractItemView::item {
 // TABLE VIEW
 // ----------------------------------------------------------------------------
 QTableView {
-  background-color: $mocha-base;
+  background-color: $panel;
   gridline-color: transparent;
   selection-background-color: $nova-selection;
   selection-color: $white;
 }
 
 QTableView::item {
-  background-color: $mocha-base;
+  background-color: $panel;
   border: none;
   padding: 2px 4px;
 }
@@ -1419,36 +1419,36 @@ QTreeView::branch:selected {
 // INPUT FIELDS
 // ----------------------------------------------------------------------------
 QLineEdit {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-surface0;
+  background-color: $panel;
+  border: 1px solid $surface-0;
   border-radius: 4px;
-  color: $mocha-text;
+  color: $text-2;
   padding: 4px 8px;
-  selection-background-color: $mocha-surface1;
+  selection-background-color: $surface-1;
 }
 
 QLineEdit:hover {
-  border-color: $mocha-surface1;
+  border-color: $surface-1;
 }
 
 QLineEdit:focus {
-  border-color: $nova-accent;
+  border-color: $accent;
 }
 
 // Search pattern field
 // searchwidget.ui:20 - <widget class="LineEdit" name="lineEditSearchPattern"/>
 // (LineEdit extends QLineEdit, searchwidget.ui:152-153)
 LineEdit#lineEditSearchPattern {
-  background-color: $macchiato-crust;
-  border: 1px solid $mocha-surface0;
+  background-color: $crust-1;
+  border: 1px solid $surface-0;
   border-radius: 6px;
   padding: 6px 12px;
   min-width: 200px;
 }
 
 LineEdit#lineEditSearchPattern:focus {
-  border-color: $nova-accent;
-  background-color: $mocha-base;
+  border-color: $accent;
+  background-color: $panel;
 }
 
 // ----------------------------------------------------------------------------
@@ -1458,23 +1458,23 @@ QComboBox {
   background-color: $nova-button;
   border: 1px solid $nova-button-border;
   border-radius: 4px;
-  color: $mocha-text;
+  color: $text-2;
   padding: 4px 8px;
   min-height: 20px;
 }
 
 QComboBox:hover {
-  border-color: $macchiato-surface2;
+  border-color: $surface-2-macchiato;
   background-color: $nova-elevated;
 }
 
 QComboBox:focus {
-  border-color: $macchiato-surface2;
+  border-color: $surface-2-macchiato;
 }
 
 QComboBox:on {
   background-color: $nova-button;
-  border-color: $macchiato-surface2;
+  border-color: $surface-2-macchiato;
 }
 
 QComboBox::drop-down {
@@ -1486,9 +1486,9 @@ QComboBox::drop-down {
 QComboBox QAbstractItemView {
   background-color: $nova-button;
   border: 1px solid $nova-button-border;
-  color: $mocha-text;
+  color: $text-2;
   selection-background-color: $nova-selection;
-  selection-color: $mocha-text;
+  selection-color: $text-2;
   outline: none;
 }
 
@@ -1497,21 +1497,21 @@ QComboBox QAbstractItemView {
 // ----------------------------------------------------------------------------
 QSpinBox,
 QDoubleSpinBox {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-surface0;
+  background-color: $panel;
+  border: 1px solid $surface-0;
   border-radius: 4px;
-  color: $mocha-text;
+  color: $text-2;
   padding: 4px;
 }
 
 QSpinBox:hover,
 QDoubleSpinBox:hover {
-  border-color: $mocha-surface1;
+  border-color: $surface-1;
 }
 
 QSpinBox:focus,
 QDoubleSpinBox:focus {
-  border-color: $nova-accent;
+  border-color: $accent;
 }
 
 // ----------------------------------------------------------------------------
@@ -1521,35 +1521,35 @@ QPushButton {
   background-color: $nova-button;
   border: 1px solid $nova-button-border;
   border-radius: 3px;
-  color: $mocha-text;
+  color: $text-2;
   font-weight: 500;
   padding: 3px 10px;
   min-height: 16px;
 }
 
 QPushButton:hover {
-  background-color: $mocha-surface0;
-  border-color: $macchiato-surface2;
+  background-color: $surface-0;
+  border-color: $surface-2-macchiato;
 }
 
 QPushButton:pressed {
-  background-color: $mocha-surface1;
+  background-color: $surface-1;
 }
 
 QPushButton:focus {
-  border-color: $nova-accent;
+  border-color: $accent;
 }
 
 QPushButton:disabled {
   background-color: $nova-disabled;
   border-color: $nova-disabled;
-  color: $mocha-overlay0;
+  color: $surface-3;
 }
 
 // Primary/Default button style
 QPushButton:default {
-  background-color: $mocha-surface0;
-  border-color: $nova-accent;
+  background-color: $surface-0;
+  border-color: $accent;
 }
 
 QPushButton:default:hover {
@@ -1560,30 +1560,30 @@ QPushButton:default:hover {
 // TAB WIDGET IMPROVEMENTS
 // ----------------------------------------------------------------------------
 QTabWidget::pane {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-crust;
+  background-color: $panel;
+  border: 1px solid $crust-0;
   border-radius: 4px;
   top: -1px;
 }
 
 QTabBar::tab {
   background-color: $nova-tab-inactive;
-  border: 1px solid $mocha-crust;
+  border: 1px solid $crust-0;
   border-bottom: none;
-  color: $mocha-subtext0;
+  color: $text-0;
   padding: 4px 10px;
   margin-right: -1px;
 }
 
 QTabBar::tab:hover {
-  background-color: $frappe-crust;
-  color: $mocha-text;
+  background-color: $crust-2;
+  color: $text-2;
 }
 
 QTabBar::tab:selected {
-  background-color: $mocha-base;
-  color: $mocha-text;
-  border-bottom: 1px solid $mocha-base;
+  background-color: $panel;
+  color: $text-2;
+  border-bottom: 1px solid $panel;
 }
 
 QTabBar::tab:first {
@@ -1601,7 +1601,7 @@ QTabBar::tab:last {
 // ----------------------------------------------------------------------------
 QGroupBox {
   background-color: transparent;
-  border: 1px solid $mocha-surface0;
+  border: 1px solid $surface-0;
   border-radius: 4px;
   margin-top: 12px;
   padding: 4px;
@@ -1609,10 +1609,10 @@ QGroupBox {
 }
 
 QGroupBox::title {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-surface0;
+  background-color: $panel;
+  border: 1px solid $surface-0;
   border-radius: 4px;
-  color: $mocha-subtext0;
+  color: $text-0;
   padding: 2px 8px;
   subcontrol-origin: margin;
   subcontrol-position: top left;
@@ -1625,14 +1625,14 @@ QGroupBox::title {
 // ----------------------------------------------------------------------------
 QCheckBox,
 QRadioButton {
-  color: $mocha-text;
+  color: $text-2;
   spacing: 4px;
 }
 
 QCheckBox::indicator,
 QRadioButton::indicator {
   background-color: $nova-button;
-  border: 1px solid $mocha-surface1;
+  border: 1px solid $surface-1;
   width: 13px;
   height: 13px;
 }
@@ -1647,19 +1647,19 @@ QRadioButton::indicator {
 
 QCheckBox::indicator:hover,
 QRadioButton::indicator:hover {
-  border-color: $nova-accent;
-  background-color: $mocha-surface0;
+  border-color: $accent;
+  background-color: $surface-0;
 }
 
 QCheckBox::indicator:checked {
-  background-color: $nova-accent;
-  border-color: $nova-accent;
+  background-color: $accent;
+  border-color: $accent;
   image: url(:/uitheme/common/controls/checkbox_check_dark.svg);
 }
 
 QRadioButton::indicator:checked {
-  background-color: $nova-accent;
-  border-color: $nova-accent;
+  background-color: $accent;
+  border-color: $accent;
   image: url(:/uitheme/common/controls/radio_check_dark.svg);
 }
 
@@ -1667,14 +1667,14 @@ QRadioButton::indicator:checked {
 // SLIDER
 // ----------------------------------------------------------------------------
 QSlider::groove:horizontal {
-  background-color: $mocha-surface0;
+  background-color: $surface-0;
   border-radius: 2px;
   height: 4px;
 }
 
 QSlider::handle:horizontal {
-  background-color: $nova-accent;
-  border: 1px solid $macchiato-crust;
+  background-color: $accent;
+  border: 1px solid $crust-1;
   border-radius: 6px;
   width: 10px;
   height: 10px;
@@ -1682,11 +1682,11 @@ QSlider::handle:horizontal {
 }
 
 QSlider::handle:horizontal:hover {
-  background-color: $mocha-lavender;
+  background-color: $accent-lavender;
 }
 
 QSlider::sub-page:horizontal {
-  background-color: $nova-accent;
+  background-color: $accent;
   border-radius: 3px;
 }
 
@@ -1696,14 +1696,14 @@ QSlider::sub-page:horizontal {
 // qBittorrent builds both log panes as LogListView (a QListView subclass,
 // executionlogwidget.cpp:51/60) with no objectName - not a QPlainTextEdit.
 LogListView {
-  background-color: $mocha-crust;
-  color: $mocha-subtext0;
+  background-color: $crust-0;
+  color: $text-0;
   font-family: "JetBrains Mono", "Cascadia Code", "Fira Code", "Consolas",
     monospace;
   font-size: 9pt;
   border: none;
   border-radius: 0;
-  selection-background-color: $mocha-surface1;
+  selection-background-color: $surface-1;
 }
 
 // ----------------------------------------------------------------------------
@@ -1711,7 +1711,7 @@ LogListView {
 // ----------------------------------------------------------------------------
 // rsswidget.ui:97 - <widget class="FeedListWidget" name="feedListWidget"/>
 FeedListWidget {
-  background-color: $mocha-base;
+  background-color: $panel;
 }
 
 FeedListWidget::item {
@@ -1723,16 +1723,16 @@ FeedListWidget::item {
 // ----------------------------------------------------------------------------
 QTextEdit,
 QPlainTextEdit {
-  background-color: $mocha-base;
-  border: 1px solid $mocha-surface0;
+  background-color: $panel;
+  border: 1px solid $surface-0;
   border-radius: 4px;
-  color: $mocha-text;
-  selection-background-color: $mocha-surface1;
+  color: $text-2;
+  selection-background-color: $surface-1;
 }
 
 QTextEdit:focus,
 QPlainTextEdit:focus {
-  border-color: $nova-accent;
+  border-color: $accent;
 }
 
 
@@ -1758,6 +1758,6 @@ QPlainTextEdit:focus {
 // Force same background when inactive
 MainWindow:!active,
 QWidget:!active {
-  background-color: $mocha-base;
+  background-color: $panel;
 }
 
