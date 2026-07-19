@@ -1878,3 +1878,37 @@ MainWindow:!active,
 QWidget:!active {
   background-color: $panel;
 }
+
+// ----------------------------------------------------------------------------
+// PROPERTIES TAB BAR (General / Trackers / Peers / HTTP Sources / Content …)
+// ----------------------------------------------------------------------------
+// These sit flush against both edges of the panel because propertieswidget.cpp
+// :133 calls setContentsMargins(0, 5, 0, 5) on the row -- zero left and right.
+// That is a QLayout contents-margin set in C++, and QSS cannot reach it: there
+// is no stylesheet property for a layout's margins.
+//
+// So the inset goes on the buttons instead. PropTabBar is a QHBoxLayout
+// (proptabbar.cpp:40) whose QPushButtons are reparented to PropertiesWidget, so
+// a direct-child selector catches exactly those six and nothing else -- the
+// trackerUp/Down and selectAll/None buttons live inside the page widgets, one
+// level deeper.
+//
+// Margining every button was the obvious approach and it is wrong: the margin
+// lands between the tabs as well as at the ends, blowing the 3px inter-tab gap
+// (proptabbar.cpp:43) out to 11px.
+//
+// QSS has no :first-child/:last-child, but it CAN match any Q_PROPERTY, and
+// `text` is one on QAbstractButton. So the inset goes on just the two end tabs
+// and the gaps in between are left alone.
+//
+// The catch: those strings come from tr(), so this only matches an English UI.
+// It degrades to today's flush-left/right look in other languages rather than
+// breaking anything, which is why it is acceptable here -- a layout margin set
+// in C++ is otherwise unreachable from a stylesheet.
+PropertiesWidget > QPushButton[text="General"] {
+  margin-left: 6px;
+}
+
+PropertiesWidget > QPushButton[text="Speed"] {
+  margin-right: 6px;
+}
