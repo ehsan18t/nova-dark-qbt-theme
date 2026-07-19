@@ -115,17 +115,24 @@ QToolButton {
 
 // Reserve room for the menu indicator so it stops painting over the icon.
 //
-// QStyleSheetStyle does NOT allocate any width for a toolbutton's menu
-// indicator -- CT_ToolButton in qstylesheetstyle.cpp only adds QSize(3, 3),
-// under Qt's own "### broken QToolButton" comment -- so a styled indicator is
-// drawn straight on top of the icon. That is what cropped the lock icon and
-// left no gap between it and the arrow.
+// QStyleSheetStyle allocates NO width for a toolbutton's menu indicator --
+// CT_ToolButton in qstylesheetstyle.cpp adds only QSize(3, 3), under Qt's own
+// "### broken QToolButton" comment -- so a styled indicator is drawn straight
+// on top of the icon.
 //
-// This has to apply to every toolbutton, not just the ones with a menu: the
-// popupMode attribute cannot single them out, because qBittorrent never calls
-// setPopupMode, so they are all mode 0. The extra space is only visible on the
-// button that actually draws an arrow.
-QToolBar QToolButton {
+// Scoped to buttons that actually HAVE a menu. Applying it to every toolbutton
+// padded all twelve toolbar icons and spaced out the whole bar.
+//
+// popupMode is the right discriminator after all. qBittorrent never calls
+// setPopupMode, but Qt does it for us: QToolButton::setDefaultAction switches
+// to MenuButtonPopup whenever the action carries a menu
+// (qtoolbutton.cpp:942-947). So mode 1 means "has a menu", exactly the set that
+// draws an indicator, and no others.
+//
+// This is also locale-independent, unlike matching on the button's text -- and
+// that text would not have worked anyway: the button takes action->iconText()
+// (qtoolbutton.cpp:925), which is "Lock", not the action's "L&ock qBittorrent".
+QToolButton[popupMode="1"] {
   padding-right: 12px;
 }
 
