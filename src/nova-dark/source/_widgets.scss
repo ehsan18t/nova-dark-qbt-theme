@@ -930,8 +930,12 @@ QProgressBar {
   margin: 0px;
 }
 
+// Blue, not the violet signature. A progress bar shows a QUANTITY, and violet
+// already means "selected / queued" everywhere else in this theme -- a violet
+// fill reads as a selection state rather than an amount. Blue also ties the bar
+// to TransferList.Downloading, which is the thing it is measuring.
 QProgressBar::chunk {
-  background-color: $accent;
+  background-color: $accent-blue;
   border-radius: 2px;
   margin: 1px;
 }

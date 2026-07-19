@@ -62,13 +62,21 @@ MAPPING = {
     "Palette.Mid": "crust-2",
     "Palette.Dark": "crust-0",
     "Palette.Shadow": "shadow",
-    # One disabled colour, applied across every role.
+    # One disabled colour across the roles that sit on a dark background.
     "Palette.WindowTextDisabled": "surface-3",
     "Palette.TextDisabled": "surface-3",
     "Palette.ToolTipTextDisabled": "surface-3",
     "Palette.BrightTextDisabled": "surface-3",
-    "Palette.HighlightedTextDisabled": "surface-3",
     "Palette.ButtonTextDisabled": "surface-3",
+    # NOT dimmed. This one draws on top of Palette.Highlight, and Highlight is
+    # two very different things: the dark selection background, and the light
+    # progress-bar fill (progressbarpainter.cpp:77 assigns ProgressBar to
+    # QPalette::Highlight, then :73 switches to the Disabled group for a stopped
+    # torrent). A mid-grey satisfies neither -- surface-3 measured 1.89:1 on
+    # BOTH, which is why the percentage on a paused torrent was unreadable.
+    # White is the best available compromise: 9.2:1 on the selection, and it
+    # matches the enabled state over the fill instead of being worse than it.
+    "Palette.HighlightedTextDisabled": "white",
 
     # --- Execution log: severity, so the accent ramp is the right source ---
     "Log.TimeStamp": "text-0",
@@ -82,33 +90,44 @@ MAPPING = {
     "RSS.ReadArticle": "text-1",
     "RSS.UnreadArticle": "accent",
 
-    # --- Transfer list: state, not severity. See the STATUS note in the ---
-    # --- palette for why these are their own ramp.                      ---
-    "TransferList.Downloading": "status-downloading",
-    "TransferList.DownloadingMetadata": "status-downloading-meta",
-    "TransferList.ForcedDownloading": "status-forced",
-    "TransferList.ForcedDownloadingMetadata": "status-forced",
-    "TransferList.ForcedUploading": "status-forced",
-    "TransferList.Uploading": "status-uploading",
+    # --- Transfer list -----------------------------------------------------
+    # Straight onto the accent family, so a state reads the same colour here as
+    # the equivalent concept does in the chrome. Only the two deliberately quiet
+    # states have their own primitives.
+    "TransferList.Downloading": "accent-blue",
+    "TransferList.DownloadingMetadata": "accent-info",
+    "TransferList.ForcedDownloading": "accent-peach",
+    "TransferList.ForcedDownloadingMetadata": "accent-peach",
+    "TransferList.ForcedUploading": "accent-peach",
+    "TransferList.Uploading": "accent-success",
+    "TransferList.QueuedDownloading": "accent",
+    "TransferList.QueuedUploading": "accent",
+    # All three checking states share one colour. They used to be split, but the
+    # two values were dE 10 apart -- indistinguishable in a column, and the
+    # distinction is cosmetic.
+    "TransferList.CheckingDownloading": "accent-teal",
+    "TransferList.CheckingUploading": "accent-teal",
+    "TransferList.CheckingResumeData": "accent-teal",
+    "TransferList.Moving": "accent-warning",
+    # missing is dull, error is bright. Separating them by lightness as well as
+    # hue reads faster when scanning than hue alone.
+    "TransferList.MissingFiles": "accent-maroon",
+    "TransferList.Error": "accent-error",
     "TransferList.StalledDownloading": "status-stalled",
     "TransferList.StalledUploading": "status-stalled",
     "TransferList.StoppedDownloading": "status-stopped",
     "TransferList.StoppedUploading": "status-stopped",
-    "TransferList.QueuedDownloading": "status-queued",
-    "TransferList.QueuedUploading": "status-queued",
-    "TransferList.CheckingDownloading": "status-checking",
-    "TransferList.CheckingUploading": "status-checking-up",
-    "TransferList.CheckingResumeData": "status-checking",
-    "TransferList.Moving": "status-moving",
-    "TransferList.MissingFiles": "status-missing",
-    "TransferList.Error": "status-error",
 
     # --- Pieces bar and progress -----------------------------------------
     "PiecesBar.Border": "piece-border",
-    "PiecesBar.Piece": "piece-complete",
-    "PiecesBar.PartialPiece": "piece-partial",
+    # Blue, matching QProgressBar::chunk and TransferList.Downloading -- these
+    # all measure the same thing, so they should agree. NOT the violet
+    # signature: violet means "selected / queued" in this theme, so a violet
+    # fill reads as a state rather than a quantity.
+    "PiecesBar.Piece": "accent-blue",
+    "PiecesBar.PartialPiece": "accent-teal",
     "PiecesBar.MissingPiece": "panel",
-    "ProgressBar": "piece-complete",
+    "ProgressBar": "accent-blue",
 }
 
 

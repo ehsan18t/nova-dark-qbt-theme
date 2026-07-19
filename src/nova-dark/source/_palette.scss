@@ -51,42 +51,52 @@ $text-bright:              #f5f5f5;
 $white:                    #ffffff;
 
 // ---------------------------------------------------------------------------
-// ACCENT - semantic colours.
+// ACCENT - one family, used by BOTH the stylesheet and config.json.
+//
+// Every accent sits in a single band: saturation 48-92%, lightness 62-84%. That
+// is what stops any one of them dominating when several appear together down a
+// column. Hue does the distinguishing, not brightness.
+//
+// The theme used to carry two disconnected accent sets -- pastels for chrome and
+// a separate saturated set for torrent states -- so "success" was one green in
+// the log and a different green in the transfer list. This is that single set;
+// scripts/generate-config.py maps qBittorrent's colour IDs straight onto these
+// names, so a colour means the same thing everywhere.
+//
+// Signature: $accent (violet) with $accent-info (cyan) as its counterpart.
+// Violet is adjacent to the blue-violet neutrals above, so it reads as chosen
+// rather than clashing.
+//
+// Measured, not eyeballed: every value clears 4.5:1 on $crust-1 and no two are
+// closer than dE 21. Re-measure if you change one -- two earlier drafts of this
+// palette looked fine and failed both tests. See
+// docs/superpowers/specs/2026-07-19-nebula-violet-palette-design.md
 // ---------------------------------------------------------------------------
-$accent:                   #4a9eff;  // primary blue; focus rings                 [Nova]
-$accent-info:              #89dceb;                                            // [Mocha sky]
-$accent-success:           #a6e3a1;                                            // [Mocha green]
-$accent-warning:           #f9e2af;                                            // [Mocha yellow]
-$accent-error:             #f38ba8;                                            // [Mocha red]
-$accent-lavender:          #b4befe;                                            // [Mocha lavender]
+$accent:                   #b396f8;  // SIGNATURE. selection, focus, progress
+$accent-lavender:          #bfb6f6;
+// Deliberately outside the band: lighter and duller reads as "washed out", and
+// downloading is the one state that should feel active. Dropped to lightness
+// 68% with saturation near full -- chroma 51.6 against the family's ~42.
+$accent-blue:              #5da3fd;  // downloading -- the one state allowed to be vivid
+$accent-info:              #86d6f3;  // links, metadata. signature counterpart
+$accent-teal:              #78e3d8;  // checking
+$accent-success:           #90e0a8;  // uploading / seeding
+$accent-warning:           #f4d990;  // moving
+$accent-peach:             #f8b581;  // forced
+$accent-error:             #fa8991;  // error -- bright, urgent
+$accent-maroon:            #cd7098;  // missing files -- dull, degraded
 
 // ---------------------------------------------------------------------------
-// STATUS - torrent transfer states and piece-map colours.
-//
-// These reach qBittorrent through config.json, which is GENERATED from this
-// file (scripts/generate-config.py) -- QSS cannot reference a config.json
-// colour, so the generator is what keeps the two from drifting apart.
-//
-// They intentionally do NOT come from the Catppuccin accent ramp. Accents
-// signal severity in chrome; these encode a torrent's state and are read
-// side-by-side down a column, so they are tuned for mutual distinguishability
-// rather than for matching the window.
+// INERT - states that are deliberately quiet, so they are not accents.
+// Separated from each other by saturation as well as lightness: pushing them
+// apart on lightness alone would have driven $status-stopped below AA.
 // ---------------------------------------------------------------------------
-$status-downloading:       #5cb8ff;
-$status-downloading-meta:  #88c8ff;
-$status-forced:            #ffb86c;  // shared by all three forced states
-$status-uploading:         #50e0a0;
-$status-stalled:           #8899aa;
-$status-stopped:           #707888;
-$status-queued:            #b8a0d8;
-$status-checking:          #70c0e0;
-$status-checking-up:       #70d8b0;
-$status-moving:            #e0c060;
-$status-missing:           #f87171;
-$status-error:             #ff5555;
+$status-stalled:           #b1bcc9;  // inactive but alive
+$status-stopped:           #7e8195;  // paused; dimmest readable
 
-$piece-complete:           #89b4fa;  //                                          [Mocha blue]
-$piece-partial:            #94e2d5;  //                                          [Mocha teal]
+// The pieces bar takes its fills straight from the accent family -- complete
+// pieces use $accent, matching QProgressBar::chunk, so the two readouts of the
+// same thing agree. Only the bar's own frame needs a primitive of its own.
 $piece-border:             #3a4055;
 
 // ---------------------------------------------------------------------------
