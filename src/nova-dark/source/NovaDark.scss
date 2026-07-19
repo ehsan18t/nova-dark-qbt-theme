@@ -1,20 +1,14 @@
 /*
  * Nova Dark Theme for qBittorrent
  * --------------------------------
- * A modern, eye-friendly dark theme inspired by Catppuccin Macchiato.
- * 
- * Features:
- * - Carefully tuned color palette with vibrant accents
- * - Distinct torrent state colors for easy status identification
- * - Gradient progress bars for visual polish
- * - Improved contrast for better readability
- * - Styled status bar, dock widgets, and splitters
- * - Custom styling for search, logs, and RSS feeds
- * 
- * Uses the shared BaseTheme for widget geometry and behavior,
- * while layering a refreshed palette and queue-state colors on top.
+ * A modern, eye-friendly dark theme.
+ *
+ * Layering (import order matters - later layers override earlier ones):
+ *   _palette.scss  primitive colours; the only file with hex literals
+ *   _tokens.scss   semantic roles mapped onto those primitives
+ *   _widgets.scss  the rules themselves, referring to tokens/primitives
  */
 
-@import "Imports/Nova Definitions";
-@import "../../common/styles/BaseTheme";
-@import "Imports/Nova Overrides";
+@import "palette";
+@import "tokens";
+@import "widgets";

@@ -1,0 +1,59 @@
+// ============================================================================
+// PRIMITIVE PALETTE - the single source of truth for colour
+// ============================================================================
+// This is the ONLY file permitted to contain a hex literal. Everything else
+// refers to these names, so a colour is changed in exactly one place.
+//
+// Names describe where a value CAME FROM, not what it is used for. That is
+// deliberate: the palette accumulated values from three different Catppuccin
+// flavours, and component-shaped names (`$toolbutton-hover`) hid it. Semantic
+// meaning belongs in _tokens.scss, one layer up.
+//
+// PALETTE NOTES - same role, two values. These are almost certainly accidental
+// drift rather than intent. Resolving them is a VISIBLE change, so it is
+// deliberately not done here:
+//   surface2  $mocha-surface2 #585b70  vs  $macchiato-surface2 #5b6078
+//   surface0  $mocha-surface0 #313244  vs  $macchiato-surface0 #363a4f
+//   crust     $mocha-crust    #11111b  vs  $macchiato-crust    #181926
+//                                      vs  $frappe-crust       #232634
+// ============================================================================
+
+// Catppuccin Mocha - the dominant flavour (14 of 18 Catppuccin values)
+$mocha-crust:              #11111b;
+$mocha-base:               #1e1e2e;
+$mocha-surface0:           #313244;
+$mocha-surface1:           #45475a;
+$mocha-surface2:           #585b70;
+$mocha-overlay0:           #6c7086;
+$mocha-subtext0:           #a6adc8;
+$mocha-subtext1:           #bac2de;
+$mocha-text:               #cdd6f4;
+$mocha-sky:                #89dceb;
+$mocha-green:              #a6e3a1;
+$mocha-yellow:             #f9e2af;
+$mocha-red:                #f38ba8;
+$mocha-lavender:           #b4befe;
+
+// Catppuccin Macchiato - mixed in alongside Mocha. Each of these collides
+// with a Mocha value playing the same role; see PALETTE NOTES below.
+$macchiato-crust:          #181926;
+$macchiato-surface0:       #363a4f;
+$macchiato-surface2:       #5b6078;
+
+// Catppuccin Frappe - a single stray value
+$frappe-crust:             #232634;
+
+// Nova originals - not from any Catppuccin flavour
+$nova-accent:              #4a9eff;
+$nova-button:              #252738;
+$nova-button-border:       #3d4058;
+$nova-elevated:            #2a2e42;
+$nova-selection:           #3d4663;
+$nova-selection-inactive:  #333750;
+$nova-selection-hover:     #454b6b;
+$nova-tab-inactive:        #14151f;
+$nova-disabled:            #1a1b26;
+$nova-progress-trough:     #2a2e3d;
+$nova-progress-border:     #3a3f52;
+$white:                    #ffffff;
+$white-bright:             #f5f5f5;

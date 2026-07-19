@@ -1,0 +1,105 @@
+// Nova Dark color definitions built on top of the shared BaseTheme structure.
+// Update the values here to iterate on the palette while keeping layout and spacing identical.
+// Inspired by Catppuccin Macchiato with enhanced vibrancy for qBittorrent.
+
+$base-padding: 4px;
+$base-bg: $macchiato-crust;
+$base-hover: $frappe-crust;
+$base-pressed: $nova-elevated;
+$base-text: $mocha-text;
+$base-text-disabled: $mocha-overlay0;
+$base-border: $mocha-crust;
+$base-border-focus: $nova-accent;
+$base-border-radius: 4px;
+
+// IMPORTANT: Set item borders to none/transparent to prevent base theme from adding borders
+$item-selected-active-bg: $nova-selection;
+$item-selected-active-border: none;
+$item-selected-inactive-bg: $nova-selection-inactive;
+$item-selected-inactive-border: none;
+
+// Sidebar items (Status, Categories, Tags, Trackers) - Consistent styling
+$sidebar-item-bg: transparent;
+$sidebar-item-text: $mocha-text;
+$sidebar-item-padding: 2px 4px;
+$sidebar-item-min-height: 20px;
+$sidebar-item-hover-bg: $nova-elevated;
+$sidebar-item-selected-bg: $nova-selection;
+$sidebar-item-selected-text: $white;
+$sidebar-item-selected-active-bg: $nova-selection;
+$sidebar-item-selected-hover-bg: $nova-selection-hover;
+
+$sub-bg: $mocha-base;
+$sub-hover: $nova-elevated;
+$sub-text: $mocha-text;
+$sub-highlight: $mocha-surface1;
+$alternate-bg: transparent;
+$dialog-bg: $macchiato-crust;
+$median-bg: $mocha-base;
+$toolbutton-on: $mocha-surface0;
+$toolbutton-border: $mocha-surface1;
+$toolbutton-hover: $macchiato-surface0;
+$toolbutton-hover-border: $nova-accent;
+$toolbutton-pressed: $mocha-surface1;
+$highlight-bg: $mocha-surface2;
+$highlight-pressed: $mocha-surface1;
+$highlight-text: $white;
+$menu-bg: $mocha-base;
+$menuitem-hover: $mocha-surface0;
+$menuitem-border: $mocha-surface1;
+$scrollbar-border: transparent;
+$scrollbar-handle: $mocha-surface1;
+$scrollbar-handle-border: transparent;
+$scrollbar-handle-hover: $macchiato-surface2;
+$input-bg: $mocha-base;
+$input-border: 1px solid $mocha-surface0;
+$input-hover: $mocha-surface0;
+$control-icon: $mocha-subtext1;
+$control-icon-disabled: $mocha-overlay0;
+$control-disabled: $nova-disabled;
+$slider-groove: $mocha-surface0;
+$slider-groove-border: $mocha-surface0;
+$slider-fill: $nova-accent;
+$slider-fill-border: $nova-accent;
+$slider-handle: $mocha-subtext0;
+$slider-handle-border: $macchiato-crust;
+$slider-handle-focus: $mocha-subtext1;
+$slider-handle-focus-border: $nova-accent;
+$slider-handle-hover: $mocha-text;
+$slider-handle-pressed: $white-bright;
+$slider-handle-pressed-border: $nova-accent;
+$tab-selected: $mocha-base;
+$tab-deselected: $nova-tab-inactive;
+$tab-deselected-text: $mocha-subtext0;
+$tab-separator: $mocha-crust;
+$tab-hover: $nova-elevated;
+$button-bg: $nova-button;
+$button-hover: $mocha-surface0;
+$button-focus: $mocha-surface0;
+$button-focus-hover-bg: $mocha-surface1;
+$button-focus-hover-border: $nova-accent;
+$button-border: 1px solid $nova-button-border;
+$button-hover-border: $macchiato-surface2;
+$radio: url(:/uitheme/common/controls/radio_check_dark.svg);
+$radio_disabled: url(:/uitheme/common/controls/radio_check_disabled.svg);
+$checkbox: url(:/uitheme/common/controls/checkbox_check_dark.svg);
+$checkbox-disabled: url(:/uitheme/common/controls/checkbox_check_disabled.svg);
+$link: $mocha-sky;
+
+// Accent colors for semantic use
+$accent-primary: $nova-accent;
+$accent-success: $mocha-green;
+$accent-warning: $mocha-yellow;
+$accent-error: $mocha-red;
+$accent-info: $mocha-sky;
+
+$font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
+  "Helvetica Neue", Arial, sans-serif;
+$font-size-bigger: 13pt;
+$font-size-big: 12pt;
+$font-size-normal: 10pt;
+$font-size-medium: 9pt;
+$font-size-small: 8pt;
+$font-size-extra-small: 7pt;
+$font-size-qslider-groove: 3pt;
+$font-size-qslider-handle: 4pt;

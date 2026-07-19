@@ -51,6 +51,23 @@ fi
 
 mkdir -p "${DIST_DIR}"
 
+# _palette.scss is the single source of truth for colour. A hex literal anywhere
+# else silently reintroduces the duplication the layering exists to prevent, so
+# fail the build rather than let it drift back. Comments are exempt -- they do
+# not compile, and commented-out rules are useful history.
+stray_hex=$(
+  find "${SOURCE_DIR}" -name '*.scss' ! -name '_palette.scss' -print0 \
+    | xargs -0 grep -nE '#[0-9a-fA-F]{6}\b' /dev/null \
+    | sed 's|//.*||' \
+    | grep -E '#[0-9a-fA-F]{6}\b' || true
+)
+if [[ -n "${stray_hex}" ]]; then
+  log_error "Hex literal outside _palette.scss:"
+  echo "${stray_hex}" | sed 's/^/          /' >&2
+  log_error "Add the colour to _palette.scss and reference it by name."
+  exit 1
+fi
+
 log_info "Compiling NovaDark.scss"
 (cd "${SOURCE_DIR}" && qtsass -o ../NovaDark.qss NovaDark.scss)
 
