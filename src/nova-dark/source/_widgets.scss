@@ -52,8 +52,7 @@ QDockWidget {
 
 QDialog,
 QWizard *,
-QCalendarWidget *,
-#qswPages > QObject {
+QCalendarWidget * {
   background-color: $dialog-bg;
   color: $sub-text;
 }
@@ -207,36 +206,23 @@ QMenu::separator {
   height: 1px;
 }
 
+// height/width are re-declared further down; padding-top is NOT, so this rule
+// is not redundant despite looking like it.
 QMenu::indicator {
   padding-top: 2px;
   height: 25px;
   width: 25px;
 }
 
-QPushButton {
-  background-color: $button-bg;
-  border: $button-border;
-  color: $sub-text;
-
-  padding: $base-padding - 1 $base-padding * 4+4;
-}
-
+// Only the background is set here. The focus border comes from the override
+// further down; the two are separate declarations, not duplicates.
 QPushButton:focus {
   background-color: $button-focus;
-}
-
-QPushButton:hover {
-  background-color: $button-hover;
-  border-color: $button-hover-border;
 }
 
 QPushButton:hover:focus {
   background-color: $button-focus-hover-bg;
   border-color: $button-focus-hover-border;
-}
-
-QPushButton:focus {
-  border-color: $base-border-focus;
 }
 
 QPushButton:pressed,
@@ -246,9 +232,7 @@ QPushButton:pressed:focus {
   color: $highlight-text;
 }
 
-QGroupBox,
-#qwMacWarning,
-#qwInlineNotice {
+QGroupBox {
   background-color: $median-bg;
   border: 1px solid $base-border;
   color: $sub-text;
@@ -262,15 +246,6 @@ QGroupBox::title {
   margin: $base-padding * 1.5;
   margin-left: $base-padding + 4;
   margin-right: $base-padding * 2;
-}
-
-QAbstractItemView {
-  alternate-background-color: $alternate-bg;
-}
-
-QListView {
-  background-color: $sub-bg;
-  border: 1px solid $base-border;
 }
 
 QListView::item {
@@ -333,13 +308,6 @@ QTreeView::item:focus {
   border-color: $sub-hover;
 }
 
-QTreeView::item:selected {
-  background-color: $item-selected-inactive-bg;
-  border: $item-selected-inactive-border;
-  border-right: 0;
-  border-left: 0;
-}
-
 QTreeView::item:selected:first,
 QTreeView::item:selected:only-one {
   border-left: $item-selected-inactive-border;
@@ -348,13 +316,6 @@ QTreeView::item:selected:only-one {
 QTreeView::item:selected:last,
 QTreeView::item:selected:only-one {
   border-right: $item-selected-inactive-border;
-}
-
-QTreeView::item:selected:active {
-  background-color: $item-selected-active-bg;
-  border: $item-selected-active-border;
-  border-right: 0;
-  border-left: 0;
 }
 
 QTreeView::item:selected:active:first,
@@ -423,11 +384,6 @@ QHeaderView::up-arrow {
   image: url(:/uitheme/common/controls/arrow_up.svg);
 }
 
-QTabWidget::pane {
-  background-color: $median-bg;
-  border: 1px solid $base-border;
-}
-
 QTabWidget::pane:top {
   margin-top: -1px;
   border-radius: $base-border-radius;
@@ -470,17 +426,8 @@ QTabBar::tab:only-one {
   border-right: 1px solid $base-border;
 }
 
-QTabBar::tab:hover {
-  background-color: $tab-hover;
-}
-
 QTabBar::tab:disabled {
   color: $base-text-disabled;
-}
-
-QTabBar::tab:selected {
-  color: $sub-text;
-  background-color: $median-bg;
 }
 
 QTabBar::tab:top {
@@ -561,14 +508,6 @@ QScrollBar::handle {
   margin: -1px;
   background: $scrollbar-handle;
   border: 1px solid $scrollbar-handle-border;
-}
-
-QScrollBar::handle:vertical {
-  min-height: 10px;
-}
-
-QScrollBar::handle:horizontal {
-  min-width: 10px;
 }
 
 QScrollBar::handle:hover {
@@ -745,11 +684,6 @@ QTreeView::indicator {
   margin: 0.4em;
 }
 
-QMenu::indicator {
-  width: 12px;
-  left: 6px;
-}
-
 QCheckBox::indicator:checked,
 QMenu::indicator:checked,
 QTreeView::indicator:checked,
@@ -797,10 +731,6 @@ QRadioButton::indicator:disabled {
   border: 1px solid transparent;
 }
 
-QRadioButton::indicator:checked {
-  image: $radio;
-}
-
 QRadioButton::indicator:checked:disabled {
   image: $radio_disabled;
 }
@@ -809,10 +739,6 @@ QSlider::groove {
   background: $slider-groove;
   border: 1px solid $slider-groove-border;
   border-radius: 2px;
-}
-
-QSlider::groove:horizontal {
-  height: 0.8em;
 }
 
 QSlider::groove:vertical {
@@ -836,11 +762,6 @@ QSlider::handle {
   background: $slider-handle;
   border: 1px solid $slider-handle-border;
   border-radius: 3px;
-}
-
-QSlider::handle:horizontal {
-  margin: -5px -1px;
-  width: 4.5em;
 }
 
 QSlider::handle:vertical {
