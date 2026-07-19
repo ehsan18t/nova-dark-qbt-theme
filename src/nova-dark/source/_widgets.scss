@@ -113,6 +113,22 @@ QToolButton {
   margin: 1px;
 }
 
+// Reserve room for the menu indicator so it stops painting over the icon.
+//
+// QStyleSheetStyle does NOT allocate any width for a toolbutton's menu
+// indicator -- CT_ToolButton in qstylesheetstyle.cpp only adds QSize(3, 3),
+// under Qt's own "### broken QToolButton" comment -- so a styled indicator is
+// drawn straight on top of the icon. That is what cropped the lock icon and
+// left no gap between it and the arrow.
+//
+// This has to apply to every toolbutton, not just the ones with a menu: the
+// popupMode attribute cannot single them out, because qBittorrent never calls
+// setPopupMode, so they are all mode 0. The extra space is only visible on the
+// button that actually draws an arrow.
+QToolBar QToolButton {
+  padding-right: 12px;
+}
+
 QToolButton:on {
   background-color: $toolbutton-on;
   border: 1px solid $toolbutton-border;
@@ -139,10 +155,32 @@ QToolBar::separator:hover {
   border: 0;
 }
 
+// The toolbar overflow button, which Qt names itself (qtoolbarextension.cpp:18).
+//
+// Everything here exists to get OUT OF THE WAY, because Qt already draws a
+// perfectly good arrow for this button and the theme's job is only to stop
+// clobbering it.
+//
+// Its width is not ours to set: QToolBarLayout hard-assigns the geometry from
+// PM_ToolBarExtensionExtent -- 12px at 100% DPI (qcommonstyle.cpp:4690) -- and
+// QStyleSheetStyle explicitly refuses that metric (qstylesheetstyle.cpp:5100 is
+// a bare `case ...: break;`, unlike the splitter and handle metrics beside it).
+// Setting width or min-width does not enlarge it; min-width actually forces an
+// oversized widget into the 12px slot, where it is clipped.
+//
+// With only 12px to work with, the inherited QToolButton box (1px margin +
+// 1px border + 1px padding a side) leaves 6px of content, and adding padding on
+// top of that leaves ZERO -- the icon becomes a null pixmap and all that paints
+// is the background, which is the "featureless grey bar" this used to render as.
+//
+// So: zero the box and set no icon. `border: 0` also restores hasNativeBorder(),
+// routing paint through the base style, which is exactly what an unthemed Qt app
+// does -- and that is the arrow we want.
 QToolButton#qt_toolbar_ext_button {
-  min-width: $base-padding * 2;
-  width: $base-padding * 2;
-  padding: 1px;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
   qproperty-icon: url(:/uitheme/common/controls/toolbar_ext.svg);
 }
 
@@ -611,23 +649,53 @@ QDateTimeEdit::down-arrow:disabled {
   image: url(:/uitheme/common/controls/arrow_down_disabled.svg);
 }
 
-QToolButton[popupMode="1"],
-QToolButton[popupMode="2"],
 QPushButton[popupMode="1"],
 QPushButton[popupMode="2"] {
-  padding-right: 14px;
+  padding-right: 15px;
 }
 
-QToolButton::menu-arrow,
+// qBittorrent never calls setPopupMode (grep of src/gui returns nothing), so
+// every toolbutton with a menu uses Qt's default DelayedPopup. Qt tucks a small
+// arrow into the button's CORNER in that mode and sizes the button around it.
+//
+// Leaving this unstyled is not an option even though it is "the default": the
+// base Windows style paints the indicator with its own light background, which
+// reads as a pale grey box on a dark toolbar. So the glyph has to be ours -- it
+// just has to sit where Qt would put it.
+//
+// Corner placement, small, transparent. The previous version used
+// `center right` at 9px, which stretched the button and left the glyph floating
+// beside the icon rather than tucked against it.
+//
+// Note two subcontrols that look relevant but are dead here, both because the
+// mode is DelayedPopup: `QToolButton::menu-button` exists only in
+// MenuButtonPopup, and `QToolButton[popupMode="1"|"2"]` matches neither.
+// A FILLED caret, not the chevron used elsewhere. At this size a stroke reads
+// thin and washed out, which is why the native indicator (a solid triangle)
+// looked better. arrow_down.svg stays the chevron for the combo box, column
+// sort header and spin box, where there is room for a stroke to read.
 QToolButton::menu-indicator,
+QToolButton::menu-arrow {
+  image: url(:/uitheme/common/controls/menu_indicator.svg);
+  subcontrol-origin: padding;
+  subcontrol-position: center right;
+  background: transparent;
+  border: 0;
+  width: 8px;
+  height: 8px;
+  right: 2px;
+  top: 0;
+}
+
 QPushButton::menu-arrow,
 QPushButton::menu-indicator {
   image: url(:/uitheme/common/controls/arrow_down.svg);
   subcontrol-origin: padding;
   subcontrol-position: center right;
-  top: 2px;
-  right: 2px;
-  width: 14px;
+  width: 9px;
+  height: 9px;
+  right: 3px;
+  top: 0;
 }
 
 QSpinBox::down-button,
@@ -980,15 +1048,18 @@ QStatusBar QPushButton:pressed {
 }
 
 // ----------------------------------------------------------------------------
-// TOOLBAR BUTTONS - Hide menu arrows/indicators
+// TOOLBAR BUTTONS - menu indicator
 // ----------------------------------------------------------------------------
-QToolButton::menu-arrow,
-QToolButton::menu-indicator,
-QPushButton::menu-arrow,
-QPushButton::menu-indicator {
-  image: none;
-  width: 0px;
-}
+// This block used to set `image: none; width: 0` here, cancelling the arrow the
+// earlier QToolButton::menu-arrow rule draws. Qt still reserved and painted the
+// indicator area, so a button that HAS a menu -- the toolbar's lock button,
+// which gets Set/Clear Password attached at mainwindow.cpp:208-211 -- rendered
+// as a featureless grey rectangle. It opened its menu when clicked, but nothing
+// on screen said it was clickable.
+//
+// The arrow IS the affordance; suppressing it while keeping the hit area is the
+// worst of both. The earlier rule already styles it correctly, so this override
+// is simply gone. Only buttons that actually have a menu draw one.
 
 // ----------------------------------------------------------------------------
 // DOCK WIDGETS
@@ -1780,4 +1851,3 @@ MainWindow:!active,
 QWidget:!active {
   background-color: $panel;
 }
-
