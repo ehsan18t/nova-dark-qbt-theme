@@ -1154,7 +1154,7 @@ QScrollBar::handle:horizontal {
 }
 
 QScrollBar::handle:hover {
-  background-color: $surface-2-macchiato;
+  background-color: $surface-2;
 }
 
 QScrollBar::handle:pressed {
@@ -1464,17 +1464,17 @@ QComboBox {
 }
 
 QComboBox:hover {
-  border-color: $surface-2-macchiato;
+  border-color: $surface-2;
   background-color: $nova-elevated;
 }
 
 QComboBox:focus {
-  border-color: $surface-2-macchiato;
+  border-color: $surface-2;
 }
 
 QComboBox:on {
   background-color: $nova-button;
-  border-color: $surface-2-macchiato;
+  border-color: $surface-2;
 }
 
 QComboBox::drop-down {
@@ -1529,7 +1529,7 @@ QPushButton {
 
 QPushButton:hover {
   background-color: $surface-0;
-  border-color: $surface-2-macchiato;
+  border-color: $surface-2;
 }
 
 QPushButton:pressed {
