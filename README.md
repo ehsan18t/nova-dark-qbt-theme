@@ -43,7 +43,7 @@ docker compose run --rm build
 
 That's it. No local toolchain required, and it works the same on Windows, macOS and Linux. The image is built automatically on first run.
 
-The result is all 8 themes in `dist/`, plus `nova-dark.qbtheme` as an alias for the default combination. A full build takes a couple of seconds, and it is not 8x the work: a stylesheet depends only on palette and density, a config only on palette, and an icon set only on palette and treatment, so each is produced once and shared.
+The result is all 8 themes in `build/dist/`, plus `nova-dark.qbtheme` as an alias for the default combination. Everything the build writes lives under `build/`, so deleting that one directory is a full clean. A full build takes a couple of seconds, and it is not 8x the work: a stylesheet depends only on palette and density, a config only on palette, and an icon set only on palette and treatment, so each is produced once and shared.
 
 To build a subset while iterating, restrict an axis:
 

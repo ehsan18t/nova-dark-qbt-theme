@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build every Nova Dark variant into dist/.
+"""Build every Nova Dark variant into build/dist/.
 
 This is the only build implementation, and it runs natively everywhere: Windows
 (cmd, PowerShell, or double-clicking scripts\\build.bat), macOS, Linux, and the
@@ -52,8 +52,13 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SRC_ROOT = PROJECT_ROOT / "src"
-DIST_DIR = PROJECT_ROOT / "dist"
 BUILD_DIR = PROJECT_ROOT / "build"
+# The packed themes live INSIDE the build root, not beside it. Everything the
+# build writes is then under one directory: one path in .gitignore, one rm -rf
+# to clean, and one tree for fix_ownership() to walk. The cost is that the file
+# a user actually installs sits one level deeper, which the build prints on the
+# last line so nobody has to go looking.
+DIST_DIR = BUILD_DIR / "dist"
 THEME_ROOT = SRC_ROOT / "nova-dark"
 SOURCE_DIR = THEME_ROOT / "source"
 PALETTE_DIR = SOURCE_DIR / "palettes"

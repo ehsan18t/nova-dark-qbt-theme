@@ -1,15 +1,13 @@
-# Build output
-dist/
+# Everything the build writes, packed themes included: build/dist holds the
+# .qbtheme files, build/{qss,icons,pack} the intermediates.
+build/
 *.qbtheme
 
-# Build intermediates
+# Stray intermediates, in case anything is ever written outside build/
 *.qss
 *.qrc
+src/nova-dark/source/build-entry.scss
 
 # Python
 __pycache__/
 *.pyc
-
-# Variant build intermediates (stylesheets, icon sets, pack staging)
-build/
-src/nova-dark/source/build-entry.scss
