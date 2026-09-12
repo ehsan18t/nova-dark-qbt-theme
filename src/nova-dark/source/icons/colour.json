@@ -1,0 +1,18 @@
+{
+  "name": "colour",
+  "description": "Each icon keeps its semantic hue. Downloads are green, errors are red, trackers are orange. Loud, but every icon is identifiable before you read its label.",
+  "roles": {
+    "default": "icon-default",
+    "accent": "icon-accent",
+    "success": "icon-success",
+    "warning": "icon-warning",
+    "error": "icon-error",
+    "upload": "icon-upload",
+    "info": "icon-info",
+    "muted": "icon-muted",
+    "orange": "icon-orange",
+    "stalled": "icon-stalled",
+    "white": "icon-white",
+    "dark": "icon-dark"
+  }
+}

@@ -1,0 +1,35 @@
+// ============================================================================
+// COMFORTABLE - the default spacing, unchanged from the pre-matrix theme
+// ============================================================================
+// A density fragment owns GEOMETRY ONLY. The build rejects a colour here, the
+// same way it rejects geometry in a palette fragment, because that separation
+// is what keeps the axes orthogonal: a palette cannot move a row, and a density
+// cannot shift a hue.
+//
+// EVERY DENSITY FRAGMENT DEFINES EXACTLY THIS SET OF NAMES, enforced by the
+// build. To add a third density, copy this file, change the numbers, and add
+// one line to variants.json. Nothing else.
+//
+// These are the values the theme shipped with before the matrix existed, so
+// this variant is visually identical to the old single theme.
+// ============================================================================
+
+$density-name: "comfortable";
+
+// The multiplier most of the base-theme rules are built on. Rules written as
+// `$base-padding * 1.5` scale with it automatically, which is why the density
+// axis reaches menus, toolbars, tabs and group boxes without naming any of them.
+$base-padding:             4px;
+
+// The transfer list and the filter sidebar. $row-min-height is the number a
+// user actually feels; the padding is in service of it.
+$row-padding:              2px 4px;
+$row-min-height:           20px;
+
+// The filter sidebar's inset from the pane edge. This is what turns the
+// selection from a full-bleed bar into a pill: at 0 the radius has no ground
+// to show against and the rounding is invisible.
+$sidebar-inset:            6px;
+
+// Space between the selection rail and the row's icon. They were touching.
+$sidebar-icon-gap:         4px;

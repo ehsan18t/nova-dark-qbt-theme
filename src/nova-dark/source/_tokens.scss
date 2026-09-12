@@ -2,7 +2,9 @@
 // Update the values here to iterate on the palette while keeping layout and spacing identical.
 // Inspired by Catppuccin Macchiato with enhanced vibrancy for qBittorrent.
 
-$base-padding: 4px;
+// $base-padding, $row-padding and $row-min-height come from the density
+// fragment (source/densities/), which is imported just above this file.
+// They are the whole of the density axis's reach into the stylesheet.
 $base-bg: $crust-1;
 $base-hover: $crust-2;
 $base-pressed: $nova-elevated;
@@ -21,9 +23,10 @@ $item-selected-inactive-border: none;
 // Sidebar items (Status, Categories, Tags, Trackers) - Consistent styling
 $sidebar-item-bg: transparent;
 $sidebar-item-text: $text-2;
-$sidebar-item-padding: 2px 4px;
-$sidebar-item-min-height: 20px;
+$sidebar-item-padding: $row-padding;
+$sidebar-item-min-height: $row-min-height;
 $sidebar-item-hover-bg: $nova-elevated;
+
 $sidebar-item-selected-bg: $nova-selection;
 $sidebar-item-selected-text: $white;
 $sidebar-item-selected-active-bg: $nova-selection;

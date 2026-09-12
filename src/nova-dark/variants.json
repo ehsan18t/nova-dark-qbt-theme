@@ -1,0 +1,59 @@
+{
+  "_note": [
+    "The variant matrix. The build takes the cartesian product of the axes below,",
+    "so this file is the only place that knows how many themes exist.",
+    "",
+    "TO ADD A VALUE TO AN AXIS:",
+    "  1. Drop the fragment in the axis 'dir' ('_<name>.scss' for palette and",
+    "     density, '<name>.json' for icons). Copy an existing one; every fragment",
+    "     on an axis must define the same names.",
+    "  2. Add its name to that axis's 'values'.",
+    "The build discovers the files on disk and fails if they disagree with this",
+    "list, so step 2 cannot be silently forgotten and a stray file cannot become",
+    "a theme by accident.",
+    "",
+    "TO ADD A WHOLE NEW AXIS: add it here with its own dir and suffix, then teach",
+    "_tokens.scss to consume whatever names its fragments define. build.py needs",
+    "no change; it already products every axis it finds.",
+    "",
+    "'default' names the combination packed as plain 'nova-dark.qbtheme', which",
+    "is what the README's install instructions point at."
+  ],
+  "name": "nova-dark",
+  "default": {
+    "palette": "nebula",
+    "density": "comfortable",
+    "icons": "colour"
+  },
+  "axes": {
+    "palette": {
+      "dir": "source/palettes",
+      "suffix": ".scss",
+      "prefix": "_",
+      "shared": [
+        "_states.scss"
+      ],
+      "values": [
+        "nebula"
+      ]
+    },
+    "density": {
+      "dir": "source/densities",
+      "suffix": ".scss",
+      "prefix": "_",
+      "shared": [],
+      "values": [
+        "comfortable"
+      ]
+    },
+    "icons": {
+      "dir": "source/icons",
+      "suffix": ".json",
+      "prefix": "",
+      "shared": [],
+      "values": [
+        "colour"
+      ]
+    }
+  }
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate nova-dark-config.json from the SCSS palette.
+"""Generate one config/<palette>.json per palette, from the SCSS palettes.
 
 qBittorrent paints two different ways. The stylesheet covers widgets it has a
 rule for; everything else falls back to the QPalette and the semantic colour
@@ -7,9 +7,10 @@ IDs it reads from a theme's config.json. There is no way for QSS to reference a
 config.json colour -- different consumers, different parse paths -- so the two
 sets of colours have no choice but to be duplicated.
 
-This script is what stops that duplication from drifting. _palette.scss stays
-the single source of truth, and config.json becomes a derived artifact: the
-MAPPING below says which primitive each qBittorrent colour ID takes.
+This script is what stops that duplication from drifting. The palette fragments
+stay the single source of truth, and each config.json becomes a derived
+artifact: the MAPPING below says which primitive each qBittorrent colour ID
+takes.
 
 That divergence was not hypothetical. Before this existed, config.json and the
 stylesheet shared 3 colours out of 33 -- a cool blue-grey system and Catppuccin
@@ -17,10 +18,22 @@ Mocha painting the same window. It showed wherever the stylesheet did not
 reach, most visibly when the window lost focus and Qt fell back to the
 QPalette-derived Inactive group.
 
+THE MAPPING IS PALETTE-INDEPENDENT, and that is the whole reason the variant
+matrix was cheap to add: it names variables, never hexes, so all three palettes
+run through it unchanged. Adding a fourth palette does not touch this file.
+
+The generated files are checked in on purpose, even though the build rewrites
+them every time. They are the only place a palette change becomes visible in
+`git diff` as colours rather than as SCSS, which is how a bad value gets caught
+before it is packed.
+
 Usage:
-    generate-config.py            rewrite the config from the palette
-    generate-config.py --check    exit 1 if the file is stale (for CI)
+    generate-config.py                rewrite every palette's config
+    generate-config.py --palette X    rewrite just that one
+    generate-config.py --check        exit 1 if any file is stale (for CI)
 """
+
+from __future__ import annotations
 
 import argparse
 import json
@@ -30,8 +43,9 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 THEME_ROOT = SCRIPT_DIR.parent
-PALETTE = THEME_ROOT / "source" / "_palette.scss"
-CONFIG = THEME_ROOT / "nova-dark-config.json"
+PALETTE_DIR = THEME_ROOT / "source" / "palettes"
+CONFIG_DIR = THEME_ROOT / "config"
+VARIANTS = THEME_ROOT / "variants.json"
 
 # qBittorrent colour ID -> palette primitive.
 #
@@ -91,8 +105,8 @@ MAPPING = {
     "RSS.UnreadArticle": "accent",
 
     # --- Transfer list -----------------------------------------------------
-    # Straight onto the accent family, so a state reads the same colour here as
-    # the equivalent concept does in the chrome. Only the two deliberately quiet
+    # Straight onto the shared state family in palettes/_states.scss, so a state
+    # reads the same colour in every variant. Only the two deliberately quiet
     # states have their own primitives.
     "TransferList.Downloading": "accent-blue",
     "TransferList.DownloadingMetadata": "accent-info",
@@ -120,71 +134,99 @@ MAPPING = {
 
     # --- Pieces bar and progress -----------------------------------------
     "PiecesBar.Border": "piece-border",
-    # Blue, matching QProgressBar::chunk and TransferList.Downloading -- these
-    # all measure the same thing, so they should agree. NOT the violet
-    # signature: violet means "selected / queued" in this theme, so a violet
-    # fill reads as a state rather than a quantity.
     "PiecesBar.Piece": "accent-blue",
     "PiecesBar.PartialPiece": "accent-teal",
     "PiecesBar.MissingPiece": "panel",
     "ProgressBar": "accent-blue",
 }
 
+DECL = re.compile(r"\s*\$([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;")
 
-def read_palette() -> dict[str, str]:
+
+def palette_names() -> list[str]:
+    return json.loads(VARIANTS.read_text(encoding="utf-8"))["axes"]["palette"]["values"]
+
+
+def read_scss_colors(path: Path) -> dict[str, str]:
     """Parse `$name: #hex;` declarations, ignoring commented-out lines."""
     colors = {}
-    for line in PALETTE.read_text(encoding="utf-8").splitlines():
-        code = line.split("//")[0]
-        match = re.match(r"\s*\$([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;", code)
+    for line in path.read_text(encoding="utf-8").splitlines():
+        match = DECL.match(line.split("//")[0])
         if match:
             colors[match.group(1)] = match.group(2).lower()
     return colors
 
 
-def build_config(palette: dict[str, str]) -> dict:
-    missing = sorted({v for v in MAPPING.values() if v not in palette})
+def palette_colors(name: str) -> dict[str, str]:
+    """The shared state colours, then the palette's own, which may override."""
+    colors = read_scss_colors(PALETTE_DIR / "_states.scss")
+    fragment = PALETTE_DIR / f"_{name}.scss"
+    if not fragment.exists():
+        sys.stderr.write(
+            f"[error] no palette fragment at {fragment}\n"
+            f"        variants.json lists '{name}' on the palette axis.\n")
+        sys.exit(1)
+    colors.update(read_scss_colors(fragment))
+    return colors
+
+
+def build_config(name: str, colors: dict[str, str]) -> dict:
+    missing = sorted({v for v in MAPPING.values() if v not in colors})
     if missing:
         sys.stderr.write(
-            "[error] MAPPING refers to primitives that _palette.scss does not define:\n"
-        )
-        for name in missing:
-            sys.stderr.write(f"          ${name}\n")
+            f"[error] palette '{name}' does not define primitives the MAPPING needs:\n")
+        for var in missing:
+            sys.stderr.write(f"          ${var}\n")
         sys.exit(1)
 
-    return {"colors": {key: palette[var] for key, var in MAPPING.items()}}
+    return {"colors": {key: colors[var] for key, var in MAPPING.items()}}
+
+
+def render(name: str) -> str:
+    return json.dumps(build_config(name, palette_colors(name)), indent=2) + "\n"
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--palette", help="only this palette (default: all of them)")
     parser.add_argument(
-        "--check",
-        action="store_true",
-        help="verify the config matches the palette instead of rewriting it",
-    )
+        "--check", action="store_true",
+        help="verify the configs match the palettes instead of rewriting them")
     args = parser.parse_args()
 
-    config = build_config(read_palette())
-    rendered = json.dumps(config, indent=2) + "\n"
+    names = [args.palette] if args.palette else palette_names()
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+
+    stale, written, count = [], 0, 0
+    for name in names:
+        rendered = render(name)
+        target = CONFIG_DIR / f"{name}.json"
+        current = target.read_text(encoding="utf-8") if target.exists() else ""
+        count = rendered.count(": ")
+
+        if args.check:
+            if current != rendered:
+                stale.append(target)
+            continue
+
+        if current != rendered:
+            target.write_text(rendered, encoding="utf-8")
+            written += 1
 
     if args.check:
-        current = CONFIG.read_text(encoding="utf-8") if CONFIG.exists() else ""
-        if current != rendered:
-            sys.stderr.write(
-                f"[error] {CONFIG.name} is stale. Regenerate it with:\n"
-                f"          python {Path(__file__).relative_to(THEME_ROOT.parent.parent)}\n"
-            )
+        if stale:
+            sys.stderr.write("[error] stale config(s). Regenerate with:\n")
+            sys.stderr.write("          python src/nova-dark/scripts/generate-config.py\n")
+            for path in stale:
+                sys.stderr.write(f"          {path.name}\n")
             sys.exit(1)
-        print(f"{CONFIG.name} is up to date ({len(config['colors'])} colours)")
+        print(f"{len(names)} config(s) up to date ({count} colours each)")
         return
 
-    current = CONFIG.read_text(encoding="utf-8") if CONFIG.exists() else ""
-    if current == rendered:
-        print(f"{CONFIG.name} already matches the palette ({len(config['colors'])} colours)")
-        return
-
-    CONFIG.write_text(rendered, encoding="utf-8")
-    print(f"regenerated {CONFIG.name} ({len(config['colors'])} colours) from _palette.scss")
+    if written:
+        print(f"regenerated {written} of {len(names)} config(s) ({count} colours each)")
+    else:
+        print(f"{len(names)} config(s) already match the palettes ({count} colours each)")
 
 
 if __name__ == "__main__":

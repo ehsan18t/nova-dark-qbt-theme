@@ -1,0 +1,99 @@
+// ============================================================================
+// NEBULA - violet signature on cool navy neutrals
+// ============================================================================
+// The original Nova Dark identity, rebuilt on a wider elevation ramp. Pick this
+// if you want the theme that shipped before the matrix existed, refined.
+//
+// EVERY PALETTE FRAGMENT DEFINES EXACTLY THIS SET OF NAMES. The build compares
+// the three files against each other and fails if one is missing a name another
+// defines, so a new palette cannot silently inherit a stale value. Copy this
+// file to add one; do not start from scratch.
+//
+// Names encode RAMP POSITION, not provenance. 0 < 1 < 2 is unambiguously the
+// lightness order, so "which of these two is lighter" stops being a question.
+// Role belongs one layer up, in _tokens.scss.
+//
+// The shared state colours (green means uploading, amber means moving) are in
+// _states.scss and are the same in all three palettes. What varies here is the
+// ground everything sits on, the chrome accent, and the icon ramp.
+// ============================================================================
+
+$palette-name: "nebula";
+
+// ---------------------------------------------------------------------------
+// CRUST - window chrome, deepest to lightest.
+//
+// INVARIANT: $crust-0 is drawn ON $crust-1 as a 1px hairline. They must never
+// be made equal. QHeaderView::section uses all three at once -- $crust-1 as the
+// section fill, $crust-0 as the separators drawn on it, $crust-2 as the hover
+// fill -- so collapsing any pair makes real borders vanish into their own
+// background. The status bar top rule and the dock title underline depend on
+// the same relationship.
+// ---------------------------------------------------------------------------
+$shadow:                   #07080d;  // below the ramp; QPalette::Shadow only
+$crust-0:                  #0e0f16;  // hairlines, splitter, deepest pane (log)
+$crust-1:                  #14151f;  // window / toolbar / header / statusbar
+$crust-2:                  #22233a;  // chrome hover
+
+// ---------------------------------------------------------------------------
+// PANEL - the content plane. Sits ABOVE $crust-1 so the list and the details
+// pane separate from the chrome without a border doing the work. This gap is
+// the whole point of the ramp: the previous palette put them 3 L* apart, which
+// reads as one flat sheet.
+// ---------------------------------------------------------------------------
+$panel:                    #1c1d2b;  // panel / menu / input background
+
+// ---------------------------------------------------------------------------
+// SURFACE - interactive control fills and strokes, lightest-ascending.
+// ---------------------------------------------------------------------------
+$surface-0:                #2b2d45;  // control hover fill; input/groupbox border
+$surface-1:                #3a3d5c;  // pressed fill; scrollbar handle rest
+$surface-2:                #4c5077;  // selection fill; hover stroke
+$surface-3:                #6b7192;  // scrollbar handle pressed; disabled text
+
+// ---------------------------------------------------------------------------
+// TEXT
+// ---------------------------------------------------------------------------
+$text-0:                   #949bb8;  // dimmest: captions, counts, column labels
+$text-1:                   #b6bcd4;
+$text-2:                   #d7dcf0;  // primary
+$text-bright:              #f2f4fb;
+
+// ---------------------------------------------------------------------------
+// CHROME ACCENT - selection, focus, progress, splitter hover.
+//
+// NOT the transfer list's "queued" colour; that is $accent-queued in
+// _states.scss. Separating the two is what lets this be any hue without
+// colliding with a state colour in the Status column.
+// ---------------------------------------------------------------------------
+$accent:                   #a78bfa;
+
+
+$nova-selection:           #2c3249;
+$nova-selection-hover:     #343b56;
+$nova-selection-inactive:  #333750;
+
+// ---------------------------------------------------------------------------
+// NOVA - values with no position in the ramps above.
+// ---------------------------------------------------------------------------
+$nova-button:              #22243a;
+$nova-button-border:       #363a5c;
+$nova-elevated:            #2a2e42;  // hover fill on content surfaces
+$nova-tab-inactive:        #101119;
+$nova-disabled:            #191a26;
+$nova-progress-trough:     #242539;
+$nova-progress-border:     #2f3150;
+$piece-border:             #3a3f5e;
+
+// ---------------------------------------------------------------------------
+// ICONS - the palette-dependent slots. The semantic ramp is in _states.scss.
+//
+// $icon-mono is the single colour the "mono" treatment paints all 88 icons.
+// It matches $text-2, the theme's own text colour: a mid grey read as washed
+// out at 16px, because an icon carries far less area than a glyph does and
+// needs more lightness to hold the same weight. QIcon cannot be retinted per state by a stylesheet, so there is
+// no accent-on-selected variant of a mono icon; one colour is the whole set.
+// ---------------------------------------------------------------------------
+$icon-default:             #b6bcd4;  // default glyph
+$icon-accent:              #a78bfa;  // follows the chrome accent
+$icon-dark:                #1c1d2b;  // on light fills

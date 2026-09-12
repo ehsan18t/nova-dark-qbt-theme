@@ -1,0 +1,88 @@
+// ============================================================================
+// SHARED STATE COLOURS - identical in every palette, on purpose
+// ============================================================================
+// One of two files in this directory permitted a hex literal (the other is the
+// palette fragment itself); the build fails on a hex anywhere else under
+// source/.
+//
+// WHY THESE DO NOT VARY BY PALETTE
+//
+// A state colour is a legend, not decoration. Green means uploading in every
+// variant, amber means moving in every variant. If Graphite and Slate each
+// invented their own green, switching palette would mean relearning the
+// transfer list, and the 12 variants would stop being one theme.
+//
+// It is also the only way to keep the measurement honest. This family was
+// tuned as a set: every value clears 4.5:1 on the chrome and no two are closer
+// than dE 21. Three divergent copies would be three sets to re-measure, and the
+// README already records what happened last time a colour table was duplicated:
+// it drifted until all nine values were wrong.
+//
+// The palette fragments therefore own the neutrals, the chrome accent and the
+// icon ramp. Everything a user reads as MEANING lives here.
+//
+// See ../../../docs (none yet) and _nebula.scss for the split.
+// ============================================================================
+
+// ---------------------------------------------------------------------------
+// TRANSFER LIST + LOG STATES
+//
+// Every accent sits in a single band: saturation 48-92%, lightness 62-84%. That
+// is what stops any one of them dominating when several appear together down a
+// column. Hue does the distinguishing, not brightness.
+// ---------------------------------------------------------------------------
+
+
+// Deliberately outside the band: lighter and duller reads as "washed out", and
+// downloading is the one state that should feel active. Lightness 68% with
+// saturation near full -- chroma 51.6 against the family's ~42.
+$accent-blue:              #5da3fd;  // downloading -- the one state allowed to be vivid
+$accent-info:              #86d6f3;  // links, metadata
+$accent-teal:              #78e3d8;  // checking
+$accent-success:           #90e0a8;  // uploading / seeding
+$accent-warning:           #f4d990;  // moving
+$accent-peach:             #f8b581;  // forced
+$accent-error:             #fa8991;  // error -- bright, urgent
+
+// Missing files. Dull where $accent-error is bright: the two are separated by
+// lightness as well as hue, which reads faster when scanning a column than hue
+// alone would. Do not brighten this toward the error family; that distinction
+// is the point.
+$accent-maroon:            #cd7098;
+
+$accent-lavender:          #bfb6f6;
+
+// ---------------------------------------------------------------------------
+// INERT - states that are deliberately quiet, so they are not accents.
+// Separated from each other by saturation as well as lightness: pushing them
+// apart on lightness alone would have driven $status-stopped below AA.
+// ---------------------------------------------------------------------------
+$status-stalled:           #b1bcc9;  // inactive but alive
+$status-stopped:           #7e8195;  // paused; dimmest readable
+
+// ---------------------------------------------------------------------------
+// ABSOLUTES
+// ---------------------------------------------------------------------------
+$white:                    #ffffff;
+
+// ---------------------------------------------------------------------------
+// ICON STATE RAMP - the semantic half of the icon colours.
+//
+// Read by scripts/recolour_icons.py through source/icons/<treatment>.json. This
+// is its own ramp on purpose: icons are read at 16px against the toolbar and
+// sidebar rather than as chrome, so they are tuned brighter and more saturated
+// than the accent family above.
+//
+// The three palette-dependent icon slots ($icon-default, $icon-accent,
+// $icon-dark, $icon-mono) live in the palette fragments, because those are the
+// ones that must sit correctly on that palette's own ground.
+// ---------------------------------------------------------------------------
+$icon-success:             #4ade80;  // downloads, completed, connected
+$icon-warning:             #fbbf24;  // warnings, queued
+$icon-error:               #f87171;  // errors, disconnected, blocked
+$icon-upload:              #c084fc;  // uploads
+$icon-info:                #22d3ee;  // info, help, statistics
+$icon-muted:               #6b7280;  // disabled, stopped
+$icon-orange:              #fb923c;  // force actions, trackers
+$icon-stalled:             #8cb4b4;  // stalled transfers
+$icon-white:               #ffffff;  // on dark backgrounds

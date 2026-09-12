@@ -19,40 +19,55 @@ WEIGHTS = ["thin", "light", "regular", "bold", "fill", "duotone"]
 # Base URL for Phosphor icons (using jsDelivr CDN)
 PHOSPHOR_CDN_BASE = "https://cdn.jsdelivr.net/npm/@phosphor-icons/core@2.1.1"
 
-# Icon colours come from the palette, not from this file.
+# THIS SCRIPT NO LONGER DECIDES WHAT COLOUR A THEMED ICON IS.
 #
-# They used to be hardcoded here, which made this a second source of truth --
-# and it had already drifted: 10 of the 12 values no longer existed anywhere in
-# _palette.scss, including #4a9eff, the accent the theme replaced. The build's
-# hex-literal guard did not catch it because that guard only scans the source/
-# directory, and this script lives outside it.
+# It downloads GEOMETRY. Every icon under icons/modern/ is written with the
+# placeholder fill below and recoloured on the way into each build by
+# scripts/recolour_icons.py, which resolves the icon's role through
+# source/icons/<treatment>.json onto a palette variable. That is what lets 91
+# checked-in files serve every palette and every icon treatment, and it is why
+# adding a treatment never touches the network.
 #
-# Now every colour is read from _palette.scss under the $icon- prefix, so
-# changing an icon colour is a one-line edit in the same file as everything
-# else. Re-run this script afterwards to regenerate the SVGs.
-PALETTE = Path(__file__).resolve().parent.parent / "source" / "_palette.scss"
+# So the value here is deliberately meaningless. It exists only so each SVG has
+# exactly one fill for recolour_icons.py to find; shipping a set with this
+# colour still visible would mean the recolour step was skipped.
+GEOMETRY_FILL = "#808080"
+
+# The control icons are the exception, and the reason this still reads a
+# palette at all. They live in src/common/controls/ and are referenced straight
+# from the stylesheet as :/uitheme/common/controls/*.svg, shared verbatim by
+# every variant, so nothing recolours them at build time and their colour has
+# to be baked in here.
+#
+# They resolve against the DEFAULT palette. That is a real limitation rather
+# than an oversight: check marks and arrows drawn in one neutral read correctly
+# on all three grounds because all three are dark, and giving them a per-variant
+# copy would mean a fourth axis for a handful of 13px glyphs.
+DEFAULT_PALETTE = "nebula"
+PALETTE_DIR = Path(__file__).resolve().parent.parent / "source" / "palettes"
+TREATMENT_DIR = Path(__file__).resolve().parent.parent / "source" / "icons"
 
 
 def load_colors() -> dict[str, str]:
-    """Read $icon-<name> declarations out of _palette.scss.
-
-    Same parsing approach as generate-config.py, kept deliberately simple: a
-    line like `$icon-accent: #4a9eff;  // comment` yields {"accent": "#4a9eff"}.
-    """
-    if not PALETTE.exists():
-        sys.stderr.write(f"[error] palette not found: {PALETTE}\n")
+    """Read $icon-<name> declarations out of the shared and default palettes."""
+    sources = [PALETTE_DIR / "_states.scss", PALETTE_DIR / f"_{DEFAULT_PALETTE}.scss"]
+    missing = [p for p in sources if not p.exists()]
+    if missing:
+        for path in missing:
+            sys.stderr.write(f"[error] palette not found: {path}\n")
         sys.exit(1)
 
     colors = {}
-    for line in PALETTE.read_text(encoding="utf-8").splitlines():
-        code = line.split("//")[0]
-        match = re.match(r"\s*\$icon-([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;", code)
-        if match:
-            colors[match.group(1)] = match.group(2).lower()
+    for path in sources:
+        for line in path.read_text(encoding="utf-8").splitlines():
+            code = line.split("//")[0]
+            match = re.match(r"\s*\$icon-([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;", code)
+            if match:
+                colors[match.group(1)] = match.group(2).lower()
 
     if not colors:
         sys.stderr.write(
-            f"[error] no $icon-* colours found in {PALETTE.name}.\n"
+            "[error] no $icon-* colours found in source/palettes/.\n"
             "        Icon colours are defined there under the $icon- prefix.\n"
         )
         sys.exit(1)
@@ -138,7 +153,7 @@ ICON_MAPPING = {
     # Edit actions
     "edit-clear": ("trash", "error"),
     "edit-copy": ("copy", "default"),
-    "edit-find": ("magnifying-glass", "upload"),
+    "edit-find": ("magnifying-glass", "default"),
     "edit-rename": ("pencil-simple", "default"),
 
     # Filters
@@ -227,34 +242,47 @@ ICON_MAPPING = {
 }
 
 
-def check_colors() -> None:
-    """Fail if a mapping asks for a colour the palette does not define.
+def check_roles() -> None:
+    """Fail if a mapping asks for a role no icon treatment can colour.
 
-    Every lookup below is COLORS.get(key, COLORS["default"]), so a key that
-    disappears from _palette.scss does not raise -- the icons that referenced it
-    are silently regenerated in default grey and the build stays green. Renaming
-    $icon-orange, for instance, repaints 5 icons and reports nothing.
+    Every lookup is a .get() with a fallback, so a role that nothing defines
+    does not raise -- the icons that referenced it are silently regenerated in
+    default grey and the build stays green. Renaming a role repaints five icons
+    and reports nothing. That is the same silent-success failure as an empty
+    icons directory, which build.py treats as fatal for exactly this reason.
 
-    That is the same silent-success failure as an empty icons directory, which
-    scripts/build.sh now treats as fatal for exactly this reason. Checked here
-    rather than in load_colors() because the mappings do not exist yet at the
-    point the palette is read.
+    Two different checks, because the two icon families are coloured at
+    different times: themed icons need their role to exist in every treatment
+    file, and control icons need their key to exist in the default palette.
     """
-    used = {color for mapping in (ICON_MAPPING, CONTROL_ICONS, INNER_CHECK_ICONS)
-            for _, color in mapping.values()}
-    used.add("default")  # the fallback itself, indexed directly below
+    themed = {role for _, role in ICON_MAPPING.values()} | {"default"}
+    control = {key for mapping in (CONTROL_ICONS, INNER_CHECK_ICONS)
+               for _, key in mapping.values()} | {"default"}
 
-    missing = sorted(used - set(COLORS))
-    if missing:
+    problems = []
+
+    treatments = sorted(TREATMENT_DIR.glob("*.json"))
+    if not treatments:
+        problems.append(f"no icon treatments found in {TREATMENT_DIR}")
+    for path in treatments:
+        declared = set(json.loads(path.read_text(encoding="utf-8"))["roles"])
+        for role in sorted(themed - declared):
+            problems.append(f"{path.name} declares no colour for role '{role}'")
+
+    for key in sorted(control - set(COLORS)):
+        problems.append(
+            f"control icons use $icon-{key}, which "
+            f"source/palettes/_{DEFAULT_PALETTE}.scss does not define")
+
+    if problems:
+        for entry in problems:
+            sys.stderr.write(f"[error] {entry}\n")
         sys.stderr.write(
-            "[error] icon colours referenced but not defined in "
-            f"{PALETTE.name}: {', '.join('$icon-' + m for m in missing)}\n"
-            "        Define them there, or update the mapping in this file.\n"
-        )
+            "        Add the missing entry, or update the mapping in this file.\n")
         sys.exit(1)
 
 
-check_colors()
+check_roles()
 
 
 def get_icon_url(icon_name: str, weight: str = "regular") -> str:
@@ -329,24 +357,23 @@ def generate_icon_list_md(output_dir: Path, weight: str, mono: bool, mono_color:
         "| Option | Description |",
         "|--------|-------------|",
         "| `--weight <w>` | Icon weight: thin, light, regular, bold, fill, duotone |",
-        "| `--mono` | Use single color for all icons |",
-        "| `--color <hex>` | Color for mono mode (default: #e0e0e0) |",
         "| `--output <dir>` | Custom output directory |",
         "",
-        "## Color Palette",
+        "## Colour",
         "",
+        "These files are GEOMETRY. Every themed icon below is written with the",
+        f"placeholder fill `{mono_color}` and recoloured on the way into each build",
+        "by `scripts/recolour_icons.py`, which resolves the icon's role through",
+        "`source/icons/<treatment>.json` onto a palette variable.",
+        "",
+        "That is why one set of files serves every palette and every icon",
+        "treatment, and why adding a treatment never touches the network. If you",
+        "see the placeholder colour in a packed theme, the recolour step was",
+        "skipped.",
+        "",
+        "| Role | Meaning |",
+        "|------|---------|",
     ]
-
-    if mono:
-        lines.extend([
-            f"Generated in mono mode - every icon uses `{mono_color}`.",
-            "",
-        ])
-
-    lines.extend([
-        "| Name | Hex | Usage |",
-        "|------|-----|-------|",
-    ])
 
     color_usage = {
         "default": "Default icons",
@@ -361,10 +388,8 @@ def generate_icon_list_md(output_dir: Path, weight: str, mono: bool, mono_color:
         "stalled": "Stalled transfers",
     }
 
-    palette = {"mono": mono_color} if mono else COLORS
-    for name, color in palette.items():
-        usage = "All icons" if mono else color_usage.get(name, "")
-        lines.append(f"| {name} | `{color}` | {usage} |")
+    for name in sorted({role for _, role in ICON_MAPPING.values()}):
+        lines.append(f"| `{name}` | {color_usage.get(name, '')} |")
 
     lines.extend([
         "",
@@ -374,9 +399,8 @@ def generate_icon_list_md(output_dir: Path, weight: str, mono: bool, mono_color:
         "|------------------|---------------|-------|",
     ])
 
-    for qbt_name, (phosphor_name, color_key) in sorted(ICON_MAPPING.items()):
-        color = mono_color if mono else COLORS.get(color_key, COLORS["default"])
-        lines.append(f"| `{qbt_name}` | {phosphor_name} | `{color}` |")
+    for qbt_name, (phosphor_name, role) in sorted(ICON_MAPPING.items()):
+        lines.append(f"| `{qbt_name}` | {phosphor_name} | `{role}` |")
 
     lines.extend([
         "",
@@ -401,10 +425,11 @@ def main():
                         help="Icon weight (default: regular)")
     parser.add_argument("--output", default=None,
                         help="Output directory (default: ../icons/modern)")
+    # --mono is deliberately gone. Monochrome is now an ICON TREATMENT chosen
+    # per build (source/icons/mono.json), not a property of the downloaded
+    # files, so every variant can offer both without downloading twice.
     parser.add_argument("--mono", action="store_true",
-                        help="Use monochrome icons (single color)")
-    parser.add_argument("--color", default="#e0e0e0",
-                        help="Monochrome color (only used with --mono)")
+                        help=argparse.SUPPRESS)
     args = parser.parse_args()
 
     # Determine output directory
@@ -425,11 +450,19 @@ def main():
     print("=" * 64)
     print()
 
-    if not args.mono:
-        print("  Color Palette:")
-        for name, color in COLORS.items():
-            print(f"    {name:<10} {color}")
+    if args.mono:
+        print("  --mono no longer applies here. Monochrome is a build-time icon")
+        print("  treatment: build the *-mono variants instead, or edit")
+        print("  src/nova-dark/source/icons/mono.json.")
         print()
+
+    print(f"  Themed icons download with the placeholder fill {GEOMETRY_FILL};")
+    print("  scripts/recolour_icons.py colours them per variant at build time.")
+    print()
+    print(f"  Control icons bake in colours from the {DEFAULT_PALETTE} palette:")
+    for name, color in sorted(COLORS.items()):
+        print(f"    {name:<10} {color}")
+    print()
 
     success_count = 0
     fail_count = 0
@@ -437,11 +470,9 @@ def main():
     for qbt_name, (phosphor_name, color_key) in ICON_MAPPING.items():
         url = get_icon_url(phosphor_name, args.weight)
 
-        # Determine color
-        if args.mono:
-            color = args.color
-        else:
-            color = COLORS.get(color_key, COLORS["default"])
+        # The placeholder, never a real colour: recolour_icons.py decides what
+        # this icon looks like, once per palette and treatment, at build time.
+        color = GEOMETRY_FILL
 
         print(f"  {qbt_name} ← {phosphor_name} ({color})...", end=" ")
 
@@ -521,12 +552,15 @@ def main():
         "source": "Phosphor Icons",
         "version": "2.1.1",
         "weight": args.weight,
-        "colored": not args.mono,
-        "colors": COLORS if not args.mono else {"mono": args.color},
-        "icons": {k: {"phosphor": v[0],
-                      "color": args.color if args.mono
-                      else COLORS.get(v[1], COLORS["default"])}
-                  for k, v in ICON_MAPPING.items()}
+        "_note": (
+            "Icon colour is a ROLE, not a hex. scripts/recolour_icons.py "
+            "resolves each role through source/icons/<treatment>.json onto a "
+            "palette variable, so the same icons serve every palette and every "
+            "icon treatment. Adding a treatment means adding one JSON file, "
+            "never re-downloading anything."
+        ),
+        "icons": {k: {"phosphor": v[0], "role": v[1]}
+                  for k, v in sorted(ICON_MAPPING.items())}
     }
 
     manifest_path = output_dir / "icon-manifest.json"
@@ -536,7 +570,7 @@ def main():
     print(f"  Manifest: {manifest_path}")
 
     # Generate ICON-LIST.md documentation
-    generate_icon_list_md(output_dir, args.weight, args.mono, args.color)
+    generate_icon_list_md(output_dir, args.weight, args.mono, GEOMETRY_FILL)
     print(f"  Icon List: {output_dir / 'ICON-LIST.md'}")
     print()
 

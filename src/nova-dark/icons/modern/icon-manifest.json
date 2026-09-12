@@ -2,373 +2,359 @@
   "source": "Phosphor Icons",
   "version": "2.1.1",
   "weight": "regular",
-  "colored": true,
-  "colors": {
-    "default": "#b0b0b0",
-    "accent": "#4a9eff",
-    "success": "#4ade80",
-    "warning": "#fbbf24",
-    "error": "#f87171",
-    "upload": "#c084fc",
-    "info": "#22d3ee",
-    "muted": "#6b7280",
-    "orange": "#fb923c",
-    "stalled": "#8cb4b4",
-    "white": "#ffffff",
-    "dark": "#1e1e2e"
-  },
+  "_note": "Icon colour is a ROLE, not a hex. scripts/recolour_icons.py resolves each role through source/icons/<treatment>.json onto a palette variable, so the same 88 icons serve every palette and every icon treatment. Adding a treatment means adding one JSON file, never re-downloading anything.",
   "icons": {
     "application-exit": {
       "phosphor": "sign-out",
-      "color": "#f87171"
+      "role": "error"
     },
     "application-rss": {
       "phosphor": "rss",
-      "color": "#fb923c"
+      "role": "orange"
     },
     "application-url": {
       "phosphor": "link",
-      "color": "#4a9eff"
+      "role": "accent"
     },
     "browser-cookies": {
       "phosphor": "cookie",
-      "color": "#fbbf24"
-    },
-    "system-log-out": {
-      "phosphor": "sign-out",
-      "color": "#f87171"
+      "role": "warning"
     },
     "chart-line": {
       "phosphor": "chart-line",
-      "color": "#22d3ee"
-    },
-    "view-statistics": {
-      "phosphor": "chart-bar",
-      "color": "#22d3ee"
-    },
-    "speedometer": {
-      "phosphor": "gauge",
-      "color": "#fbbf24"
+      "role": "info"
     },
     "checked-completed": {
       "phosphor": "check-circle",
-      "color": "#4ade80"
-    },
-    "connected": {
-      "phosphor": "wifi-high",
-      "color": "#4ade80"
-    },
-    "task-complete": {
-      "phosphor": "check",
-      "color": "#4ade80"
-    },
-    "disconnected": {
-      "phosphor": "wifi-slash",
-      "color": "#f87171"
-    },
-    "error": {
-      "phosphor": "warning-circle",
-      "color": "#f87171"
-    },
-    "firewalled": {
-      "phosphor": "shield-warning",
-      "color": "#f87171"
-    },
-    "task-reject": {
-      "phosphor": "x",
-      "color": "#f87171"
-    },
-    "ip-blocked": {
-      "phosphor": "prohibit",
-      "color": "#f87171"
-    },
-    "tracker-error": {
-      "phosphor": "warning-octagon",
-      "color": "#f87171"
-    },
-    "dialog-warning": {
-      "phosphor": "warning",
-      "color": "#fbbf24"
-    },
-    "tracker-warning": {
-      "phosphor": "warning",
-      "color": "#fbbf24"
-    },
-    "queued": {
-      "phosphor": "clock",
-      "color": "#fbbf24"
-    },
-    "loading": {
-      "phosphor": "spinner",
-      "color": "#6b7280"
-    },
-    "paused": {
-      "phosphor": "pause-circle",
-      "color": "#6b7280"
-    },
-    "stopped": {
-      "phosphor": "stop-circle",
-      "color": "#f87171"
-    },
-    "directory": {
-      "phosphor": "folder",
-      "color": "#fbbf24"
-    },
-    "fileicon": {
-      "phosphor": "file",
-      "color": "#b0b0b0"
-    },
-    "folder-documents": {
-      "phosphor": "folder-open",
-      "color": "#fbbf24"
-    },
-    "folder-new": {
-      "phosphor": "folder-plus",
-      "color": "#fbbf24"
-    },
-    "folder-remote": {
-      "phosphor": "cloud",
-      "color": "#4a9eff"
-    },
-    "download": {
-      "phosphor": "download",
-      "color": "#4ade80"
-    },
-    "downloading": {
-      "phosphor": "arrow-circle-down",
-      "color": "#22d3ee"
-    },
-    "stalledDL": {
-      "phosphor": "arrow-down",
-      "color": "#8cb4b4"
-    },
-    "upload": {
-      "phosphor": "upload",
-      "color": "#c084fc"
-    },
-    "stalledUP": {
-      "phosphor": "arrow-up",
-      "color": "#8cb4b4"
-    },
-    "edit-clear": {
-      "phosphor": "trash",
-      "color": "#f87171"
-    },
-    "edit-copy": {
-      "phosphor": "copy",
-      "color": "#b0b0b0"
-    },
-    "edit-find": {
-      "phosphor": "magnifying-glass",
-      "color": "#c084fc"
-    },
-    "edit-rename": {
-      "phosphor": "pencil-simple",
-      "color": "#b0b0b0"
-    },
-    "filter-active": {
-      "phosphor": "funnel",
-      "color": "#4ade80"
-    },
-    "filter-all": {
-      "phosphor": "list",
-      "color": "#b0b0b0"
-    },
-    "filter-inactive": {
-      "phosphor": "funnel-simple",
-      "color": "#6b7280"
-    },
-    "filter-stalled": {
-      "phosphor": "hourglass",
-      "color": "#fbbf24"
-    },
-    "go-bottom": {
-      "phosphor": "arrow-line-down",
-      "color": "#4a9eff"
-    },
-    "go-down": {
-      "phosphor": "arrow-down",
-      "color": "#4a9eff"
-    },
-    "go-top": {
-      "phosphor": "arrow-line-up",
-      "color": "#4a9eff"
-    },
-    "go-up": {
-      "phosphor": "arrow-up",
-      "color": "#4a9eff"
-    },
-    "force-recheck": {
-      "phosphor": "arrows-clockwise",
-      "color": "#fb923c"
-    },
-    "reannounce": {
-      "phosphor": "megaphone",
-      "color": "#fb923c"
-    },
-    "view-refresh": {
-      "phosphor": "arrow-clockwise",
-      "color": "#4a9eff"
-    },
-    "view-preview": {
-      "phosphor": "eye",
-      "color": "#22d3ee"
-    },
-    "list-add": {
-      "phosphor": "plus-circle",
-      "color": "#4ade80"
-    },
-    "list-remove": {
-      "phosphor": "minus-circle",
-      "color": "#f87171"
-    },
-    "insert-link": {
-      "phosphor": "link",
-      "color": "#4a9eff"
-    },
-    "help-about": {
-      "phosphor": "info",
-      "color": "#22d3ee"
-    },
-    "help-contents": {
-      "phosphor": "question",
-      "color": "#22d3ee"
-    },
-    "hash": {
-      "phosphor": "hash",
-      "color": "#b0b0b0"
-    },
-    "name": {
-      "phosphor": "tag",
-      "color": "#b0b0b0"
-    },
-    "network-connect": {
-      "phosphor": "globe",
-      "color": "#22d3ee"
-    },
-    "network-server": {
-      "phosphor": "hard-drives",
-      "color": "#b0b0b0"
-    },
-    "peers": {
-      "phosphor": "users",
-      "color": "#4a9eff"
-    },
-    "peers-add": {
-      "phosphor": "user-plus",
-      "color": "#4ade80"
-    },
-    "peers-remove": {
-      "phosphor": "user-minus",
-      "color": "#f87171"
+      "role": "success"
     },
     "configure": {
       "phosphor": "gear",
-      "color": "#b0b0b0"
+      "role": "default"
     },
-    "plugins": {
-      "phosphor": "puzzle-piece",
-      "color": "#c084fc"
+    "connected": {
+      "phosphor": "wifi-high",
+      "role": "success"
     },
-    "preferences-advanced": {
-      "phosphor": "sliders",
-      "color": "#c084fc"
+    "dialog-warning": {
+      "phosphor": "warning",
+      "role": "warning"
     },
-    "preferences-bittorrent": {
-      "phosphor": "share-network",
-      "color": "#4ade80"
+    "directory": {
+      "phosphor": "folder",
+      "role": "warning"
     },
-    "preferences-desktop": {
-      "phosphor": "monitor",
-      "color": "#4a9eff"
+    "disconnected": {
+      "phosphor": "wifi-slash",
+      "role": "error"
     },
-    "preferences-webui": {
-      "phosphor": "browser",
-      "color": "#22d3ee"
+    "download": {
+      "phosphor": "download",
+      "role": "success"
     },
-    "object-locked": {
-      "phosphor": "lock",
-      "color": "#fbbf24"
+    "downloading": {
+      "phosphor": "arrow-circle-down",
+      "role": "info"
     },
-    "security-high": {
-      "phosphor": "shield-check",
-      "color": "#4ade80"
+    "edit-clear": {
+      "phosphor": "trash",
+      "role": "error"
     },
-    "security-low": {
-      "phosphor": "shield",
-      "color": "#fbbf24"
+    "edit-copy": {
+      "phosphor": "copy",
+      "role": "default"
     },
-    "torrent-creator": {
-      "phosphor": "file-plus",
-      "color": "#4a9eff"
+    "edit-find": {
+      "phosphor": "magnifying-glass",
+      "role": "default"
     },
-    "torrent-magnet": {
-      "phosphor": "magnet",
-      "color": "#c084fc"
+    "edit-rename": {
+      "phosphor": "pencil-simple",
+      "role": "default"
     },
-    "torrent-start": {
-      "phosphor": "play",
-      "color": "#4a9eff"
+    "error": {
+      "phosphor": "warning-circle",
+      "role": "error"
     },
-    "torrent-start-forced": {
-      "phosphor": "fast-forward",
-      "color": "#fb923c"
+    "fileicon": {
+      "phosphor": "file",
+      "role": "default"
     },
-    "torrent-stop": {
-      "phosphor": "stop",
-      "color": "#f87171"
+    "filter-active": {
+      "phosphor": "funnel",
+      "role": "success"
     },
-    "pause-session": {
-      "phosphor": "pause",
-      "color": "#fbbf24"
+    "filter-all": {
+      "phosphor": "list",
+      "role": "default"
     },
-    "set-location": {
-      "phosphor": "map-pin",
-      "color": "#4a9eff"
+    "filter-inactive": {
+      "phosphor": "funnel-simple",
+      "role": "muted"
     },
-    "trackerless": {
-      "phosphor": "globe-simple",
-      "color": "#6b7280"
+    "filter-stalled": {
+      "phosphor": "hourglass",
+      "role": "warning"
     },
-    "trackers": {
-      "phosphor": "list-bullets",
-      "color": "#b0b0b0"
+    "firewalled": {
+      "phosphor": "shield-warning",
+      "role": "error"
     },
-    "rss_read_article": {
-      "phosphor": "article",
-      "color": "#6b7280"
+    "folder-documents": {
+      "phosphor": "folder-open",
+      "role": "warning"
     },
-    "rss_unread_article": {
-      "phosphor": "article-medium",
-      "color": "#fb923c"
+    "folder-new": {
+      "phosphor": "folder-plus",
+      "role": "warning"
+    },
+    "folder-remote": {
+      "phosphor": "cloud",
+      "role": "accent"
+    },
+    "force-recheck": {
+      "phosphor": "arrows-clockwise",
+      "role": "orange"
+    },
+    "go-bottom": {
+      "phosphor": "arrow-line-down",
+      "role": "accent"
+    },
+    "go-down": {
+      "phosphor": "arrow-down",
+      "role": "accent"
+    },
+    "go-top": {
+      "phosphor": "arrow-line-up",
+      "role": "accent"
+    },
+    "go-up": {
+      "phosphor": "arrow-up",
+      "role": "accent"
+    },
+    "hash": {
+      "phosphor": "hash",
+      "role": "default"
+    },
+    "help-about": {
+      "phosphor": "info",
+      "role": "info"
+    },
+    "help-contents": {
+      "phosphor": "question",
+      "role": "info"
+    },
+    "insert-link": {
+      "phosphor": "link",
+      "role": "accent"
+    },
+    "ip-blocked": {
+      "phosphor": "prohibit",
+      "role": "error"
+    },
+    "list-add": {
+      "phosphor": "plus-circle",
+      "role": "success"
+    },
+    "list-remove": {
+      "phosphor": "minus-circle",
+      "role": "error"
+    },
+    "loading": {
+      "phosphor": "spinner",
+      "role": "muted"
     },
     "mail-inbox": {
       "phosphor": "envelope",
-      "color": "#4a9eff"
+      "role": "accent"
     },
-    "view-categories": {
-      "phosphor": "folders",
-      "color": "#fbbf24"
-    },
-    "tags": {
+    "name": {
       "phosphor": "tag",
-      "color": "#4a9eff"
+      "role": "default"
+    },
+    "network-connect": {
+      "phosphor": "globe",
+      "role": "info"
+    },
+    "network-server": {
+      "phosphor": "hard-drives",
+      "role": "default"
+    },
+    "object-locked": {
+      "phosphor": "lock",
+      "role": "warning"
+    },
+    "pause-session": {
+      "phosphor": "pause",
+      "role": "warning"
+    },
+    "paused": {
+      "phosphor": "pause-circle",
+      "role": "muted"
+    },
+    "peers": {
+      "phosphor": "users",
+      "role": "accent"
+    },
+    "peers-add": {
+      "phosphor": "user-plus",
+      "role": "success"
+    },
+    "peers-remove": {
+      "phosphor": "user-minus",
+      "role": "error"
+    },
+    "plugins": {
+      "phosphor": "puzzle-piece",
+      "role": "upload"
+    },
+    "preferences-advanced": {
+      "phosphor": "sliders",
+      "role": "upload"
+    },
+    "preferences-bittorrent": {
+      "phosphor": "share-network",
+      "role": "success"
+    },
+    "preferences-desktop": {
+      "phosphor": "monitor",
+      "role": "accent"
+    },
+    "preferences-webui": {
+      "phosphor": "browser",
+      "role": "info"
+    },
+    "queued": {
+      "phosphor": "clock",
+      "role": "warning"
     },
     "ratio": {
       "phosphor": "scales",
-      "color": "#22d3ee"
+      "role": "info"
+    },
+    "reannounce": {
+      "phosphor": "megaphone",
+      "role": "orange"
+    },
+    "rss_read_article": {
+      "phosphor": "article",
+      "role": "muted"
+    },
+    "rss_unread_article": {
+      "phosphor": "article-medium",
+      "role": "orange"
+    },
+    "security-high": {
+      "phosphor": "shield-check",
+      "role": "success"
+    },
+    "security-low": {
+      "phosphor": "shield",
+      "role": "warning"
+    },
+    "set-location": {
+      "phosphor": "map-pin",
+      "role": "accent"
     },
     "slow": {
       "phosphor": "traffic-cone",
-      "color": "#fbbf24"
+      "role": "warning"
     },
     "slow_off": {
       "phosphor": "rabbit",
-      "color": "#4ade80"
+      "role": "success"
+    },
+    "speedometer": {
+      "phosphor": "gauge",
+      "role": "warning"
+    },
+    "stalledDL": {
+      "phosphor": "arrow-down",
+      "role": "stalled"
+    },
+    "stalledUP": {
+      "phosphor": "arrow-up",
+      "role": "stalled"
+    },
+    "stopped": {
+      "phosphor": "stop-circle",
+      "role": "error"
+    },
+    "system-log-out": {
+      "phosphor": "sign-out",
+      "role": "error"
+    },
+    "tags": {
+      "phosphor": "tag",
+      "role": "accent"
+    },
+    "task-complete": {
+      "phosphor": "check",
+      "role": "success"
+    },
+    "task-reject": {
+      "phosphor": "x",
+      "role": "error"
+    },
+    "torrent-creator": {
+      "phosphor": "file-plus",
+      "role": "accent"
+    },
+    "torrent-magnet": {
+      "phosphor": "magnet",
+      "role": "upload"
+    },
+    "torrent-start": {
+      "phosphor": "play",
+      "role": "accent"
+    },
+    "torrent-start-forced": {
+      "phosphor": "fast-forward",
+      "role": "orange"
+    },
+    "torrent-stop": {
+      "phosphor": "stop",
+      "role": "error"
+    },
+    "tracker-error": {
+      "phosphor": "warning-octagon",
+      "role": "error"
+    },
+    "tracker-warning": {
+      "phosphor": "warning",
+      "role": "warning"
+    },
+    "trackerless": {
+      "phosphor": "globe-simple",
+      "role": "muted"
+    },
+    "trackers": {
+      "phosphor": "list-bullets",
+      "role": "default"
+    },
+    "upload": {
+      "phosphor": "upload",
+      "role": "upload"
+    },
+    "view-categories": {
+      "phosphor": "folders",
+      "role": "warning"
+    },
+    "view-preview": {
+      "phosphor": "eye",
+      "role": "info"
+    },
+    "view-refresh": {
+      "phosphor": "arrow-clockwise",
+      "role": "accent"
+    },
+    "view-statistics": {
+      "phosphor": "chart-bar",
+      "role": "info"
     },
     "wallet-open": {
       "phosphor": "heart",
-      "color": "#f87171"
+      "role": "error"
     }
   }
 }

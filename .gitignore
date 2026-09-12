@@ -9,3 +9,7 @@ dist/
 # Python
 __pycache__/
 *.pyc
+
+# Variant build intermediates (stylesheets, icon sets, pack staging)
+build/
+src/nova-dark/source/build-entry.scss
