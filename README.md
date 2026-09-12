@@ -24,7 +24,7 @@ Every combination is built, so there are **8 themes** to choose from.
 
 ### Which file?
 
-Files are named after the choices that actually vary, so today that is `nova-dark-<palette>-<icons>.qbtheme`. An axis with only one value is left out of the name; add a second density and it reappears in all of them. Every combination is packed and none is privileged, so pick the two below that suit you.
+Files are named after the choices that actually vary, so today that is `theme-<palette>-<icons>.qbtheme`. An axis with only one value is left out of the name; add a second density and it reappears in all of them. Every combination is packed and none is privileged, so pick the two below that suit you.
 
 | Pick | If you want |
 | ---- | ----------- |

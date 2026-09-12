@@ -165,25 +165,33 @@ class Axis:
         return found
 
 
-def load_axes() -> dict[str, Axis]:
+def load_axes() -> tuple[dict[str, Axis], str]:
     if not VARIANTS_FILE.exists():
         fail(f"{rel(VARIANTS_FILE)} not found; it declares the variant matrix.")
     manifest = json.loads(VARIANTS_FILE.read_text(encoding="utf-8"))
-    return {name: Axis(name, spec) for name, spec in manifest["axes"].items()}
+    theme_name = manifest.get("name")
+    if not theme_name:
+        fail(f'{rel(VARIANTS_FILE)} has no "name"; it prefixes every packed theme.')
+    axes = {name: Axis(name, spec) for name, spec in manifest["axes"].items()}
+    return axes, theme_name
 
 
-def variant_name(combo: dict[str, str], axes: dict[str, Axis]) -> str:
+def variant_name(combo: dict[str, str], axes: dict[str, Axis], theme: str) -> str:
     """Name a variant by the axes that actually vary.
 
     An axis carrying a single value distinguishes nothing, so it is left out:
     with one density there is no "comfortable" to tell apart from anything, and
     carrying it in every filename is noise. Add a second density and it returns
     to the names automatically, for every variant at once.
+
+    The prefix comes from variants.json's "name" rather than a literal here. It
+    used to be hardcoded while that key sat unread, so the manifest looked like
+    it controlled the name and did not.
     """
     parts = [combo[name] for name, axis in axes.items() if len(axis.values) > 1]
     if not parts:  # every axis pinned; fall back to the full combination
         parts = [combo[name] for name in axes]
-    return "nova-dark-" + "-".join(parts)
+    return f"{theme}-" + "-".join(parts)
 
 
 # ---------------------------------------------------------------------------
@@ -487,7 +495,7 @@ def main() -> None:
         help="print the variants that would be built, then exit")
     args = parser.parse_args()
 
-    axes = load_axes()
+    axes, theme = load_axes()
 
     # Gates first: all of them, before any work, so a bad fragment is reported
     # once rather than twelve times.
@@ -515,7 +523,7 @@ def main() -> None:
 
     if args.list:
         for combo in combos:
-            print(variant_name(combo, axes))
+            print(variant_name(combo, axes, theme))
         return
 
     compile_filename = check_qtsass()
@@ -561,7 +569,7 @@ def main() -> None:
     log_info(f"Packing {len(combos)} theme(s)")
     built = {}
     for combo in combos:
-        name = variant_name(combo, axes)
+        name = variant_name(combo, axes, theme)
         built[tuple(combo[a] for a in order)] = pack(
             name,
             sheets[(combo["palette"], combo["density"])],

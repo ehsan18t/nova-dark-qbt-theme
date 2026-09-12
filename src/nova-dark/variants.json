@@ -20,7 +20,7 @@
     "no alias file: a theme is named for the choices that produced it, and there",
     "is nothing to keep in step with a 'recommended' one."
   ],
-  "name": "nova-dark",
+  "name": "theme",
   "axes": {
     "palette": {
       "dir": "source/palettes",
