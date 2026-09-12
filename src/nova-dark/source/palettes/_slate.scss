@@ -1,0 +1,68 @@
+// ============================================================================
+// SLATE - blue-slate neutrals, teal accent, the widest elevation separation
+// ============================================================================
+// The softest of the three. Its neutrals carry real hue rather than being
+// near-black, so the planes separate further apart than Nebula's do and the
+// window reads as a product rather than a terminal. Teal is the one accent of
+// the three that is not in the blue-violet family, which is what stops it
+// reading as a recolour of Nebula.
+//
+// Same variable set as _nebula.scss, enforced by the build. See that file for
+// what each ramp means; only the values differ here.
+// ============================================================================
+
+$palette-name: "slate";
+
+// --- CRUST: chrome, deepest to lightest. $crust-0 is drawn ON $crust-1 as a
+// --- hairline; never make them equal.
+$shadow:                   #03070a;
+$crust-0:                  #080d12;
+$crust-1:                  #0d1319;
+$crust-2:                  #182430;
+
+// --- PANEL: the content plane, above the chrome.
+$panel:                    #131b24;
+
+// --- SURFACE: control fills and strokes, lightest-ascending.
+$surface-0:                #2a3b4b;
+$surface-1:                #36495b;
+$surface-2:                #476075;
+$surface-3:                #657b8d;
+
+// --- TEXT
+$text-0:                   #8ea3b4;
+$text-1:                   #b2c3d1;
+$text-2:                   #dbe6ee;
+$text-bright:              #f1f6fa;
+
+// --- CHROME ACCENT. Teal, which would collide with $accent-teal (checking) in
+// --- the Status column if the chrome and queued roles had not been split; see
+// --- $accent-queued in _states.scss.
+$accent:                   #4fd6c4;
+
+
+$nova-selection:           #273942;
+$nova-selection-hover:     #2f444f;
+$nova-selection-inactive:  #22333b;
+
+// --- NOVA
+$nova-button:              #1a2732;
+$nova-button-border:       #33495c;
+$nova-elevated:            #243530;
+$nova-tab-inactive:        #090f14;
+$nova-disabled:            #121920;
+$nova-progress-trough:     #1b2733;
+$nova-progress-border:     #2d4051;
+$piece-border:             #3a5064;
+
+// The checked checkbox and radio fill. Equal to $accent here, which is what
+// this palette shipped with; graphite overrides it because a neutral accent
+// cannot carry the "on" state on its own. See _graphite.scss.
+$check-fill:               #4fd6c4;
+
+// --- ICONS: the palette-dependent slots; semantic ramp is in _states.scss.
+$icon-default:             #b2c3d1;
+$icon-mono:                #dbe6ee;
+$icon-accent:              #4fd6c4;
+$icon-mono:                #dbe6ee;
+$icon-dark:                #1a232e;

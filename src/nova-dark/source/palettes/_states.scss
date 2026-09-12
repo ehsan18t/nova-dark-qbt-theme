@@ -32,6 +32,12 @@
 // column. Hue does the distinguishing, not brightness.
 // ---------------------------------------------------------------------------
 
+// Queued. Deliberately NOT $accent: Slate's chrome accent is teal, which would
+// collide with $accent-teal (checking) in the one column where those two must
+// stay distinguishable, and Graphite's is a neutral, which would read as no
+// state at all. Splitting the role is what lets the chrome accent be any hue,
+// or none.
+$accent-queued:            #b396f8;
 
 // Deliberately outside the band: lighter and duller reads as "washed out", and
 // downloading is the one state that should feel active. Lightness 68% with

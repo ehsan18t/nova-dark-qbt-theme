@@ -1,0 +1,18 @@
+{
+  "name": "mono",
+  "description": "Every icon in one neutral, so colour on screen means torrent state and nothing else. The sidebar stops competing with the transfer list it is filtering.",
+  "roles": {
+    "default": "icon-mono",
+    "accent": "icon-mono",
+    "success": "icon-mono",
+    "warning": "icon-mono",
+    "error": "icon-mono",
+    "upload": "icon-mono",
+    "info": "icon-mono",
+    "muted": "icon-mono",
+    "orange": "icon-mono",
+    "stalled": "icon-mono",
+    "white": "icon-white",
+    "dark": "icon-dark"
+  }
+}

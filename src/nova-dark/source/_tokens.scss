@@ -85,6 +85,26 @@ $radio: url(:/uitheme/common/controls/radio_check_dark.svg);
 $radio_disabled: url(:/uitheme/common/controls/radio_check_disabled.svg);
 $checkbox: url(:/uitheme/common/controls/checkbox_check_dark.svg);
 $checkbox-disabled: url(:/uitheme/common/controls/checkbox_check_disabled.svg);
+
+// CHECKED CHECKBOX / RADIO.
+//
+// The glyph is chosen BY the fill rather than declared next to it, so the two
+// can never disagree and a new palette gets the right one for free. The two
+// glyph files are baked in src/common/ and packed verbatim for every variant
+// (they are NOT on the icon axis and nothing recolours them), so a palette
+// cannot name its own tick colour; deriving the choice from the fill is what
+// lets one shared pair serve both a dark fill and a light one.
+//
+// YIQ brightness, not lightness(): HSL lightness reads #a78bfa as 76% and
+// #6e727c as 44%, which is the opposite of how a white tick actually fares on
+// them. The 128 threshold is the standard one and is not tuned to the current
+// palettes -- when it was written it flipped all three, because a white tick
+// measured 1.24:1 on graphite, 2.72:1 on nebula and 1.79:1 on slate, all under
+// the 3:1 floor a non-text graphic needs.
+$checkbox-checked-bg: $check-fill;
+$checkbox-check-glyph: if(
+  (red($check-fill) * 299 + green($check-fill) * 587 + blue($check-fill) * 114) / 1000 > 128,
+  "on_light", "dark");
 $link: $accent-info;
 
 // Accent colors for semantic use

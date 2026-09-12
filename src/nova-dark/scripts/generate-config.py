@@ -102,7 +102,14 @@ MAPPING = {
 
     # --- RSS -------------------------------------------------------------
     "RSS.ReadArticle": "text-1",
-    "RSS.UnreadArticle": "accent",
+    # $text-bright, NOT $accent. This is the only place the chrome accent was
+    # ever drawn as TEXT, and it has to stay readable on $panel in every
+    # palette. Graphite's accent is a neutral in the same band as $surface-3,
+    # which measures 3.56:1 there -- dimmer than the READ articles beside it,
+    # which inverts the one distinction the pair exists to make. Brightest text
+    # against $text-1 is the conventional unread treatment and holds in all
+    # three palettes without the mapping having to know which one it is.
+    "RSS.UnreadArticle": "text-bright",
 
     # --- Transfer list -----------------------------------------------------
     # Straight onto the shared state family in palettes/_states.scss, so a state
@@ -114,8 +121,8 @@ MAPPING = {
     "TransferList.ForcedDownloadingMetadata": "accent-peach",
     "TransferList.ForcedUploading": "accent-peach",
     "TransferList.Uploading": "accent-success",
-    "TransferList.QueuedDownloading": "accent",
-    "TransferList.QueuedUploading": "accent",
+    "TransferList.QueuedDownloading": "accent-queued",
+    "TransferList.QueuedUploading": "accent-queued",
     # All three checking states share one colour. They used to be split, but the
     # two values were dE 10 apart -- indistinguishable in a column, and the
     # distinction is cosmetic.

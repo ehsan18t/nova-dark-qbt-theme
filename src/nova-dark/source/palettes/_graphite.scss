@@ -1,0 +1,86 @@
+// ============================================================================
+// GRAPHITE - greys all the way down, colour only where colour means something
+// ============================================================================
+// The quiet instrument. NO hue appears anywhere in this palette's chrome: not
+// in the accent, not in the selection, not in the section captions. Every one
+// of those slots holds a neutral off the same cool-grey ramp, so the transfer
+// list's state colours are the only saturated thing on screen and they read
+// from across the room.
+//
+// The neutrals keep a slight cool bias (hue ~222 at 7-11% saturation) rather
+// than being pure grey, which is the difference between a palette that reads as
+// chosen and one that reads as unconsidered. That bias is below the threshold
+// where it registers as a colour; the chrome slots below stay inside it.
+//
+// Same variable set as _nebula.scss, enforced by the build. See that file for
+// what each ramp means; only the values differ here.
+// ============================================================================
+
+$palette-name: "graphite";
+
+// --- CRUST: chrome, deepest to lightest. $crust-0 is drawn ON $crust-1 as a
+// --- hairline; never make them equal.
+$shadow:                   #040507;
+$crust-0:                  #0a0b0d;
+$crust-1:                  #0f1013;
+$crust-2:                  #1d1f23;
+
+// --- PANEL: the content plane, above the chrome.
+$panel:                    #191a1f;
+
+// --- SURFACE: control fills and strokes, lightest-ascending.
+$surface-0:                #2b2e35;
+$surface-1:                #383c44;
+$surface-2:                #4a4f59;
+$surface-3:                #6b6f7b;
+
+// --- TEXT
+$text-0:                   #979ba6;
+$text-1:                   #bcc0c9;
+$text-2:                   #e4e7ee;
+$text-bright:              #f7f8fa;
+
+// --- CHROME ACCENT. A neutral, which is the whole point of this palette: an
+// --- accent hue would be the one saturated thing in the chrome and would pull
+// --- against the state colours it sits beside. It lands in the same band as
+// --- $surface-3 on purpose, because "no accent" means the accent is a surface.
+// ---
+// --- Capped by legibility, not taste: it is Palette.Highlight, and
+// --- Palette.HighlightedText is white, so white must stay readable on it.
+// --- #6e727c measures 4.82:1.
+// ---
+// --- It no longer fills the checked checkbox or radio -- that is $check-fill
+// --- below, so the cap here does not constrain them and they do not constrain
+// --- the cap.
+$accent:                   #6e727c;
+
+
+$nova-selection:           #32353c;
+$nova-selection-hover:     #3b3f47;
+$nova-selection-inactive:  #3c4048;
+
+// --- NOVA
+$nova-button:              #1f2126;
+$nova-button-border:       #343841;
+$nova-elevated:            #262a33;
+$nova-tab-inactive:        #0c0d0f;
+$nova-disabled:            #16171a;
+$nova-progress-trough:     #222428;
+$nova-progress-border:     #2e3137;
+$piece-border:             #3a3e47;
+
+// The checked checkbox and radio fill. Its own primitive rather than $accent,
+// because graphite's accent is a neutral in the $surface-3 band and a box
+// filled with it reads as one more disabled control instead of as "on". White
+// here, level with $icon-mono and $caption, so a ticked box is unmissable.
+$check-fill:               #e4e7ee;
+
+// --- ICONS: the palette-dependent slots; semantic ramp is in _states.scss.
+$icon-default:             #bcc0c9;
+$icon-mono:                #e4e7ee;
+// Equal to $icon-mono, and that is not an oversight: with no accent hue to
+// spend, an accent icon distinguishes itself by being the brightest one, one
+// step above $icon-default.
+$icon-accent:              #e4e7ee;
+$icon-mono:                #e4e7ee;
+$icon-dark:                #191a1f;

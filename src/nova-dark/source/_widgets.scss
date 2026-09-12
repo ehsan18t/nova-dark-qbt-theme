@@ -1777,15 +1777,15 @@ QRadioButton::indicator:hover {
 }
 
 QCheckBox::indicator:checked {
-  background-color: $accent;
-  border-color: $accent;
-  image: url(:/uitheme/common/controls/checkbox_check_dark.svg);
+  background-color: $checkbox-checked-bg;
+  border-color: $checkbox-checked-bg;
+  image: url(:/uitheme/common/controls/checkbox_check_#{$checkbox-check-glyph}.svg);
 }
 
 QRadioButton::indicator:checked {
-  background-color: $accent;
-  border-color: $accent;
-  image: url(:/uitheme/common/controls/radio_check_dark.svg);
+  background-color: $checkbox-checked-bg;
+  border-color: $checkbox-checked-bg;
+  image: url(:/uitheme/common/controls/radio_check_#{$checkbox-check-glyph}.svg);
 }
 
 // ----------------------------------------------------------------------------

@@ -85,6 +85,11 @@ $nova-progress-trough:     #242539;
 $nova-progress-border:     #2f3150;
 $piece-border:             #3a3f5e;
 
+// The checked checkbox and radio fill. Equal to $accent here, which is what
+// this palette shipped with; graphite overrides it because a neutral accent
+// cannot carry the "on" state on its own. See _graphite.scss.
+$check-fill:               #a78bfa;
+
 // ---------------------------------------------------------------------------
 // ICONS - the palette-dependent slots. The semantic ramp is in _states.scss.
 //
@@ -95,5 +100,6 @@ $piece-border:             #3a3f5e;
 // no accent-on-selected variant of a mono icon; one colour is the whole set.
 // ---------------------------------------------------------------------------
 $icon-default:             #b6bcd4;  // default glyph
+$icon-mono:                #d7dcf0;  // the entire "mono" treatment
 $icon-accent:              #a78bfa;  // follows the chrome accent
 $icon-dark:                #1c1d2b;  // on light fills

@@ -34,7 +34,9 @@
         "_states.scss"
       ],
       "values": [
-        "nebula"
+        "nebula",
+        "graphite",
+        "slate"
       ]
     },
     "density": {
@@ -52,7 +54,8 @@
       "prefix": "",
       "shared": [],
       "values": [
-        "colour"
+        "colour",
+        "mono"
       ]
     }
   }
