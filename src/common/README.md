@@ -1,6 +1,6 @@
 # Shared Assets
 
-- `controls/` – accent-tinted UI glyphs (checkboxes, radios, tree toggles,
+- `controls/`: accent-tinted UI glyphs (checkboxes, radios, tree toggles,
   toolbar overflow, splitter handles, dock titlebar buttons) referenced by the
   stylesheet as `:/uitheme/common/controls/<name>.svg`.
 

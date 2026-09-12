@@ -2,14 +2,25 @@
 
 A modern, carefully crafted dark theme for qBittorrent featuring a refined color palette, semantic status colors, and a custom icon set.
 
-![Nova Dark screenshot](screenshots/nova-dark.png)
+<div align="center">
+  <img alt="The four palettes with colour icons" src="screenshots/palettes.png" width="100%">
+  <br>
+  <sub><b>colour</b> icons: every icon keeps its semantic hue.</sub>
+</div>
+<br>
+<div align="center">
+  <br>
+  <img alt="The four palettes with monochrome icons" src="screenshots/palettes-mono.png" width="100%">
+  <br>
+  <sub><b>mono</b> icons: colour on screen means torrent state and nothing else.</sub>
+</div>
 
 ## Features
 
-- 🎨 **Four palettes** – Nova (blue on navy), Nebula (violet on navy), Graphite (no hue in the chrome at all), Slate (blue-slate, teal accent)
-- 🎯 **Two icon treatments** – Semantic colour, or monochrome so colour on screen means torrent state and nothing else
-- 🚦 **Semantic status colors** – Distinct colors for each torrent state, identical in every variant so the legend never changes
-- ✨ **Polished UI** – Consistent styling across every widget, dialog and panel
+- 🎨 **Four palettes**: Nova (blue on navy), Nebula (violet on navy), Graphite (no hue in the chrome at all), Slate (blue-slate, teal accent)
+- 🎯 **Two icon treatments**: Semantic colour, or monochrome so colour on screen means torrent state and nothing else
+- 🚦 **Semantic status colors**: Distinct colors for each torrent state, identical in every variant so the legend never changes
+- ✨ **Polished UI**: Consistent styling across every widget, dialog and panel
 
 Every combination is built, so there are **8 themes** to choose from.
 
@@ -26,14 +37,21 @@ Every combination is built, so there are **8 themes** to choose from.
 
 Files are named after the choices that actually vary, so today that is `theme-<palette>-<icons>.qbtheme`. An axis with only one value is left out of the name; add a second density and it reappears in all of them. Every combination is packed and none is privileged, so pick the two below that suit you.
 
-| Pick | If you want |
-| ---- | ----------- |
-| `nova` | Closest to the theme that shipped before the matrix: a blue accent on the same cool navy |
-| `nebula` | The same ground with a violet accent |
-| `graphite` | Greys all the way down. No hue anywhere in the chrome, so the transfer list is the only colour on screen |
-| `slate` | Softer blue-slate with a teal accent and the widest separation between panes |
-| `colour` | Icons keep their semantic hue: downloads green, errors red, trackers orange |
-| `mono` | Every icon in one neutral, so the sidebar stops competing with the list it filters |
+**The palette** sets the ground and the accent, and each one is shown with both icon treatments:
+
+| Palette                                                                                                                         | `colour` icons                                                                       | `mono` icons                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| **`nova`**<br><br>Closest to the theme that shipped before the matrix: a blue accent on the same cool navy.                     | <img alt="Nova, colour icons" src="screenshots/nova-colour.png" width="300">         | <img alt="Nova, mono icons" src="screenshots/nova-mono.png" width="300">         |
+| **`nebula`**<br><br>The same ground with a violet accent.                                                                       | <img alt="Nebula, colour icons" src="screenshots/nebula-colour.png" width="300">     | <img alt="Nebula, mono icons" src="screenshots/nebula-mono.png" width="300">     |
+| **`graphite`**<br><br>Greys all the way down. No hue anywhere in the chrome, so the transfer list is the only colour on screen. | <img alt="Graphite, colour icons" src="screenshots/graphite-colour.png" width="300"> | <img alt="Graphite, mono icons" src="screenshots/graphite-mono.png" width="300"> |
+| **`slate`**<br><br>Softer blue-slate with a teal accent and the widest separation between panes.                                | <img alt="Slate, colour icons" src="screenshots/slate-colour.png" width="300">       | <img alt="Slate, mono icons" src="screenshots/slate-mono.png" width="300">       |
+
+**The icon treatment** sets what colour means:
+
+| Preview                                                                 | Icons                                                                                                 |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| <img alt="Colour icons" src="screenshots/icons-colour.png" width="420"> | **`colour`**<br><br>Icons keep their semantic hue: downloads green, errors red, trackers orange.      |
+| <img alt="Mono icons" src="screenshots/icons-mono.png" width="420">     | **`mono`**<br><br>Every icon in one neutral, so the sidebar stops competing with the list it filters. |
 
 ## Build from Source
 
@@ -56,11 +74,11 @@ python scripts/build.py --list        # print the matrix without building
 
 The container is only a toolchain wrapper. `scripts/build.py` is the actual build, and every path runs that same file. To run it directly you need:
 
-| Tool | What it does | Provided by |
-| ---- | ------------ | ----------- |
-| Python 3.8+ | Runs the build itself | [python.org](https://www.python.org/downloads/) |
-| `qtsass` | Compiles the SCSS sources to Qt-flavoured QSS | `pip install qtsass` |
-| `rcc` | Packs the stylesheet, icons and config into a `.qbtheme` | Qt 5 base tools |
+| Tool        | What it does                                             | Provided by                                     |
+| ----------- | -------------------------------------------------------- | ----------------------------------------------- |
+| Python 3.8+ | Runs the build itself                                    | [python.org](https://www.python.org/downloads/) |
+| `qtsass`    | Compiles the SCSS sources to Qt-flavoured QSS            | `pip install qtsass`                            |
+| `rcc`       | Packs the stylesheet, icons and config into a `.qbtheme` | Qt 5 base tools                                 |
 
 `qtsass` is imported, not called as a command, so it does not need to be on `PATH`. Installing it for the Python you build with is enough.
 
@@ -133,14 +151,14 @@ To change icon *colours*, edit the `$icon-` values in a palette fragment, or add
 
 Identical in every palette, on purpose. A state colour is a legend, not decoration: if each palette invented its own green, switching palette would mean relearning the transfer list.
 
-| Status            | Color      |
-| ----------------- | ---------- |
-| Downloading       | 🔵 Blue     |
-| Uploading/Seeding | 🟢 Green    |
-| Forced            | 🟠 Orange   |
-| Stalled           | ⚪ Gray     |
-| Queued            | 🟣 Violet   |
-| Error/Missing     | 🔴 Red      |
+| Status            | Color    |
+| ----------------- | -------- |
+| Downloading       | 🔵 Blue   |
+| Uploading/Seeding | 🟢 Green  |
+| Forced            | 🟠 Orange |
+| Stalled           | ⚪ Gray   |
+| Queued            | 🟣 Violet |
+| Error/Missing     | 🔴 Red    |
 
 This is also why the chrome accent and the "queued" colour are separate: Graphite's accent is blue and Slate's is teal, either of which would be indistinguishable from Downloading or Checking in the one column where those have to stay apart.
 
