@@ -27,8 +27,42 @@ $sidebar-item-padding: $row-padding;
 $sidebar-item-min-height: $row-min-height;
 $sidebar-item-hover-bg: $nova-elevated;
 
+// The sidebar hovers on a deeper shade of its own selection colour. This is a
+// SEPARATE token from $sidebar-item-hover-bg above, because that one drives the
+// generic QTreeView::item:hover rule -- and TransferListWidget is a QTreeView,
+// so changing it tints every row of the torrent list too.
+$sidebar-pane-hover-bg: $nova-selection-hover-dim;
 $sidebar-item-selected-bg: $nova-selection;
 $sidebar-item-selected-text: $white;
+$header-bg: $header;
+$header-hover-bg: $header-hover;
+$sidebar-bg: $rail;
+// The section captions can ONLY take a colour. ArrowCheckBox paints just the
+// arrow and the label (transferlistfilterswidgetitem.cpp:45-59), never chaining
+// to QCheckBox::paintEvent, so no background, border or radius on that widget is
+// ever drawn. The proposal's design gave the caption a recessed band and dimmed
+// the text against it; with the band impossible, dimming alone just reads as
+// washed out, which is what it was reported as.
+//
+// So the accent carries it instead. It is the one reachable colour that reads as
+// a deliberate label rather than as faded body text, and it gives the sidebar the
+// same hierarchy the band was there to provide.
+$sidebar-caption-text: $caption;
+// Hover on a section title. $text-bright, NOT $base-text: graphite's caption IS
+// $base-text, so brightening to it was a no-op and the one clickable thing in
+// the sidebar chrome had no hover feedback at all. $text-bright is above every
+// caption value in all three palettes, so the rule does something everywhere.
+$sidebar-caption-hover-text: $text-bright;
+$sidebar-item-radius: $base-border-radius;
+// The selection rail, chosen by the palette. Graphite makes it white because
+// that palette has no accent to spend; Nebula and Slate use theirs. Declared in
+// all twenty item states so the label never shifts when a row is selected.
+$sidebar-item-rail: $selection-rail;
+// 3px. Wide enough to read as a deliberate marker rather than a hairline on a
+// row this tall. It is declared in all twenty item states, transparent in the
+// ones that are not selected, so the label never shifts sideways when a row is
+// picked -- widening it here widens the reserved space everywhere at once.
+$sidebar-item-rail-width: 3px;
 $sidebar-item-selected-active-bg: $nova-selection;
 $sidebar-item-selected-hover-bg: $nova-selection-hover;
 
@@ -124,41 +158,3 @@ $font-size-small: 8pt;
 $font-size-extra-small: 7pt;
 $font-size-qslider-groove: 3pt;
 $font-size-qslider-handle: 4pt;
-
-$sidebar-bg: $rail;
-
-// The section captions can ONLY take a colour. ArrowCheckBox paints just the
-// arrow and the label (transferlistfilterswidgetitem.cpp:45-59), never chaining
-// to QCheckBox::paintEvent, so no background, border or radius on that widget is
-// ever drawn. The proposal's design gave the caption a recessed band and dimmed
-// the text against it; with the band impossible, dimming alone just reads as
-// washed out, which is what it was reported as.
-//
-// So the accent carries it instead. It is the one reachable colour that reads as
-// a deliberate label rather than as faded body text, and it gives the sidebar the
-// same hierarchy the band was there to provide.
-$sidebar-caption-text: $caption;
-// Hover on a section title. $text-bright, NOT $base-text: graphite's caption IS
-// $base-text, so brightening to it was a no-op and the one clickable thing in
-// the sidebar chrome had no hover feedback at all. $text-bright is above every
-// caption value in all three palettes, so the rule does something everywhere.
-$sidebar-caption-hover-text: $text-bright;
-
-$sidebar-item-radius: $base-border-radius;
-
-// The selection rail, chosen by the palette. Graphite makes it white because
-// that palette has no accent to spend; Nebula and Slate use theirs. Declared in
-// all twenty item states so the label never shifts when a row is selected.
-$sidebar-item-rail: $selection-rail;
-
-// 3px. Wide enough to read as a deliberate marker rather than a hairline on a
-// row this tall. It is declared in all twenty item states, transparent in the
-// ones that are not selected, so the label never shifts sideways when a row is
-// picked -- widening it here widens the reserved space everywhere at once.
-$sidebar-item-rail-width: 3px;
-
-// The sidebar hovers on a deeper shade of its own selection colour. This is a
-// SEPARATE token from $sidebar-item-hover-bg above, because that one drives the
-// generic QTreeView::item:hover rule -- and TransferListWidget is a QTreeView,
-// so changing it tints every row of the torrent list too.
-$sidebar-pane-hover-bg: $nova-selection-hover-dim;

@@ -128,6 +128,10 @@ MAPPING = {
     "TransferList.ForcedDownloadingMetadata": "accent-peach",
     "TransferList.ForcedUploading": "accent-peach",
     "TransferList.Uploading": "accent-success",
+    # $accent-queued, NOT $accent. The chrome accent is violet in Nebula but
+    # blue in Graphite and teal in Slate, either of which would be
+    # indistinguishable from Downloading or Checking in this one column. The
+    # split is what lets a palette pick any accent it likes.
     "TransferList.QueuedDownloading": "accent-queued",
     "TransferList.QueuedUploading": "accent-queued",
     # All three checking states share one colour. They used to be split, but the
@@ -147,11 +151,37 @@ MAPPING = {
     "TransferList.StoppedUploading": "status-stopped",
 
     # --- Pieces bar and progress -----------------------------------------
-    "PiecesBar.Border": "piece-border",
-    "PiecesBar.Piece": "accent-blue",
-    "PiecesBar.PartialPiece": "accent-teal",
-    "PiecesBar.MissingPiece": "panel",
-    "ProgressBar": "accent-blue",
+    # $panel, deliberately NOT a frame colour.
+    #
+    # piecesbar.cpp:181 draws the bar's content into QRect(1, 1, w-2, h-2), then
+    # :205-207 strokes a border along addRect(0, 0, w, h). The left and top edges
+    # of that rect land on real pixels; the right and bottom fall at x = w and
+    # y = h, one pixel outside the widget, and are clipped away. The outermost
+    # column and row are then covered by neither the content nor the border, so
+    # they show the pane behind the bar.
+    #
+    # The result is a border on two sides and bare background on the other two,
+    # which is unmissable once the bar is filled. The geometry is C++ and a theme
+    # supplies borderColor() and nothing else, so the only fix is to stop the two
+    # drawn edges standing out: matching them to the pane makes all four agree.
+    "PiecesBar.Border": "panel",
+    # $progress-fill: the palette's accent, darkened. The bar has to satisfy two
+    # things at once. It must match the variant, which a fixed blue did not --
+    # that was the first report. And white has to be readable on it, because
+    # progressbarpainter.cpp draws the percentage in Palette.HighlightedText
+    # straight over the fill -- using the accent raw measured 1.79:1 on slate,
+    # which was the second report. A darkened accent is the only value that does
+    # both. The pieces bar follows it because they measure the same thing.
+    "PiecesBar.Piece": "progress-fill",
+    # Follows the palette: a lighter shade of the fill where the palette has an
+    # accent, a dimmer neutral in Graphite where it does not.
+    "PiecesBar.PartialPiece": "progress-partial",
+    # The trough, not $panel. With the border above no longer visible, a bar
+    # filled with the pane's own colour would vanish entirely when empty, and the
+    # properties pane opens empty on every launch. On the trough it stays legible
+    # as a recessed slot.
+    "PiecesBar.MissingPiece": "nova-progress-trough",
+    "ProgressBar": "progress-fill",
 }
 
 DECL = re.compile(r"\s*\$([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;")

@@ -1005,12 +1005,11 @@ QProgressBar {
   margin: 0px;
 }
 
-// Blue, not the violet signature. A progress bar shows a QUANTITY, and violet
-// already means "selected / queued" everywhere else in this theme -- a violet
-// fill reads as a selection state rather than an amount. Blue also ties the bar
-// to TransferList.Downloading, which is the thing it is measuring.
+// Matches the ProgressBar colour in config.json, so the bars the stylesheet
+// paints and the ones the delegate paints agree. See _palette fragments for why
+// this is the accent DARKENED rather than the accent itself.
 QProgressBar::chunk {
-  background-color: $accent-blue;
+  background-color: $progress-fill;
   border-radius: 2px;
   margin: 1px;
 }
@@ -1189,15 +1188,19 @@ QToolTip {
 // HEADER VIEW (Column Headers)
 // ----------------------------------------------------------------------------
 QHeaderView {
-  background-color: $crust-1;
+  background-color: $header-bg;
   border: none;
 }
 
 QHeaderView::section {
-  background-color: $crust-1;
+  background-color: $header-bg;
   border: none;
-  border-right: 1px solid $crust-0;
-  border-bottom: 1px solid $crust-0;
+  // The column separators follow $panel, not $crust-0. The header now sits ABOVE
+  // the rows, so a separator taken from the darkest crust would read as a hard
+  // grid on it rather than the hairline it was on the old dark header. The
+  // bottom rule keeps the crust, because that one genuinely separates two planes.
+  border-right: 1px solid $panel;
+  border-bottom: 1px solid $crust-1;
   color: $text-0;
   font-weight: 500;
   // Tight left padding buys back room for narrow columns. The "#" column is
@@ -1217,7 +1220,7 @@ QHeaderView::section {
 }
 
 QHeaderView::section:hover {
-  background-color: $crust-2;
+  background-color: $header-hover-bg;
   color: $text-2;
 }
 
@@ -1546,8 +1549,11 @@ QLineEdit:focus {
 // Only the horizontal padding and the corner radius differ, and neither
 // affects height. Change QComboBox's vertical padding or min-height and this
 // must change with it.
+// Matched to the "Filter by" QComboBox immediately to its right, which uses
+// the button fill. The two sit side by side on the same toolbar, so any
+// difference between them reads as a mistake rather than as a distinction.
 LineEdit#lineEditSearchPattern {
-  background-color: $crust-1;
+  background-color: $nova-button;
   border: 1px solid $surface-0;
   border-radius: 6px;
   padding: 4px 12px;
@@ -1724,6 +1730,17 @@ QTabBar::tab:last {
 // ----------------------------------------------------------------------------
 // GROUP BOX
 // ----------------------------------------------------------------------------
+// DO NOT TIGHTEN THESE THREE VALUES. margin-top reserves the strip the title is
+// drawn into, because QGroupBox::title below uses subcontrol-origin: margin;
+// padding-top is the clearance between that strip and the first row of content.
+// Shrinking them to make the properties panel denser was tried and it dropped
+// the "Transfer" and "Information" titles straight on top of their own first
+// row of labels.
+//
+// The gap BETWEEN label rows, which is what actually costs the space, is a
+// QGridLayout's vertical spacing (propertieswidget.ui:164 sets only top and
+// bottom margins) and no stylesheet property reaches it. There is nothing to
+// win here; see the won't-fix note in the ledger.
 QGroupBox {
   background-color: transparent;
   border: 1px solid $surface-0;
@@ -1919,6 +1936,8 @@ PropertiesWidget > QPushButton[text="General"] {
 PropertiesWidget > QPushButton[text="Speed"] {
   margin-right: 6px;
 }
+
+
 // ----------------------------------------------------------------------------
 // SIDEBAR ALIGNMENT
 // ----------------------------------------------------------------------------
@@ -2116,4 +2135,26 @@ TagFilterWidget:!active {
 
 TransferListFiltersWidgetItem:!active > QCheckBox {
   color: $sidebar-caption-text;
+}
+
+
+// ----------------------------------------------------------------------------
+// HEADER FRAME COLOUR
+// ----------------------------------------------------------------------------
+// The frame around the column header, recoloured. The border itself is KEPT;
+// only $crust-0 becomes $crust-1, so the darkest value in the palette stops
+// outlining what is now the lightest plane in the window. $crust-1 is the
+// toolbar's own colour, so the header's top edge meets the toolbar rather than
+// cutting across it.
+//
+// This rule has to live HERE, at the end of the file, and not up in the HEADER
+// VIEW block. QHeaderView is a QAbstractItemView subclass, so the
+//   QAbstractItemView { border: 1px solid $crust-0 }
+// rule above also matches it; the two selectors tie on specificity and source
+// order decides. Declared any earlier, this silently loses and the header keeps
+// the near-black frame.
+QHeaderView {
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 1px solid $crust-1;
 }

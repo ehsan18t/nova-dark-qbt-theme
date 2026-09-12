@@ -51,10 +51,10 @@
     "TransferList.StalledUploading": "#b1bcc9",
     "TransferList.StoppedDownloading": "#7e8195",
     "TransferList.StoppedUploading": "#7e8195",
-    "PiecesBar.Border": "#3a5064",
-    "PiecesBar.Piece": "#5da3fd",
-    "PiecesBar.PartialPiece": "#78e3d8",
-    "PiecesBar.MissingPiece": "#131b24",
-    "ProgressBar": "#5da3fd"
+    "PiecesBar.Border": "#131b24",
+    "PiecesBar.Piece": "#008573",
+    "PiecesBar.PartialPiece": "#4fd6c4",
+    "PiecesBar.MissingPiece": "#1b2733",
+    "ProgressBar": "#008573"
   }
 }

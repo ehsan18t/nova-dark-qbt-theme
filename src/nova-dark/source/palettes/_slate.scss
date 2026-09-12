@@ -39,13 +39,24 @@ $text-bright:              #f1f6fa;
 // --- the Status column if the chrome and queued roles had not been split; see
 // --- $accent-queued in _states.scss.
 $accent:                   #4fd6c4;
-
+// The selection fill. Rotated off the accent's green-teal toward blue-cyan, and
+// deliberately desaturated rather than a strong tint of the accent: a saturated selection band competes with the transfer list's own
+// state colours, which are the thing on screen that colour is supposed to mean.
+// Nebula's three values are the ones the theme shipped with before the matrix;
+// the other palettes use the same relationship rotated onto their hue.
+// The column header of every table: the transfer list, Peers, Trackers, Content.
+// ABOVE $panel, so the header reads as the top edge of the table rather than as
+// more toolbar. It used to be $crust-1, the same value the toolbar uses, which
+// merged the two into one band.
+$header:                   #1d2833;
+$header-hover:             #27343f;
 
 // The filter sidebar's own plane. BELOW $panel, not above it: the sidebar is
 // chrome and the torrent list is content, so the list should be the lighter
 // surface. Getting this backwards is what made the right-hand panel read
 // better than the left.
 $rail:                     #0f1720;
+
 // The section captions. Its own primitive, NOT $accent: the captions sit above
 // every section all the way down the pane, so the chrome accent at full
 // strength turns the sidebar into a column of violet. Roughly 40% saturation
@@ -55,14 +66,28 @@ $rail:                     #0f1720;
 // paints just the arrow and the label and never chains to QCheckBox::paintEvent
 // -- so it is carrying the whole of the caption's hierarchy on its own.
 $caption:                  #7cc0b7;
+
+// CHROME COLOURS. These three are on the PALETTE axis on purpose.
+//
+// A monochrome progress bar and a white selection rail are right for Graphite,
+// whose whole point is that colour is absent so the transfer list's state
+// colours are the only colour on screen. Applying that to a violet or a teal
+// palette leaves grey chrome sitting next to coloured icons, which reads as a
+// mistake rather than as restraint.
+//
+// $progress-fill is capped by legibility, not taste: qBittorrent draws the
+// percentage in Palette.HighlightedText, which is white and is also the
+// selection text colour, so it cannot go dark to suit a brighter bar.
+$progress-fill:            #008573;
+$progress-partial:         #4fd6c4;
 $selection-rail:           #4fd6c4;
+$nova-selection:           #273942;
+$nova-selection-hover:     #2f444f;
 // Sidebar hover: a DEEPER shade of the selection fill, not a neutral grey. The
 // row you are pointing at and the row that is selected should read as the same
 // idea at two strengths, and the accent rail on the selected one is what
 // separates them. A neutral hover made them look unrelated.
 $nova-selection-hover-dim: #1f2e35;
-$nova-selection:           #273942;
-$nova-selection-hover:     #2f444f;
 $nova-selection-inactive:  #22333b;
 
 // --- NOVA
@@ -82,7 +107,6 @@ $check-fill:               #4fd6c4;
 
 // --- ICONS: the palette-dependent slots; semantic ramp is in _states.scss.
 $icon-default:             #b2c3d1;
-$icon-mono:                #dbe6ee;
 $icon-accent:              #4fd6c4;
 $icon-mono:                #dbe6ee;
 $icon-dark:                #1a232e;
