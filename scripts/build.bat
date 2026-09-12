@@ -42,7 +42,7 @@ set "RC=%ERRORLEVEL%"
 
 echo.
 if "%RC%"=="0" (
-    echo Done. Install build\dist\nova-dark.qbtheme via
+    echo Done. Pick a theme from build\dist\ and install it via
     echo   qBittorrent - Options - Behavior - Use custom UI theme
 ) else (
     echo Build FAILED with exit code %RC%. See the errors above.

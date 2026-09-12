@@ -165,12 +165,11 @@ class Axis:
         return found
 
 
-def load_axes() -> tuple[dict[str, Axis], dict[str, str]]:
+def load_axes() -> dict[str, Axis]:
     if not VARIANTS_FILE.exists():
         fail(f"{rel(VARIANTS_FILE)} not found; it declares the variant matrix.")
     manifest = json.loads(VARIANTS_FILE.read_text(encoding="utf-8"))
-    axes = {name: Axis(name, spec) for name, spec in manifest["axes"].items()}
-    return axes, manifest["default"]
+    return {name: Axis(name, spec) for name, spec in manifest["axes"].items()}
 
 
 def variant_name(combo: dict[str, str], axes: dict[str, Axis]) -> str:
@@ -488,7 +487,7 @@ def main() -> None:
         help="print the variants that would be built, then exit")
     args = parser.parse_args()
 
-    axes, default = load_axes()
+    axes = load_axes()
 
     # Gates first: all of them, before any work, so a bad fragment is reported
     # once rather than twelve times.
@@ -569,17 +568,6 @@ def main() -> None:
             CONFIG_DIR / f"{combo['palette']}.json",
             icon_sets[(combo["palette"], combo["icons"])],
         )
-
-    # The default alias. The README's install instructions point at this name,
-    # and so does anyone who has been using the theme since before it had
-    # variants, so it keeps working and simply means "the recommended one".
-    alias_key = tuple(default[a] for a in order)
-    if alias_key in built:
-        alias = DIST_DIR / "nova-dark.qbtheme"
-        shutil.copyfile(built[alias_key], alias)
-        log_step(f"alias {alias.name} -> {variant_name(default, axes)}")
-    elif not args.only:
-        log_warn(f"default combination {default} was not built; no alias written")
 
     fix_ownership()
     log_done(f"{len(built)} theme(s) in {rel(DIST_DIR)}")

@@ -16,15 +16,11 @@
     "_tokens.scss to consume whatever names its fragments define. build.py needs",
     "no change; it already products every axis it finds.",
     "",
-    "'default' names the combination packed as plain 'nova-dark.qbtheme', which",
-    "is what the README's install instructions point at."
+    "Every combination is packed and none is privileged. There is no default and",
+    "no alias file: a theme is named for the choices that produced it, and there",
+    "is nothing to keep in step with a 'recommended' one."
   ],
   "name": "nova-dark",
-  "default": {
-    "palette": "nebula",
-    "density": "comfortable",
-    "icons": "colour"
-  },
   "axes": {
     "palette": {
       "dir": "source/palettes",
