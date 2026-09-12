@@ -58,7 +58,14 @@ MAPPING = {
     # both are visible.
     "Palette.Window": "crust-1",              # matches QMainWindow/QToolBar
     "Palette.WindowText": "text-2",
-    "Palette.Base": "panel",                  # matches QTreeView/QLineEdit bg
+    # $rail, not $panel. TransferListFiltersWidget is a custom QWidget with no
+    # paintEvent (transferlistfilterswidget.cpp:52-56), so the sidebar container
+    # and the gaps between its sections cannot be painted from the stylesheet at
+    # all -- they follow this. The five filter widgets are set to the same
+    # primitive in _widgets.scss; the two are one decision in two files, and
+    # leaving them apart stripes the pane. Everything that must stay $panel
+    # (the transfer list, inputs, menus) sets its background explicitly.
+    "Palette.Base": "rail",
     "Palette.AlternateBase": "crust-2",
     "Palette.Text": "text-2",
     "Palette.ToolTipBase": "panel",           # matches QToolTip

@@ -69,6 +69,26 @@ $text-bright:              #f2f4fb;
 $accent:                   #a78bfa;
 
 
+// The filter sidebar's own plane. BELOW $panel, not above it: the sidebar is
+// chrome and the torrent list is content, so the list should be the lighter
+// surface. Getting this backwards is what made the right-hand panel read
+// better than the left.
+$rail:                     #171824;
+// The section captions. Its own primitive, NOT $accent: the captions sit above
+// every section all the way down the pane, so the chrome accent at full
+// strength turns the sidebar into a column of violet. Roughly 40% saturation
+// against the accent's ~90%, same hue, so it reads as a quiet label.
+//
+// Colour is the only thing that reaches this widget at all -- ArrowCheckBox
+// paints just the arrow and the label and never chains to QCheckBox::paintEvent
+// -- so it is carrying the whole of the caption's hierarchy on its own.
+$caption:                  #9d8dce;
+$selection-rail:           #a78bfa;
+// Sidebar hover: a DEEPER shade of the selection fill, not a neutral grey. The
+// row you are pointing at and the row that is selected should read as the same
+// idea at two strengths, and the accent rail on the selected one is what
+// separates them. A neutral hover made them look unrelated.
+$nova-selection-hover-dim: #242839;
 $nova-selection:           #2c3249;
 $nova-selection-hover:     #343b56;
 $nova-selection-inactive:  #333750;

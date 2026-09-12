@@ -55,6 +55,33 @@ $text-bright:              #f7f8fa;
 $accent:                   #6e727c;
 
 
+// The filter sidebar's own plane. BELOW $panel, not above it: the sidebar is
+// chrome and the torrent list is content, so the list should be the lighter
+// surface. Getting this backwards is what made the right-hand panel read
+// better than the left.
+$rail:                     #151619;
+// The section captions, at the SAME value as $icon-mono and $text-2 -- the
+// brightest thing in the sidebar rather than a dimmer label above it.
+//
+// This is the third attempt and the first that reads. The other two both tried
+// to buy hierarchy by going DIMMER than the item rows: $text-0 in amend 4, then
+// a neutral luminance-matched to the old blue caption (L* 68) here. Both were
+// reported as blending. In the hued palettes the caption gets its separation
+// from a hue the rows do not have; graphite has no hue to spend, so dimming is
+// the only axis left and dimming is exactly what makes a label disappear.
+// Going the other way -- caption level with the icons, rows carrying their own
+// weight below -- puts the emphasis where a section heading wants it.
+//
+// Colour is the only thing that reaches this widget at all -- ArrowCheckBox
+// paints just the arrow and the label and never chains to QCheckBox::paintEvent
+// -- so it is carrying the whole of the caption's hierarchy on its own.
+$caption:                  #e4e7ee;
+$selection-rail:           #e4e7ee;
+// Sidebar hover: a DEEPER shade of the selection fill, not a neutral grey. The
+// row you are pointing at and the row that is selected should read as the same
+// idea at two strengths, and the accent rail on the selected one is what
+// separates them. A neutral hover made them look unrelated.
+$nova-selection-hover-dim: #292b31;
 $nova-selection:           #32353c;
 $nova-selection-hover:     #3b3f47;
 $nova-selection-inactive:  #3c4048;

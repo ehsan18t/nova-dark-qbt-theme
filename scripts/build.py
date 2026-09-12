@@ -537,6 +537,16 @@ def main() -> None:
                 compile_filename, palette, density)
             log_step(f"{palette} / {density}")
 
+    # A compiled stylesheet can be perfectly valid and still paint the wrong
+    # thing, because a rule the sidebar relies on can be out-specified by a
+    # generic reset. That is invisible in the source and invisible in the
+    # output; it only shows when the cascade is resolved the way Qt resolves it.
+    # This already caught the selection rail disappearing whenever the sidebar
+    # had focus.
+    log_info("Checking the sidebar rail wins the cascade")
+    run_script(THEME_ROOT / "scripts" / "check_cascade.py",
+               *[str(p) for p in sheets.values()])
+
     log_info(f"Recolouring {len(palettes) * len(treatments)} icon set(s)")
     icon_sets = {}
     for palette in palettes:

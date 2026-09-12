@@ -1919,3 +1919,201 @@ PropertiesWidget > QPushButton[text="General"] {
 PropertiesWidget > QPushButton[text="Speed"] {
   margin-right: 6px;
 }
+// ----------------------------------------------------------------------------
+// SIDEBAR ALIGNMENT
+// ----------------------------------------------------------------------------
+// The filter sidebar is built from two different widget families: STATUS and
+// TRACKERS are QListWidgets (basefilterwidget.h:39), while CATEGORIES and TAGS
+// are QTreeViews (categoryfilterwidget.h:33, tagfilterwidget.h:36).
+//
+// Only the QTreeViews draw a ::branch, and the branch rule above gives it
+// margin-left: 3px plus padding-left: 3px. That 6px lands on the Categories and
+// Tags rows and on nothing else, so the two halves of one sidebar sit at
+// different indents. Zeroing it here lines all four sections up.
+//
+// Scoped to the two classes by name, NEVER to QTreeView::branch: the Content
+// tab's file tree is also a QTreeView and genuinely needs its branch offset to
+// show nesting.
+CategoryFilterWidget::branch,
+TagFilterWidget::branch {
+  margin-left: 0;
+  margin-top: 0;
+  padding-left: 0;
+}
+
+
+// ============================================================================
+// FILTER SIDEBAR
+// ============================================================================
+// EVERY selector in this section names a filter widget class. That is not
+// style, it is the fix for the defect that cost the last release: the sidebar
+// is built from QListWidgets and QTreeViews, and TransferListWidget is a
+// QTreeView too, so a rule written against `QTreeView::item` gives every cell
+// of the main torrent list a rounded border. It rendered as stray bracket marks
+// at each column boundary. Nothing here may be written generically.
+//
+// The five classes: StatusFilterWidget, TrackersFilterWidget and
+// TrackerStatusFilterWidget are QListWidgets (basefilterwidget.h:39);
+// CategoryFilterWidget (categoryfilterwidget.h:33) and TagFilterWidget
+// (tagfilterwidget.h:36) are QTreeViews.
+// ----------------------------------------------------------------------------
+
+// The pane's own plane, one step above the content surface, plus the inset that
+// gives the selection pill somewhere to sit.
+StatusFilterWidget,
+TrackersFilterWidget,
+TrackerStatusFilterWidget,
+CategoryFilterWidget,
+TagFilterWidget {
+  background-color: $sidebar-bg;
+  border: none;
+  outline: none;
+  padding-left: $sidebar-inset;
+  padding-right: $sidebar-inset;
+}
+
+// The rounded selection. The left border is declared at the rail's width in
+// EVERY state, transparent when unselected, so the label never shifts sideways
+// when a row is picked -- Qt stylesheets have no ::before to draw a rail with.
+// The selection rail, and why this is generated rather than hand-written.
+//
+// BUG THIS FIXES: the rail vanished while the sidebar had focus and appeared
+// once focus moved elsewhere. A single `::item:selected` rule carries one
+// pseudo-class, and the generic reset rules above reach THREE of them --
+// `QTreeView::item:selected:active:only-one { border-left: 0 }` and friends.
+// So the moment a row was actually selected, with the widget active, the
+// generic rule out-specified the rail and zeroed it. Clicking away dropped
+// `:active`, the generic rule stopped matching, and the rail reappeared. It
+// looked random; it was specificity, exactly.
+//
+// There is no single selector that wins. Those resets exist in twenty distinct
+// item states, so the rail has to be declared in all twenty, per widget class.
+// That is 100 selectors, which is why they are looped rather than typed.
+//
+// The unselected states matter just as much as the selected ones: they reserve
+// the SAME 2px as a transparent border, so a row does not jump sideways by 2px
+// at the moment it is selected.
+$sidebar-widgets:
+  StatusFilterWidget,
+  TrackersFilterWidget,
+  TrackerStatusFilterWidget,
+  CategoryFilterWidget,
+  TagFilterWidget;
+
+// Every item state in which a generic rule above touches a border. Derived from
+// the compiled stylesheet, not guessed: if a reset is ever added in a new state,
+// the rail will disappear in that state until the state is added here.
+// Four groups, because a row needs a different background in each. The states
+// are split rather than merged so that hovering a SELECTED row keeps the
+// selected-hover colour instead of dropping back to the plain hover.
+$sidebar-rest-states: "", ":first", ":last", ":only-one", ":focus";
+$sidebar-rest-hover-states: ":hover", ":hover:first", ":hover:last", ":hover:only-one";
+$sidebar-selected-states:
+  ":selected", ":selected:!active", ":selected:active",
+  ":selected:first", ":selected:last", ":selected:only-one",
+  ":selected:active:first", ":selected:active:last", ":selected:active:only-one";
+$sidebar-selected-hover-states: ":selected:hover", ":selected:active:hover";
+
+@each $widget in $sidebar-widgets {
+  @each $state in $sidebar-rest-states {
+    #{$widget}::item#{$state} {
+      border-left: $sidebar-item-rail-width solid transparent;
+      border-radius: $sidebar-item-radius;
+      padding-left: $sidebar-icon-gap;
+    }
+  }
+
+  @each $state in $sidebar-rest-hover-states {
+    #{$widget}::item#{$state} {
+      background-color: $sidebar-pane-hover-bg;
+      border-left: $sidebar-item-rail-width solid transparent;
+      border-radius: $sidebar-item-radius;
+      padding-left: $sidebar-icon-gap;
+    }
+  }
+
+  @each $state in $sidebar-selected-states {
+    #{$widget}::item#{$state} {
+      background-color: $sidebar-item-selected-bg;
+      border-left: $sidebar-item-rail-width solid $sidebar-item-rail;
+      border-radius: $sidebar-item-radius;
+      padding-left: $sidebar-icon-gap;
+    }
+  }
+
+  @each $state in $sidebar-selected-hover-states {
+    #{$widget}::item#{$state} {
+      background-color: $sidebar-item-selected-hover-bg;
+      border-left: $sidebar-item-rail-width solid $sidebar-item-rail;
+      border-radius: $sidebar-item-radius;
+      padding-left: $sidebar-icon-gap;
+    }
+  }
+}
+
+// ----------------------------------------------------------------------------
+// SECTION CAPTIONS - "STATUS" / "CATEGORIES" / "TAGS" / "TRACKERS"
+// ----------------------------------------------------------------------------
+// Drawn by ArrowCheckBox, declared in an anonymous namespace at
+// transferlistfilterswidgetitem.cpp:40 WITHOUT Q_OBJECT, so Qt reports its
+// class as "QCheckBox" and the selector `ArrowCheckBox` matches nothing.
+//
+// The ancestor is what makes this safe: a bare `QCheckBox` rule would repaint
+// every checkbox in the Options dialog. TransferListFiltersWidgetItem does have
+// Q_OBJECT (transferlistfilterswidgetitem.h:35) and the caption is its direct
+// child (:75-80), so this reaches exactly the section headers.
+//
+// No font properties here, deliberately. The caption's font is assigned in C++
+// with setBold(true) + QFont::AllUppercase (:71-73), and a font set on the
+// widget beats an application stylesheet, so font rules would look like they
+// were doing something while changing nothing. The ground and the colour are
+// what QSS owns, and they are what makes it read as a header.
+// ONLY colour and spacing are set here, and that is not restraint, it is the
+// limit of what this widget can receive. ArrowCheckBox::paintEvent
+// (transferlistfilterswidgetitem.cpp:45-59) constructs its own QPainter and
+// draws exactly two things -- PE_IndicatorBranch for the arrow and
+// CE_CheckBoxLabel for the text. It never calls QCheckBox::paintEvent, so the
+// styled background Qt would otherwise draw for this widget is never drawn.
+//
+// background-color, border, border-radius and padding on this selector are all
+// silently discarded. They were set here once; they did nothing, and the dimmed
+// text they were supposed to sit behind just looked washed out. Do not add them
+// back. The layout also aligns the caption AlignLeft with zero side margins
+// (:73-76), so it is not full width even if a background could paint.
+TransferListFiltersWidgetItem > QCheckBox {
+  color: $sidebar-caption-text;
+  spacing: 6px;
+}
+
+TransferListFiltersWidgetItem > QCheckBox:hover {
+  color: $sidebar-caption-hover-text;
+}
+
+// The collapse arrow is NOT drawn as a checkbox indicator: paintEvent is fully
+// overridden and never calls QCheckBox::paintEvent, drawing the arrow with
+// PE_IndicatorBranch instead (:55). An `image:` here would be ignored. The rect
+// IS still queried through subElementRect(SE_CheckBoxIndicator) at :52, which is
+// why width and height reach it when nothing else does.
+TransferListFiltersWidgetItem > QCheckBox::indicator {
+  width: 10px;
+  height: 10px;
+}
+
+// ----------------------------------------------------------------------------
+// The sidebar's share of the inactive-window rule.
+//
+// MUST come after `QWidget:!active` above. Both carry one type selector plus one
+// pseudo-class, so specificity ties and the later rule wins; without this the
+// whole sidebar flips from $rail to $panel every time the window loses focus.
+// That rule is doing its job, it simply predates the sidebar having a plane.
+StatusFilterWidget:!active,
+TrackersFilterWidget:!active,
+TrackerStatusFilterWidget:!active,
+CategoryFilterWidget:!active,
+TagFilterWidget:!active {
+  background-color: $sidebar-bg;
+}
+
+TransferListFiltersWidgetItem:!active > QCheckBox {
+  color: $sidebar-caption-text;
+}
