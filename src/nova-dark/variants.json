@@ -34,8 +34,9 @@
         "_states.scss"
       ],
       "values": [
-        "nebula",
         "graphite",
+        "nebula",
+        "nova",
         "slate"
       ]
     },

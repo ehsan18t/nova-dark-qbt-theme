@@ -14,6 +14,7 @@ nova-dark/
 ├── source/
 │   ├── palettes/           WHAT A COLOUR IS. The only files allowed a hex
 │   │   ├── _states.scss    literal; the build fails otherwise.
+│   │   ├── _nova.scss
 │   │   ├── _nebula.scss
 │   │   ├── _graphite.scss
 │   │   └── _slate.scss

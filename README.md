@@ -6,12 +6,12 @@ A modern, carefully crafted dark theme for qBittorrent featuring a refined color
 
 ## Features
 
-- 🎨 **Three palettes** – Nebula (violet on navy), Graphite (near-neutral, blue accent), Slate (blue-slate, teal accent)
+- 🎨 **Four palettes** – Nova (blue on navy), Nebula (violet on navy), Graphite (no hue in the chrome at all), Slate (blue-slate, teal accent)
 - 🎯 **Two icon treatments** – Semantic colour, or monochrome so colour on screen means torrent state and nothing else
 - 🚦 **Semantic status colors** – Distinct colors for each torrent state, identical in every variant so the legend never changes
 - ✨ **Polished UI** – Consistent styling across every widget, dialog and panel
 
-Every combination is built, so there are **6 themes** to choose from.
+Every combination is built, so there are **8 themes** to choose from.
 
 ## Install
 
@@ -24,12 +24,13 @@ Every combination is built, so there are **6 themes** to choose from.
 
 ### Which file?
 
-Files are named after the choices that actually vary, so today that is `nova-dark-<palette>-<icons>.qbtheme`. An axis with only one value is left out of the name; add a second density and it reappears in all of them. Plain `nova-dark.qbtheme` is Nebula + colour, the recommended starting point and the same file the older instructions pointed at.
+Files are named after the choices that actually vary, so today that is `nova-dark-<palette>-<icons>.qbtheme`. An axis with only one value is left out of the name; add a second density and it reappears in all of them. Plain `nova-dark.qbtheme` is Nebula + colour, the same file the older instructions pointed at.
 
 | Pick | If you want |
 | ---- | ----------- |
-| `nebula` | The original Nova Dark identity: violet accent on cool navy |
-| `graphite` | Near-neutral greys. The quietest of the three; the transfer list is the only colour on screen |
+| `nova` | Closest to the theme that shipped before the matrix: a blue accent on the same cool navy |
+| `nebula` | The same ground with a violet accent |
+| `graphite` | Greys all the way down. No hue anywhere in the chrome, so the transfer list is the only colour on screen |
 | `slate` | Softer blue-slate with a teal accent and the widest separation between panes |
 | `colour` | Icons keep their semantic hue: downloads green, errors red, trackers orange |
 | `mono` | Every icon in one neutral, so the sidebar stops competing with the list it filters |
@@ -42,7 +43,7 @@ docker compose run --rm build
 
 That's it. No local toolchain required, and it works the same on Windows, macOS and Linux. The image is built automatically on first run.
 
-The result is all 6 themes in `dist/`, plus `nova-dark.qbtheme` as an alias for the recommended combination. A full build takes a couple of seconds, and it is not 6x the work: a stylesheet depends only on palette and density, a config only on palette, and an icon set only on palette and treatment, so each is produced once and shared.
+The result is all 8 themes in `dist/`, plus `nova-dark.qbtheme` as an alias for the default combination. A full build takes a couple of seconds, and it is not 8x the work: a stylesheet depends only on palette and density, a config only on palette, and an icon set only on palette and treatment, so each is produced once and shared.
 
 To build a subset while iterating, restrict an axis:
 
@@ -116,7 +117,7 @@ The script checks its own prerequisites and tells you what is missing rather tha
 
 Icons come from [Phosphor](https://phosphoricons.com/) and are checked in, so a normal build never touches the network.
 
-The checked-in files are **geometry, not colour**. They carry a placeholder fill and are recoloured per variant at build time, which is why one set of 91 files serves all three palettes and both icon treatments, and why adding an icon treatment never needs a download. If you ever see flat grey `#808080` icons in a packed theme, the recolour step was skipped.
+The checked-in files are **geometry, not colour**. They carry a placeholder fill and are recoloured per variant at build time, which is why one set of 91 files serves every palette and both icon treatments, and why adding an icon treatment never needs a download. If you ever see flat grey `#808080` icons in a packed theme, the recolour step was skipped.
 
 You only need to refetch when changing the icon weight or adding a new icon (needs Python 3.10+ and an internet connection):
 
@@ -130,7 +131,7 @@ To change icon *colours*, edit the `$icon-` values in a palette fragment, or add
 
 ## Status Colors
 
-Identical in all three palettes, on purpose. A state colour is a legend, not decoration: if each palette invented its own green, switching palette would mean relearning the transfer list.
+Identical in every palette, on purpose. A state colour is a legend, not decoration: if each palette invented its own green, switching palette would mean relearning the transfer list.
 
 | Status            | Color      |
 | ----------------- | ---------- |

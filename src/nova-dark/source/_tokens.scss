@@ -51,7 +51,7 @@ $sidebar-caption-text: $caption;
 // Hover on a section title. $text-bright, NOT $base-text: graphite's caption IS
 // $base-text, so brightening to it was a no-op and the one clickable thing in
 // the sidebar chrome had no hover feedback at all. $text-bright is above every
-// caption value in all three palettes, so the rule does something everywhere.
+// caption value in every palette, so the rule does something everywhere.
 $sidebar-caption-hover-text: $text-bright;
 $sidebar-item-radius: $base-border-radius;
 // The selection rail, chosen by the palette. Graphite makes it white because
@@ -132,9 +132,9 @@ $checkbox-disabled: url(:/uitheme/common/controls/checkbox_check_disabled.svg);
 // YIQ brightness, not lightness(): HSL lightness reads #a78bfa as 76% and
 // #6e727c as 44%, which is the opposite of how a white tick actually fares on
 // them. The 128 threshold is the standard one and is not tuned to the current
-// palettes -- when it was written it flipped all three, because a white tick
-// measured 1.24:1 on graphite, 2.72:1 on nebula and 1.79:1 on slate, all under
-// the 3:1 floor a non-text graphic needs.
+// palettes -- when it was written it flipped every one of them, because a white
+// tick measured 1.24:1 on graphite, 2.72:1 on nebula and nova and 1.79:1 on
+// slate, all under the 3:1 floor a non-text graphic needs.
 $checkbox-checked-bg: $check-fill;
 $checkbox-check-glyph: if(
   (red($check-fill) * 299 + green($check-fill) * 587 + blue($check-fill) * 114) / 1000 > 128,

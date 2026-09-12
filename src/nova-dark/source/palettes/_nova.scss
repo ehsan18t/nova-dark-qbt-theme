@@ -1,13 +1,25 @@
 // ============================================================================
-// NEBULA - violet signature on cool navy neutrals
+// NOVA - blue signature on Nebula's cool navy neutrals
 // ============================================================================
-// The original Nova Dark identity, rebuilt on a wider elevation ramp. Pick this
-// if you want the theme that shipped before the matrix existed, refined.
+// Nebula's ground with a blue accent instead of a violet one. It is the closest
+// of the four to the theme that shipped before the matrix existed, because that
+// theme drew its icons in #4a9eff and this puts a blue back in the same places.
+//
+// Derived from _nebula.scss by changing SEVEN values and nothing else: the
+// chrome accent, the section caption, the two progress values, the selection
+// rail, the checked-control fill and the accent icon slot. The neutral ramp,
+// the selection fills and the state colours are byte-identical to Nebula's, so
+// anything that looks wrong in both is a Nebula problem, not a Nova one.
+//
+// The blue is #4c9aff, the exact value Graphite carried before that palette
+// dropped hue from its chrome. Nothing is lost by reusing it: Graphite no
+// longer has an accent for it to collide with.
 //
 // EVERY PALETTE FRAGMENT DEFINES EXACTLY THIS SET OF NAMES. The build compares
-// the three files against each other and fails if one is missing a name another
-// defines, so a new palette cannot silently inherit a stale value. Copy this
-// file to add one; do not start from scratch.
+// the palette files against each other and fails if one is missing a name
+// another defines, so a new palette cannot silently inherit a stale value. Copy
+// this file to add one; do not start from scratch -- Nova itself is a copy of
+// _nebula.scss with seven values changed.
 //
 // Names encode RAMP POSITION, not provenance. 0 < 1 < 2 is unambiguously the
 // lightness order, so "which of these two is lighter" stops being a question.
@@ -18,7 +30,7 @@
 // ground everything sits on, the chrome accent, and the icon ramp.
 // ============================================================================
 
-$palette-name: "nebula";
+$palette-name: "nova";
 
 // ---------------------------------------------------------------------------
 // CRUST - window chrome, deepest to lightest.
@@ -66,7 +78,7 @@ $text-bright:              #f2f4fb;
 // _states.scss. Separating the two is what lets this be any hue without
 // colliding with a state colour in the Status column.
 // ---------------------------------------------------------------------------
-$accent:                   #a78bfa;
+$accent:                   #4c9aff;
 
 // $accent at ~16% over $panel, flattened to a literal because Qt stylesheets
 // have no alpha compositing against an unknown backdrop. This is the selection
@@ -92,28 +104,33 @@ $rail:                     #171824;
 
 // The section captions. Its own primitive, NOT $accent: the captions sit above
 // every section all the way down the pane, so the chrome accent at full
-// strength turns the sidebar into a column of violet. Roughly 40% saturation
+// strength turns the sidebar into a column of blue. Roughly 40% saturation
 // against the accent's ~90%, same hue, so it reads as a quiet label.
 //
 // Colour is the only thing that reaches this widget at all -- ArrowCheckBox
 // paints just the arrow and the label and never chains to QCheckBox::paintEvent
 // -- so it is carrying the whole of the caption's hierarchy on its own.
-$caption:                  #9d8dce;
+$caption:                  #8da9ce;
 
 // CHROME COLOURS. These three are on the PALETTE axis on purpose.
 //
 // A monochrome progress bar and a white selection rail are right for Graphite,
 // whose whole point is that colour is absent so the transfer list's state
-// colours are the only colour on screen. Applying that to a violet or a teal
-// palette leaves grey chrome sitting next to coloured icons, which reads as a
-// mistake rather than as restraint.
+// colours are the only colour on screen. Applying that to a blue, a violet or
+// a teal palette leaves grey chrome sitting next to coloured icons, which reads
+// as a mistake rather than as restraint.
+//
+// Nova's fill keeps Nebula's relationship to its accent rather than its hue:
+// saturation is 70% of an accent at 100%, and the lightness is tuned so white
+// clears the same bar. #2061b6 measures 6.09:1, where Nebula's #5b4fd6 measures
+// 5.94. The raw accent cannot be used here -- #4c9aff is 2.85:1 under white.
 //
 // $progress-fill is capped by legibility, not taste: qBittorrent draws the
 // percentage in Palette.HighlightedText, which is white and is also the
 // selection text colour, so it cannot go dark to suit a brighter bar.
-$progress-fill:            #5b4fd6;
-$progress-partial:         #8b80e2;
-$selection-rail:           #a78bfa;
+$progress-fill:            #2061b6;
+$progress-partial:         #387fdc;
+$selection-rail:           #4c9aff;
 $nova-selection:           #2c3249;
 $nova-selection-hover:     #343b56;
 // Sidebar hover: a DEEPER shade of the selection fill, not a neutral grey. The
@@ -138,7 +155,7 @@ $piece-border:             #3a3f5e;
 // The checked checkbox and radio fill. Equal to $accent here, which is what
 // this palette shipped with; graphite overrides it because a neutral accent
 // cannot carry the "on" state on its own. See _graphite.scss.
-$check-fill:               #a78bfa;
+$check-fill:               #4c9aff;
 
 // ---------------------------------------------------------------------------
 // ICONS - the palette-dependent slots. The semantic ramp is in _states.scss.
@@ -150,6 +167,6 @@ $check-fill:               #a78bfa;
 // no accent-on-selected variant of a mono icon; one colour is the whole set.
 // ---------------------------------------------------------------------------
 $icon-default:             #b6bcd4;  // default glyph
-$icon-accent:              #a78bfa;  // follows the chrome accent
+$icon-accent:              #4c9aff;  // follows the chrome accent
 $icon-mono:                #d7dcf0;  // the entire "mono" treatment
 $icon-dark:                #1c1d2b;  // on light fills

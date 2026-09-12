@@ -19,7 +19,7 @@ reach, most visibly when the window lost focus and Qt fell back to the
 QPalette-derived Inactive group.
 
 THE MAPPING IS PALETTE-INDEPENDENT, and that is the whole reason the variant
-matrix was cheap to add: it names variables, never hexes, so all three palettes
+matrix was cheap to add: it names variables, never hexes, so every palette
 run through it unchanged. Adding a fourth palette does not touch this file.
 
 The generated files are checked in on purpose, even though the build rewrites
@@ -115,7 +115,7 @@ MAPPING = {
     # which measures 3.56:1 there -- dimmer than the READ articles beside it,
     # which inverts the one distinction the pair exists to make. Brightest text
     # against $text-1 is the conventional unread treatment and holds in all
-    # three palettes without the mapping having to know which one it is.
+    # every palette without the mapping having to know which one it is.
     "RSS.UnreadArticle": "text-bright",
 
     # --- Transfer list -----------------------------------------------------

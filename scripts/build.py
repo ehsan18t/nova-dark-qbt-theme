@@ -18,16 +18,16 @@ build.sh and build.bat are both thin launchers for this file. Add logic here.
 THE MATRIX
 
 src/nova-dark/variants.json declares the axes; this file takes their cartesian
-product. Today that is 3 palettes x 2 densities x 2 icon treatments = 12 themes,
+product. Today that is 4 palettes x 1 density x 2 icon treatments = 8 themes,
 but nothing here knows those numbers. Adding a value is one fragment file plus
 one line in that manifest, and adding a whole axis needs no change here at all.
 
-The work is NOT 12x anything, because the axes have different blast radius:
+The work is NOT 8x anything, because the axes have different blast radius:
 
-    config.json     depends on palette only              ->  3 generated
-    stylesheet      depends on palette x density         ->  6 compiled
-    icon set        depends on palette x treatment       ->  6 recoloured
-    .qbtheme        depends on all three                 -> 12 packed
+    config.json     depends on palette only              -> 4 generated
+    stylesheet      depends on palette x density         -> 4 compiled
+    icon set        depends on palette x treatment       -> 8 recoloured
+    .qbtheme        depends on all three                 -> 8 packed
 
 So each intermediate is produced once and reused across the variants that share
 it. Skipping that would triple the slowest steps for no benefit.
