@@ -5,7 +5,7 @@
   stylesheet as `:/uitheme/common/controls/<name>.svg`.
 
 The build passes this folder to `make-resource.py` as `-include-dir`, which
-embeds it under the `common/` alias prefix — that is what makes those
+embeds it under the `common/` alias prefix, that is what makes those
 `:/uitheme/common/...` paths resolve. Every file here must be referenced by the
 stylesheet; unreferenced ones are not packaged, and a reference with no file
 fails the build.

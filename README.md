@@ -6,19 +6,33 @@ A modern, carefully crafted dark theme for qBittorrent featuring a refined color
 
 ## Features
 
-- 🎨 **Modern Dark Palette** – Deep, easy-on-the-eyes background with excellent contrast
-- 🚦 **Semantic Status Colors** – Distinct colors for each torrent state (downloading, seeding, stalled, error, etc.)
-- 🎯 **90+ Custom Icons** – Phosphor icon set with meaningful color coding
-- ✨ **Polished UI** – Consistent styling across all widgets, dialogs, and panels
+- 🎨 **Three palettes** – Nebula (violet on navy), Graphite (near-neutral, blue accent), Slate (blue-slate, teal accent)
+- 🎯 **Two icon treatments** – Semantic colour, or monochrome so colour on screen means torrent state and nothing else
+- 🚦 **Semantic status colors** – Distinct colors for each torrent state, identical in every variant so the legend never changes
+- ✨ **Polished UI** – Consistent styling across every widget, dialog and panel
+
+Every combination is built, so there are **6 themes** to choose from.
 
 ## Install
 
-1. Download `nova-dark.qbtheme` from the [Releases](https://github.com/ehsan18t/qbt-theme/releases) page
+1. Download a `.qbtheme` from the [Releases](https://github.com/ehsan18t/qbt-theme/releases) page
 2. In qBittorrent, go to **Tools → Options → Behavior**
 3. Enable **Use custom UI Theme**
 4. Browse to the downloaded `.qbtheme` file
 5. Click **Apply**, then **OK**
 6. Restart qBittorrent
+
+### Which file?
+
+Files are named after the choices that actually vary, so today that is `nova-dark-<palette>-<icons>.qbtheme`. An axis with only one value is left out of the name; add a second density and it reappears in all of them. Plain `nova-dark.qbtheme` is Nebula + colour, the recommended starting point and the same file the older instructions pointed at.
+
+| Pick | If you want |
+| ---- | ----------- |
+| `nebula` | The original Nova Dark identity: violet accent on cool navy |
+| `graphite` | Near-neutral greys. The quietest of the three; the transfer list is the only colour on screen |
+| `slate` | Softer blue-slate with a teal accent and the widest separation between panes |
+| `colour` | Icons keep their semantic hue: downloads green, errors red, trackers orange |
+| `mono` | Every icon in one neutral, so the sidebar stops competing with the list it filters |
 
 ## Build from Source
 
@@ -28,7 +42,14 @@ docker compose run --rm build
 
 That's it. No local toolchain required, and it works the same on Windows, macOS and Linux. The image is built automatically on first run.
 
-The result is `dist/nova-dark.qbtheme`.
+The result is all 6 themes in `dist/`, plus `nova-dark.qbtheme` as an alias for the recommended combination. A full build takes a couple of seconds, and it is not 6x the work: a stylesheet depends only on palette and density, a config only on palette, and an icon set only on palette and treatment, so each is produced once and shared.
+
+To build a subset while iterating, restrict an axis:
+
+```bash
+python scripts/build.py --only palette=nebula --only icons=mono
+python scripts/build.py --list        # print the matrix without building
+```
 
 ## Local Build (without Docker)
 
@@ -93,17 +114,23 @@ The script checks its own prerequisites and tells you what is missing rather tha
 <details>
 <summary>Regenerating icons</summary>
 
-Icons come from [Phosphor](https://phosphoricons.com/) and are checked in, so a normal build never touches the network. To refetch or recolor them (needs Python 3.10+ and an internet connection):
+Icons come from [Phosphor](https://phosphoricons.com/) and are checked in, so a normal build never touches the network.
+
+The checked-in files are **geometry, not colour**. They carry a placeholder fill and are recoloured per variant at build time, which is why one set of 91 files serves all three palettes and both icon treatments, and why adding an icon treatment never needs a download. If you ever see flat grey `#808080` icons in a packed theme, the recolour step was skipped.
+
+You only need to refetch when changing the icon weight or adding a new icon (needs Python 3.10+ and an internet connection):
 
 ```bash
-python src/nova-dark/scripts/download_phosphor_icons.py
+python src/nova-dark/scripts/download_phosphor_icons.py --weight regular
 ```
 
-Useful flags: `--weight <thin|light|regular|bold|fill|duotone>`, `--mono` with `--color <hex>` for a single-color set.
+To change icon *colours*, edit the `$icon-` values in a palette fragment, or add a treatment under `src/nova-dark/source/icons/`. Neither touches the network.
 
 </details>
 
 ## Status Colors
+
+Identical in all three palettes, on purpose. A state colour is a legend, not decoration: if each palette invented its own green, switching palette would mean relearning the transfer list.
 
 | Status            | Color      |
 | ----------------- | ---------- |
@@ -111,8 +138,14 @@ Useful flags: `--weight <thin|light|regular|bold|fill|duotone>`, `--mono` with `
 | Uploading/Seeding | 🟢 Green    |
 | Forced            | 🟠 Orange   |
 | Stalled           | ⚪ Gray     |
-| Queued            | 🟣 Lavender |
+| Queued            | 🟣 Violet   |
 | Error/Missing     | 🔴 Red      |
+
+This is also why the chrome accent and the "queued" colour are separate: Graphite's accent is blue and Slate's is teal, either of which would be indistinguishable from Downloading or Checking in the one column where those have to stay apart.
+
+## Adding your own variant
+
+A palette, a density or an icon treatment is one fragment file plus one line in `src/nova-dark/variants.json`. The build discovers the files and fails if they disagree with that list, in either direction, so a half-finished palette cannot become a shipped theme by accident. See [`src/nova-dark/README.md`](src/nova-dark/README.md).
 
 ## License
 
