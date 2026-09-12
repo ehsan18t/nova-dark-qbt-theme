@@ -1,8 +1,0 @@
-# The Dockerfile COPYs nothing -- sources reach the container through the
-# bind mount in compose.yaml -- so this file only trims the context uploaded
-# to the daemon on `docker compose build`. Excluding the sources here is safe
-# and keeps that upload near-empty; if a COPY is ever added, re-check this list.
-*
-
-# Keep only what the image build itself reads.
-!Dockerfile

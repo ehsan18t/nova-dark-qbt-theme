@@ -3,7 +3,7 @@
 
 This is the only build implementation, and it runs natively everywhere: Windows
 (cmd, PowerShell, or double-clicking scripts\\build.bat), macOS, Linux, and the
-container defined by the Dockerfile.
+container docker-compose.yml defines inline.
 
 It is written in Python rather than shell because Python was never optional --
 make-resource.py, generate-config.py and recolour_icons.py *are* the build, and
