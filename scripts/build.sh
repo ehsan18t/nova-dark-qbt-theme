@@ -5,7 +5,7 @@
 #
 # The build moved to Python because Python was never optional here --
 # make-resource.py and generate-config.py are the build, and the toolchain image
-# is python:3.11-slim -- whereas a shell script made Windows depend on Git Bash
+# is a Python image -- whereas a shell script made Windows depend on Git Bash
 # for nothing. Add logic to build.py, not to this file or to build.bat.
 set -euo pipefail
 

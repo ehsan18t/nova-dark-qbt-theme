@@ -7,7 +7,7 @@ container docker-compose.yml defines inline.
 
 It is written in Python rather than shell because Python was never optional --
 make-resource.py, generate-config.py and recolour_icons.py *are* the build, and
-the toolchain image is python:3.11-slim. A shell script made Windows depend on
+the toolchain image is a Python image. A shell script made Windows depend on
 Git Bash for nothing, and the alternative, a .bat that reimplemented the build,
 is precisely what let the Windows path silently package a stale stylesheet for
 as long as it did.
