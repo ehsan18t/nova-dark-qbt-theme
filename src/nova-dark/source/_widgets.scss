@@ -874,9 +874,7 @@ QComboBox:focus {
   background-color: $button-focus;
 }
 
-QCheckBox::indicator:focus:hover,
 QTreeView::indicator:focus:hover,
-QRadioButton::indicator:focus:hover,
 QGroupBox::indicator:focus:hover,
 QComboBox:focus:hover {
   background-color: $button-focus-hover-bg;
@@ -1793,16 +1791,40 @@ QRadioButton::indicator:hover {
   background-color: $surface-0;
 }
 
-QCheckBox::indicator:checked {
+// Explicit compound states keep the bright checked fill ahead of earlier
+// :focus / :hover rules so the dark on_light glyph never lands on a dark
+// surface after a checkbox or radio receives focus on click.
+QCheckBox::indicator:checked,
+QCheckBox::indicator:checked:hover,
+QCheckBox::indicator:checked:focus,
+QCheckBox::indicator:checked:focus:hover {
   background-color: $checkbox-checked-bg;
   border-color: $checkbox-checked-bg;
   image: url(:/uitheme/common/controls/checkbox_check_#{$checkbox-check-glyph}.svg);
 }
 
-QRadioButton::indicator:checked {
+QRadioButton::indicator:checked,
+QRadioButton::indicator:checked:hover,
+QRadioButton::indicator:checked:focus,
+QRadioButton::indicator:checked:focus:hover {
   background-color: $checkbox-checked-bg;
   border-color: $checkbox-checked-bg;
   image: url(:/uitheme/common/controls/radio_check_#{$checkbox-check-glyph}.svg);
+}
+
+// Override the earlier :checked:disabled rules after :checked above so a
+// checked disabled control keeps $control-disabled instead of inheriting
+// $checkbox-checked-bg behind the muted disabled glyph.
+QCheckBox::indicator:checked:disabled {
+  background-color: $control-disabled;
+  border: 1px solid transparent;
+  image: $checkbox-disabled;
+}
+
+QRadioButton::indicator:checked:disabled {
+  background-color: $control-disabled;
+  border: 1px solid transparent;
+  image: $radio_disabled;
 }
 
 // ----------------------------------------------------------------------------
