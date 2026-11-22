@@ -128,10 +128,10 @@ MAPPING = {
     "TransferList.ForcedDownloadingMetadata": "accent-peach",
     "TransferList.ForcedUploading": "accent-peach",
     "TransferList.Uploading": "accent-success",
-    # $accent-queued, NOT $accent. The chrome accent is violet in Nebula but
-    # blue in Graphite and teal in Slate, either of which would be
-    # indistinguishable from Downloading or Checking in this one column. The
-    # split is what lets a palette pick any accent it likes.
+    # $accent-queued, NOT $accent. The chrome accent is violet in Nebula,
+    # blue in Nova, teal in Slate, and neutral in Graphite, so reusing $accent
+    # would collide with Downloading or Checking in this column. The split is
+    # what lets a palette pick any accent it likes.
     "TransferList.QueuedDownloading": "accent-queued",
     "TransferList.QueuedUploading": "accent-queued",
     # All three checking states share one colour. They used to be split, but the
@@ -246,7 +246,7 @@ def main() -> None:
         rendered = render(name)
         target = CONFIG_DIR / f"{name}.json"
         current = target.read_text(encoding="utf-8") if target.exists() else ""
-        count = rendered.count(": ")
+        count = len(MAPPING)
 
         if args.check:
             if current != rendered:

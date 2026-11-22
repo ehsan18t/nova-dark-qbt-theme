@@ -63,12 +63,20 @@ STATES = [
 RULE = re.compile(r"([^{}]+)\{([^}]*)\}")
 ITEM = re.compile(r"^(\w+)::item(.*)$")
 INDICATOR = re.compile(r"^(QCheckBox|QRadioButton)::indicator(.*)$")
+COMBOBOX = re.compile(r"^(QComboBox)((?::!?[a-z-]+)*)$")
+PUSHBUTTON = re.compile(r"^(QPushButton)((?::!?[a-z-]+)*)$")
+SLIDER = re.compile(r"^QSlider::(groove|handle|sub-page)(.*)$")
+TAB = re.compile(r"^(QTabBar)::tab(.*)$")
 PSEUDO = re.compile(r"(?<!:):(?!:)(!?)([a-z-]+)")
 
 PROP_PATTERNS = {
     "border": r"^border(-left)?\s*:",
+    "border_shorthand": r"^border\s*:",
+    "border_color": r"^border-color\s*:",
     "background": r"^background(-color)?\s*:",
     "image": r"^image\s*:",
+    "padding_bottom": r"^padding-bottom\s*:",
+    "margin_bottom": r"^margin-bottom\s*:",
 }
 
 INDICATORS = ("QCheckBox", "QRadioButton")
@@ -117,6 +125,11 @@ def indicator_rules(stylesheet: str, prop: str):
     return _subcontrol_rules(stylesheet, INDICATOR, prop)
 
 
+def widget_rules(stylesheet: str, widget_re: re.Pattern[str], prop: str):
+    """(type, positive pseudo-states, negated states, value, depth, order, selector)."""
+    return _subcontrol_rules(stylesheet, widget_re, prop)
+
+
 def _winner(rules, widget, base, state):
     matching = [
         r for r in rules
@@ -128,14 +141,14 @@ def _winner(rules, widget, base, state):
     return max(matching, key=lambda r: (r[4], r[5]))
 
 
-def _check_indicator_prop(rules, widget, label, state, expected_win, prop_name):
+def _check_match(rules, widget, prefix, label, state, expected_win, prop_name):
     win = _winner(rules, widget, widget, state)
     expected_val = expected_win[3] if expected_win else None
     actual_val = win[3] if win else None
     if expected_val is None or actual_val != expected_val:
         actual_desc = f"`{win[6]}` (`{actual_val}`)" if win else "none"
         return (
-            f"{widget}::indicator [{label}]: {prop_name} -- "
+            f"{prefix} [{label}]: {prop_name} -- "
             f"{actual_desc} does not match expected `{expected_val}`"
         )
     return None
@@ -148,6 +161,7 @@ def check_indicators(text: str) -> list[str]:
     failures = []
 
     for widget in INDICATORS:
+        prefix = f"{widget}::indicator"
         checked_bg = _winner(backgrounds, widget, widget, {"checked"})
         checked_img = _winner(images, widget, widget, {"checked"})
         for label, state in CHECKED_COMPOUND_STATES:
@@ -155,27 +169,153 @@ def check_indicators(text: str) -> list[str]:
                 (backgrounds, checked_bg, "background"),
                 (images, checked_img, "image"),
             ):
-                err = _check_indicator_prop(
-                    rules, widget, label, state, expected, prop_name
+                err = _check_match(
+                    rules, widget, prefix, label, state, expected, prop_name
                 )
                 if err:
                     failures.append(err)
 
         hover_bg = _winner(backgrounds, widget, widget, {"hover"})
-        err = _check_indicator_prop(
-            backgrounds, widget, "focus hover", {"focus", "hover"},
+        err = _check_match(
+            backgrounds, widget, prefix, "focus hover", {"focus", "hover"},
             hover_bg, "background"
         )
         if err:
             failures.append(err)
 
         disabled_bg = _winner(backgrounds, widget, widget, {"disabled"})
-        err = _check_indicator_prop(
-            backgrounds, widget, "checked disabled", {"checked", "disabled"},
+        err = _check_match(
+            backgrounds, widget, prefix, "checked disabled", {"checked", "disabled"},
             disabled_bg, "background"
         )
         if err:
             failures.append(err)
+
+    return failures
+
+
+def check_combobox(text: str) -> list[str]:
+    """Verify QComboBox focus/hover/on/editable cascades."""
+    backgrounds = widget_rules(text, COMBOBOX, "background")
+    border_colors = widget_rules(text, COMBOBOX, "border_color")
+    failures = []
+
+    rest_bg = _winner(backgrounds, "QComboBox", "QComboBox", set())
+    hover_bg = _winner(backgrounds, "QComboBox", "QComboBox", {"hover"})
+    hover_bc = _winner(border_colors, "QComboBox", "QComboBox", {"hover"})
+    on_bg = _winner(backgrounds, "QComboBox", "QComboBox", {"on"})
+    disabled_bg = _winner(backgrounds, "QComboBox", "QComboBox", {"disabled"})
+
+    checks = [
+        (backgrounds, "focus hover", {"focus", "hover"}, hover_bg, "background"),
+        (border_colors, "focus hover", {"focus", "hover"}, hover_bc, "border-color"),
+        (backgrounds, "focus", {"focus"}, rest_bg, "background"),
+        (backgrounds, "on focus hover", {"on", "focus", "hover"}, on_bg, "background"),
+        (backgrounds, "editable disabled", {"editable", "disabled"}, disabled_bg, "background"),
+    ]
+    for rules, label, state, expected, prop_name in checks:
+        err = _check_match(rules, "QComboBox", "QComboBox", label, state, expected, prop_name)
+        if err:
+            failures.append(err)
+    return failures
+
+
+def check_pushbutton(text: str) -> list[str]:
+    """Verify QPushButton focus/pressed/default/disabled and status-bar priority."""
+    backgrounds = widget_rules(text, PUSHBUTTON, "background")
+    failures = []
+
+    hover_bg = _winner(backgrounds, "QPushButton", "QPushButton", {"hover"})
+    pressed_bg = _winner(backgrounds, "QPushButton", "QPushButton", {"pressed"})
+    disabled_bg = _winner(backgrounds, "QPushButton", "QPushButton", {"disabled"})
+
+    checks = [
+        ("pressed focus", {"pressed", "focus"}, pressed_bg),
+        ("hover focus", {"hover", "focus"}, hover_bg),
+        ("default pressed", {"default", "pressed"}, pressed_bg),
+        ("default disabled", {"default", "disabled"}, disabled_bg),
+    ]
+    for label, state, expected in checks:
+        err = _check_match(
+            backgrounds, "QPushButton", "QPushButton", label, state, expected, "background"
+        )
+        if err:
+            failures.append(err)
+
+    for prop in ("background", "border_color"):
+        for r in widget_rules(text, PUSHBUTTON, prop):
+            if r[4] >= 2 and ({"hover", "focus"} <= r[1] or {"pressed", "focus"} <= r[1]):
+                failures.append(
+                    f"QPushButton: `{r[6]}` has specificity {r[4]} pseudos and "
+                    f"would override `QStatusBar QPushButton` (specificity 0x12)"
+                )
+    return failures
+
+
+def check_slider(text: str) -> list[str]:
+    """Verify QSlider disabled/hover/pressed cascades and palette purity."""
+    backgrounds = widget_rules(text, SLIDER, "background")
+    failures = []
+
+    for part in ("groove", "handle", "sub-page"):
+        prefix = f"QSlider::{part}"
+        horiz_bg = _winner(backgrounds, part, part, {"horizontal"})
+        disabled_bg = _winner(backgrounds, part, part, {"disabled"})
+        err = _check_match(
+            backgrounds, part, prefix, "horizontal disabled",
+            {"horizontal", "disabled"}, disabled_bg, "background"
+        )
+        if err:
+            failures.append(err)
+        elif horiz_bg and disabled_bg and horiz_bg[3] == disabled_bg[3]:
+            failures.append(
+                f"{prefix} [horizontal disabled]: background `{disabled_bg[3]}` "
+                f"is identical to enabled `horizontal`"
+            )
+
+    handle_horiz = _winner(backgrounds, "handle", "handle", {"horizontal"})
+    for label, state in (("horizontal hover", {"horizontal", "hover"}),
+                         ("horizontal pressed", {"horizontal", "pressed"})):
+        win = _winner(backgrounds, "handle", "handle", state)
+        if not win or not handle_horiz or win[3] == handle_horiz[3]:
+            failures.append(
+                f"QSlider::handle [{label}]: background `{win[3] if win else None}` "
+                f"does not differ from resting `horizontal` (`{handle_horiz[3] if handle_horiz else None}`)"
+            )
+        if win and win[3].lower() == "#bfb6f6":
+            failures.append(
+                f"QSlider::handle [{label}]: hardcoded `#bfb6f6` lavender leak"
+            )
+
+    return failures
+
+
+def check_listview_and_tabbar(text: str) -> list[str]:
+    """Verify QListView::item:hover border reset and QTabBar::tab top symmetry."""
+    failures = []
+
+    lv_borders = item_rules(text, "border_shorthand")
+    lv_hover = _winner(lv_borders, "QListView", "QListView", {"hover"})
+    if not lv_hover or lv_hover[3] != "none":
+        val = f"`{lv_hover[6]}` (`{lv_hover[3]}`)" if lv_hover else "none"
+        failures.append(
+            f"QListView::item [hover]: border -- {val} must resolve to `none`"
+        )
+
+    tab_pb = widget_rules(text, TAB, "padding_bottom")
+    win_pb = _winner(tab_pb, "QTabBar", "QTabBar", {"top", "selected"})
+    if win_pb:
+        failures.append(
+            f"QTabBar::tab [top selected]: `{win_pb[6]}` sets `padding-bottom: "
+            f"{win_pb[3]}`, breaking vertical padding symmetry"
+        )
+
+    tab_mb = widget_rules(text, TAB, "margin_bottom")
+    win_mb = _winner(tab_mb, "QTabBar", "QTabBar", {"top"})
+    if win_mb and win_mb[3] not in ("0", "0px"):
+        failures.append(
+            f"QTabBar::tab [top]: `{win_mb[6]}` leaks `margin-bottom: {win_mb[3]}`"
+        )
 
     return failures
 
@@ -211,6 +351,10 @@ def check(path: Path) -> list[str]:
                     f"is overridden")
 
     failures.extend(check_indicators(text))
+    failures.extend(check_combobox(text))
+    failures.extend(check_pushbutton(text))
+    failures.extend(check_slider(text))
+    failures.extend(check_listview_and_tabbar(text))
     return failures
 
 
@@ -233,8 +377,8 @@ def main() -> None:
 
     checked = len(sys.argv) - 1
     print(f"sidebar rail/fill ({len(STATES)} states x {len(SIDEBAR)} widgets) "
-          f"and indicator cascades ({len(INDICATORS)} widgets) resolve "
-          f"correctly across {checked} stylesheet(s)")
+          f"and widget cascades (indicators, combo, button, slider, list, tab) "
+          f"resolve correctly across {checked} stylesheet(s)")
 
 
 if __name__ == "__main__":

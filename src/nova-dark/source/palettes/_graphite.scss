@@ -16,8 +16,6 @@
 // what each ramp means; only the values differ here.
 // ============================================================================
 
-$palette-name: "graphite";
-
 // --- CRUST: chrome, deepest to lightest. $crust-0 is drawn ON $crust-1 as a
 // --- hairline; never make them equal.
 $shadow:                   #040507;
@@ -122,7 +120,6 @@ $nova-tab-inactive:        #0c0d0f;
 $nova-disabled:            #16171a;
 $nova-progress-trough:     #222428;
 $nova-progress-border:     #2e3137;
-$piece-border:             #3a3e47;
 
 // The checked checkbox and radio fill. Its own primitive rather than $accent,
 // because graphite's accent is a neutral in the $surface-3 band and a box

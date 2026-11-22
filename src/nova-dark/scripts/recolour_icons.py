@@ -21,7 +21,7 @@ the packed theme.
 
 HOW A COLOUR IS CHOSEN
 
-    icon-manifest.json   name -> role        ("edit-find" -> "accent")
+    icon-manifest.json     name -> role      ("edit-find" -> "default")
     source/icons/<t>.json  role -> variable  ("accent" -> "icon-accent")
     source/palettes/*      variable -> hex   ("icon-accent" -> "#a78bfa")
 
@@ -49,11 +49,6 @@ PALETTE_DIR = THEME_ROOT / "source" / "palettes"
 
 DECL = re.compile(r"\s*\$([\w-]+)\s*:\s*(#[0-9a-fA-F]{6})\s*;")
 FILL = re.compile(r'\bfill="(#[0-9a-fA-F]{3,8})"')
-
-# Roles an icon may carry but that the manifest does not currently use. They
-# stay declared in every treatment so a future icon drawn on an inverted fill
-# has somewhere to point.
-DEFAULT_ROLE = "default"
 
 
 def fail(*lines: str) -> None:
@@ -105,7 +100,7 @@ def resolve(palette: str, treatment: str) -> dict[str, str]:
     return resolved
 
 
-def recolour(palette: str, treatment: str, out_dir: Path) -> int:
+def recolour(palette: str, treatment: str, out_dir: Path) -> tuple[int, int]:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))["icons"]
     role_hex = resolve(palette, treatment)
 

@@ -3,12 +3,13 @@
 // ============================================================================
 // Formerly two files: common/styles/BaseTheme.scss (shared with the old Mumble
 // Dark theme) and Imports/Nova Overrides.scss. With one theme left the split no
-// longer earned its keep -- 82 selectors were styled in BOTH files, so the
-// rendered result was a merge across two places and it was never obvious which
-// one set a given property.
+// longer earned its keep -- dozens of selectors were styled in BOTH files, so
+// the rendered result was a merge across two places and it was never obvious
+// which one set a given property.
 //
-// Concatenated in the original compile order, so the cascade is unchanged.
-// Colours refer to _palette.scss; no hex literals below this line.
+// Legacy BaseTheme rules sit above the Nova overrides below; conflicting
+// legacy selectors are being pruned as overrides are consolidated.
+// Colours refer to _tokens.scss / palettes; no hex literals below this line.
 // ============================================================================
 
 /*
@@ -78,9 +79,6 @@ QObject::separator {
 
 QObject::separator:hover {
   background: $base-hover;
-}
-
-DockTitleBar {
 }
 
 QToolTip,
@@ -259,24 +257,6 @@ QMenu::indicator {
   width: 25px;
 }
 
-// Only the background is set here. The focus border comes from the override
-// further down; the two are separate declarations, not duplicates.
-QPushButton:focus {
-  background-color: $button-focus;
-}
-
-QPushButton:hover:focus {
-  background-color: $button-focus-hover-bg;
-  border-color: $button-focus-hover-border;
-}
-
-QPushButton:pressed,
-QPushButton:pressed:focus {
-  background-color: $highlight-bg;
-  border-color: $highlight-bg;
-  color: $highlight-text;
-}
-
 QGroupBox {
   background-color: $median-bg;
   border: 1px solid $base-border;
@@ -298,11 +278,6 @@ QListView::item {
   border: 1px solid transparent;
   selection-color: $sub-text;
   padding: $base-padding/2 $base-padding;
-}
-
-QListView::item:hover {
-  background-color: $sub-hover;
-  border: 1px solid $sub-hover;
 }
 
 QListView::item:selected {
@@ -331,46 +306,6 @@ QTreeView::item {
   padding: $base-padding/2 $base-padding;
   selection-color: $sub-text;
   border-radius: 0;
-}
-
-QTreeView::item:first,
-QTreeView::item:only-one {
-  border-left: 1px solid transparent;
-  border-top-left-radius: $base-border-radius;
-  border-bottom-left-radius: $base-border-radius;
-}
-
-QTreeView::item:last,
-QTreeView::item:only-one {
-  border-right: 1px solid transparent;
-  border-top-right-radius: $base-border-radius;
-  border-bottom-right-radius: $base-border-radius;
-}
-
-QTreeView::item:hover,
-QTreeView::item:focus {
-  background-color: $sub-hover;
-  border-color: $sub-hover;
-}
-
-QTreeView::item:selected:first,
-QTreeView::item:selected:only-one {
-  border-left: $item-selected-inactive-border;
-}
-
-QTreeView::item:selected:last,
-QTreeView::item:selected:only-one {
-  border-right: $item-selected-inactive-border;
-}
-
-QTreeView::item:selected:active:first,
-QTreeView::item:selected:active:only-one {
-  border-left: $item-selected-active-border;
-}
-
-QTreeView::item:selected:active:last,
-QTreeView::item:selected:active:only-one {
-  border-right: $item-selected-active-border;
 }
 
 QTreeView::branch {
@@ -478,11 +413,6 @@ QTabBar::tab:disabled {
   color: $base-text-disabled;
 }
 
-QTabBar::tab:top {
-  border-bottom: 0;
-  margin-bottom: 1px;
-}
-
 QTabBar::tab:right {
   border-left: 0;
   margin-left: 1px;
@@ -496,11 +426,6 @@ QTabBar::tab:left {
 QTabBar::tab:bottom {
   border-top: 0;
   margin-top: 1px;
-}
-
-QTabBar::tab:top:selected {
-  padding-bottom: $base-padding * 1.5 + 1;
-  margin-bottom: 0;
 }
 
 QTabBar::tab:right:selected {
@@ -583,8 +508,6 @@ QAbstractScrollArea::corner {
   height: 0;
   width: 0;
   border-radius: 0;
-  border-top: 1px solid $scrollbar-border;
-  border-left: 1px solid $scrollbar-border;
   background: $sub-bg;
 }
 
@@ -608,8 +531,7 @@ QLineEdit,
 QTextEdit,
 QPlainTextEdit,
 QSpinBox,
-QAbstractSpinBox,
-QComboBox:editable {
+QAbstractSpinBox {
   border: $input-border;
   background-color: $input-bg;
 }
@@ -654,11 +576,6 @@ QDateTimeEdit::down-arrow {
 QComboBox::down-arrow:disabled,
 QDateTimeEdit::down-arrow:disabled {
   image: url(:/uitheme/common/controls/arrow_down_disabled.svg);
-}
-
-QPushButton[popupMode="1"],
-QPushButton[popupMode="2"] {
-  padding-right: 15px;
 }
 
 // qBittorrent never calls setPopupMode (grep of src/gui returns nothing), so
@@ -740,7 +657,6 @@ QComboBox QAbstractItemView {
 
 QLabel,
 QCheckBox,
-QAbstractCheckBox,
 QTreeView::indicator,
 QGroupBox::indicator,
 QRadioButton {
@@ -797,10 +713,6 @@ QTreeView::indicator {
 
 QProgressBar:horizontal {
   text-align: center;
-}
-
-QProgressBar {
-  font: bold italic large "Times New Roman";
 }
 
 QRadioButton::indicator:disabled {
@@ -869,14 +781,12 @@ QSlider::handle:disabled {
 QCheckBox::indicator:focus,
 QTreeView::indicator:focus,
 QRadioButton::indicator:focus,
-QGroupBox::indicator:focus,
-QComboBox:focus {
+QGroupBox::indicator:focus {
   background-color: $button-focus;
 }
 
 QTreeView::indicator:focus:hover,
-QGroupBox::indicator:focus:hover,
-QComboBox:focus:hover {
+QGroupBox::indicator:focus:hover {
   background-color: $button-focus-hover-bg;
   border-color: $button-focus-hover-border;
 }
@@ -884,30 +794,26 @@ QComboBox:focus:hover {
 QCheckBox::indicator:hover,
 QTreeView::indicator:hover,
 QRadioButton::indicator:hover,
-QGroupBox::indicator:hover,
-QComboBox:hover {
+QGroupBox::indicator:hover {
   background-color: $button-hover;
   border-color: $button-hover-border;
 }
 
 QLineEdit:focus,
 QSpinBox:focus,
-QAbstractSpinBox:focus,
-QComboBox:editable:focus {
+QAbstractSpinBox:focus {
   background-color: $input-bg;
 }
 
 QLineEdit:focus:hover,
 QSpinBox:focus:hover,
-QAbstractSpinBox:focus:hover,
-QComboBox:editable:focus:hover {
+QAbstractSpinBox:focus:hover {
   border-color: $button-focus-hover-border;
 }
 
 QLineEdit:hover,
 QSpinBox:hover,
-QAbstractSpinBox:hover,
-QComboBox:editable:hover {
+QAbstractSpinBox:hover {
   background-color: $input-bg;
   border-color: $button-hover-border;
 }
@@ -916,13 +822,11 @@ QCheckBox::indicator:focus,
 QTreeView::indicator:focus,
 QRadioButton::indicator:focus,
 QGroupBox::indicator:focus,
-QComboBox:focus,
 QLineEdit:focus,
 QTextEdit:focus,
 QPlainTextEdit:focus,
 QSpinBox:focus,
-QAbstractSpinBox:focus,
-QComboBox:editable:focus {
+QAbstractSpinBox:focus {
   border-color: $base-border-focus;
 }
 
@@ -993,7 +897,7 @@ QProgressBar {
   border-radius: 3px;
   color: $white;
   text-align: center;
-  font-family: "Segoe UI", sans-serif;
+  font-family: $font-family;
   font-size: 11px;
   font-weight: bold;
   font-style: normal;
@@ -1330,6 +1234,7 @@ QListView::item {
 
 QListView::item:hover {
   background-color: $sidebar-item-hover-bg;
+  border: none;
 }
 
 QListView::item:selected {
@@ -1362,101 +1267,26 @@ QTreeView {
   show-decoration-selected: 1;
 }
 
-// Base item style - COMPLETE property reset
+// Base item style
 // NOTE: Do NOT set 'color' here - it overrides TransferListWidget state colors!
 QTreeView::item {
   background-color: $sidebar-item-bg;
   border: 0px solid transparent;
-  border-top: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  border-left: 0px solid transparent;
   border-radius: 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   margin: 0;
   padding: $sidebar-item-padding;
   min-height: $sidebar-item-min-height;
 }
 
-// Column position overrides - prevent base theme borders
-QTreeView::item:first {
-  border: 0px solid transparent;
-  border-left: 0px solid transparent;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-QTreeView::item:last {
-  border: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-QTreeView::item:only-one {
-  border: 0px solid transparent;
-  border-radius: 0;
-}
-
-// Hover states
-QTreeView::item:hover {
-  background-color: $sidebar-item-hover-bg;
-  border: 0px solid transparent;
-}
-
-QTreeView::item:hover:first {
-  background-color: $sidebar-item-hover-bg;
-  border: 0px solid transparent;
-  border-left: 0px solid transparent;
-}
-
-QTreeView::item:hover:last {
-  background-color: $sidebar-item-hover-bg;
-  border: 0px solid transparent;
-  border-right: 0px solid transparent;
-}
-
-QTreeView::item:hover:only-one {
-  background-color: $sidebar-item-hover-bg;
-  border: 0px solid transparent;
-}
-
-// Focus state
+// Hover & focus states
+QTreeView::item:hover,
 QTreeView::item:focus {
   background-color: $sidebar-item-hover-bg;
   border: 0px solid transparent;
 }
 
 // Selected (inactive)
-QTreeView::item:selected {
-  background-color: $sidebar-item-selected-bg;
-  border: 0px solid transparent;
-  border-top: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  border-left: 0px solid transparent;
-}
-
-QTreeView::item:selected:first {
-  background-color: $sidebar-item-selected-bg;
-  border: 0px solid transparent;
-  border-left: 0px solid transparent;
-}
-
-QTreeView::item:selected:last {
-  background-color: $sidebar-item-selected-bg;
-  border: 0px solid transparent;
-  border-right: 0px solid transparent;
-}
-
-QTreeView::item:selected:only-one {
-  background-color: $sidebar-item-selected-bg;
-  border: 0px solid transparent;
-}
-
+QTreeView::item:selected,
 QTreeView::item:selected:!active {
   background-color: $sidebar-item-selected-bg;
   border: 0px solid transparent;
@@ -1466,35 +1296,10 @@ QTreeView::item:selected:!active {
 QTreeView::item:selected:active {
   background-color: $sidebar-item-selected-active-bg;
   border: 0px solid transparent;
-  border-top: 0px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 0px solid transparent;
-  border-left: 0px solid transparent;
-}
-
-QTreeView::item:selected:active:first {
-  background-color: $sidebar-item-selected-active-bg;
-  border: 0px solid transparent;
-  border-left: 0px solid transparent;
-}
-
-QTreeView::item:selected:active:last {
-  background-color: $sidebar-item-selected-active-bg;
-  border: 0px solid transparent;
-  border-right: 0px solid transparent;
-}
-
-QTreeView::item:selected:active:only-one {
-  background-color: $sidebar-item-selected-active-bg;
-  border: 0px solid transparent;
 }
 
 // Selected + Hover
-QTreeView::item:selected:hover {
-  background-color: $sidebar-item-selected-hover-bg;
-  border: 0px solid transparent;
-}
-
+QTreeView::item:selected:hover,
 QTreeView::item:selected:active:hover {
   background-color: $sidebar-item-selected-hover-bg;
   border: 0px solid transparent;
@@ -1576,18 +1381,45 @@ QComboBox {
   min-height: 20px;
 }
 
-QComboBox:hover {
+QComboBox:hover,
+QComboBox:focus:hover {
   border-color: $surface-2;
   background-color: $nova-elevated;
 }
 
 QComboBox:focus {
+  background-color: $nova-button;
   border-color: $surface-2;
 }
 
-QComboBox:on {
+QComboBox:on,
+QComboBox:on:hover,
+QComboBox:on:focus,
+QComboBox:on:focus:hover {
   background-color: $nova-button;
   border-color: $surface-2;
+}
+
+QComboBox:editable {
+  background-color: $panel;
+  border: 1px solid $surface-0;
+}
+
+QComboBox:editable:hover {
+  background-color: $panel;
+  border-color: $surface-1;
+}
+
+QComboBox:editable:focus,
+QComboBox:editable:focus:hover {
+  background-color: $panel;
+  border-color: $accent;
+}
+
+QComboBox:disabled,
+QComboBox:editable:disabled {
+  background-color: $control-disabled;
+  border-color: transparent;
 }
 
 // `margin: 0` is load-bearing. The shared drop-down rule further up sets
@@ -1661,18 +1493,12 @@ QPushButton:hover {
   border-color: $surface-2;
 }
 
-QPushButton:pressed {
-  background-color: $surface-1;
-}
-
 QPushButton:focus {
   border-color: $accent;
 }
 
-QPushButton:disabled {
-  background-color: $nova-disabled;
-  border-color: $nova-disabled;
-  color: $surface-3;
+QPushButton:pressed {
+  background-color: $surface-1;
 }
 
 // Primary/Default button style
@@ -1683,6 +1509,19 @@ QPushButton:default {
 
 QPushButton:default:hover {
   background-color: $nova-selection;
+  border-color: $accent;
+}
+
+QPushButton:default:pressed {
+  background-color: $surface-1;
+  border-color: $accent;
+}
+
+QPushButton:disabled,
+QPushButton:default:disabled {
+  background-color: $nova-disabled;
+  border-color: $nova-disabled;
+  color: $surface-3;
 }
 
 // ----------------------------------------------------------------------------
@@ -1836,6 +1675,11 @@ QSlider::groove:horizontal {
   height: 4px;
 }
 
+QSlider::groove:horizontal:disabled {
+  background-color: $control-disabled;
+  border: 1px solid transparent;
+}
+
 QSlider::handle:horizontal {
   background-color: $accent;
   border: 1px solid $crust-1;
@@ -1845,13 +1689,31 @@ QSlider::handle:horizontal {
   margin: -4px 0;
 }
 
+QSlider::handle:horizontal:focus {
+  border-color: $text-bright;
+}
+
 QSlider::handle:horizontal:hover {
-  background-color: $accent-lavender;
+  background-color: lighten($accent, 8%);
+}
+
+QSlider::handle:horizontal:pressed {
+  background-color: darken($accent, 8%);
+}
+
+QSlider::handle:horizontal:disabled {
+  background-color: $control-disabled;
+  border: 1px solid $control-disabled;
 }
 
 QSlider::sub-page:horizontal {
   background-color: $accent;
   border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+  background-color: $control-disabled;
+  border: 1px solid transparent;
 }
 
 // ----------------------------------------------------------------------------
@@ -2016,24 +1878,16 @@ TagFilterWidget {
 // The rounded selection. The left border is declared at the rail's width in
 // EVERY state, transparent when unselected, so the label never shifts sideways
 // when a row is picked -- Qt stylesheets have no ::before to draw a rail with.
-// The selection rail, and why this is generated rather than hand-written.
 //
-// BUG THIS FIXES: the rail vanished while the sidebar had focus and appeared
-// once focus moved elsewhere. A single `::item:selected` rule carries one
-// pseudo-class, and the generic reset rules above reach THREE of them --
-// `QTreeView::item:selected:active:only-one { border-left: 0 }` and friends.
-// So the moment a row was actually selected, with the widget active, the
-// generic rule out-specified the rail and zeroed it. Clicking away dropped
-// `:active`, the generic rule stopped matching, and the rail reappeared. It
-// looked random; it was specificity, exactly.
-//
-// There is no single selector that wins. Those resets exist in twenty distinct
-// item states, so the rail has to be declared in all twenty, per widget class.
-// That is 100 selectors, which is why they are looped rather than typed.
+// Because subclass selectors (`StatusFilterWidget`, `CategoryFilterWidget`, etc.)
+// tie `QListView` and `QTreeView` on specificity (`0x01`), the sidebar must
+// still declare each non-positional state covered by `QListView::item` and
+// `QTreeView::item` above (8 states x 5 widgets = 40 selectors), split into
+// four groups so hovering a SELECTED row keeps the selected-hover colour.
 //
 // The unselected states matter just as much as the selected ones: they reserve
-// the SAME 2px as a transparent border, so a row does not jump sideways by 2px
-// at the moment it is selected.
+// the SAME 3px as a transparent border, so a row does not jump sideways when
+// it is selected.
 $sidebar-widgets:
   StatusFilterWidget,
   TrackersFilterWidget,
@@ -2041,18 +1895,9 @@ $sidebar-widgets:
   CategoryFilterWidget,
   TagFilterWidget;
 
-// Every item state in which a generic rule above touches a border. Derived from
-// the compiled stylesheet, not guessed: if a reset is ever added in a new state,
-// the rail will disappear in that state until the state is added here.
-// Four groups, because a row needs a different background in each. The states
-// are split rather than merged so that hovering a SELECTED row keeps the
-// selected-hover colour instead of dropping back to the plain hover.
-$sidebar-rest-states: "", ":first", ":last", ":only-one", ":focus";
-$sidebar-rest-hover-states: ":hover", ":hover:first", ":hover:last", ":hover:only-one";
-$sidebar-selected-states:
-  ":selected", ":selected:!active", ":selected:active",
-  ":selected:first", ":selected:last", ":selected:only-one",
-  ":selected:active:first", ":selected:active:last", ":selected:active:only-one";
+$sidebar-rest-states: "", ":focus";
+$sidebar-rest-hover-states: ":hover";
+$sidebar-selected-states: ":selected", ":selected:!active", ":selected:active";
 $sidebar-selected-hover-states: ":selected:hover", ":selected:active:hover";
 
 @each $widget in $sidebar-widgets {

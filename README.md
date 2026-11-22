@@ -113,7 +113,7 @@ py -m pip install qtsass
 set QBT_THEME_RCC=C:\Qt\5.15.2\msvc2019_64\bin\rcc.exe
 ```
 
-Then **double-click `scripts\build.bat`**. Python is the only thing it needs: no Docker, no Git Bash, no WSL. It keeps the window open so you can read any errors, and drops the result in `dist\`.
+Then **double-click `scripts\build.bat`**. Python is the only thing it needs: no Docker, no Git Bash, no WSL. It keeps the window open so you can read any errors, and drops the result in `build\dist\`.
 
 `build.bat` and `build.sh` are both thin launchers that locate a Python and hand over to `build.py`, which is the single build implementation on every platform. Neither launcher contains build logic, so there is nothing to drift: keeping a second copy in sync is what previously let the Windows path silently package a stale stylesheet.
 
@@ -160,7 +160,7 @@ Identical in every palette, on purpose. A state colour is a legend, not decorati
 | Queued            | 🟣 Violet |
 | Error/Missing     | 🔴 Red    |
 
-This is also why the chrome accent and the "queued" colour are separate: Graphite's accent is blue and Slate's is teal, either of which would be indistinguishable from Downloading or Checking in the one column where those have to stay apart.
+This is also why the chrome accent and the "queued" colour are separate: Nova's accent is blue, Slate's is teal, and Graphite's is neutral — keeping them separate ensures Queued never collides with Downloading or Checking in the Status column.
 
 ## Adding your own variant
 

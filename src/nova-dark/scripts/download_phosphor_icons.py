@@ -91,10 +91,12 @@ CONTROL_ICONS = {
 # Inner check/radio marks - these use bold weight for visibility
 # Saved to src/common/controls/ alongside CONTROL_ICONS
 INNER_CHECK_ICONS = {
-    # White check for dark backgrounds
+    # White check/dot for dark fills
     "checkbox_check_dark": ("check", "white"),
-    # White dot for dark backgrounds
     "radio_check_dark": ("circle", "white"),
+    # Dark check/dot for light accent fills
+    "checkbox_check_on_light": ("check", "dark"),
+    "radio_check_on_light": ("circle", "dark"),
 }
 
 # Mapping from qBittorrent icon names to (Phosphor icon name, color key)

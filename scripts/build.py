@@ -555,7 +555,7 @@ def main() -> None:
     # output; it only shows when the cascade is resolved the way Qt resolves it.
     # This already caught the selection rail disappearing whenever the sidebar
     # had focus.
-    log_info("Checking the sidebar rail wins the cascade")
+    log_info("Checking stylesheet cascades")
     run_script(THEME_ROOT / "scripts" / "check_cascade.py",
                *[str(p) for p in sheets.values()])
 

@@ -64,7 +64,7 @@ skipped.
 | `downloading` | arrow-circle-down | `info` |
 | `edit-clear` | trash | `error` |
 | `edit-copy` | copy | `default` |
-| `edit-find` | magnifying-glass | `upload` |
+| `edit-find` | magnifying-glass | `default` |
 | `edit-rename` | pencil-simple | `default` |
 | `error` | warning-circle | `error` |
 | `fileicon` | file | `default` |

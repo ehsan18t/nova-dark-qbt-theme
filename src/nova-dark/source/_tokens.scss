@@ -7,7 +7,6 @@
 // They are the whole of the density axis's reach into the stylesheet.
 $base-bg: $crust-1;
 $base-hover: $crust-2;
-$base-pressed: $nova-elevated;
 $base-text: $text-2;
 $base-text-disabled: $surface-3;
 $base-border: $crust-0;
@@ -67,7 +66,6 @@ $sidebar-item-selected-active-bg: $nova-selection;
 $sidebar-item-selected-hover-bg: $nova-selection-hover;
 
 $sub-bg: $panel;
-$sub-hover: $nova-elevated;
 $sub-text: $text-2;
 $sub-highlight: $surface-1;
 $alternate-bg: transparent;
@@ -91,7 +89,6 @@ $scrollbar-handle-hover: $surface-2;
 $input-bg: $panel;
 $input-border: 1px solid $surface-0;
 $control-icon: $text-1;
-$control-icon-disabled: $surface-3;
 $control-disabled: $nova-disabled;
 $slider-groove: $surface-0;
 $slider-groove-border: $surface-0;
@@ -104,10 +101,8 @@ $slider-handle-focus-border: $accent;
 $slider-handle-hover: $text-2;
 $slider-handle-pressed: $text-bright;
 $slider-handle-pressed-border: $accent;
-$tab-selected: $panel;
 $tab-deselected: $nova-tab-inactive;
 $tab-deselected-text: $text-0;
-$tab-hover: $nova-elevated;
 $button-bg: $nova-button;
 $button-hover: $surface-0;
 $button-focus: $surface-0;
@@ -115,7 +110,6 @@ $button-focus-hover-bg: $surface-1;
 $button-focus-hover-border: $accent;
 $button-border: 1px solid $nova-button-border;
 $button-hover-border: $surface-2;
-$radio: url(:/uitheme/common/controls/radio_check_dark.svg);
 $radio_disabled: url(:/uitheme/common/controls/radio_check_disabled.svg);
 $checkbox: url(:/uitheme/common/controls/checkbox_check_dark.svg);
 $checkbox-disabled: url(:/uitheme/common/controls/checkbox_check_disabled.svg);
@@ -141,20 +135,6 @@ $checkbox-check-glyph: if(
   "on_light", "dark");
 $link: $accent-info;
 
-// Accent colors for semantic use
-$accent-primary: $accent;
-$accent-success: $accent-success;
-$accent-warning: $accent-warning;
-$accent-error: $accent-error;
-$accent-info: $accent-info;
-
 $font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans",
   "Helvetica Neue", Arial, sans-serif;
-$font-size-bigger: 13pt;
-$font-size-big: 12pt;
-$font-size-normal: 10pt;
-$font-size-medium: 9pt;
 $font-size-small: 8pt;
-$font-size-extra-small: 7pt;
-$font-size-qslider-groove: 3pt;
-$font-size-qslider-handle: 4pt;
