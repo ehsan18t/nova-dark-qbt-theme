@@ -1223,9 +1223,10 @@ QListView {
   outline: none;
 }
 
+// NOTE: Do NOT set 'color' here - it overrides ArticleListWidget (RSS) and
+// LogListView Qt::ForegroundRole colours from config.json!
 QListView::item {
   background-color: $sidebar-item-bg;
-  color: $sidebar-item-text;
   border: none;
   border-radius: 0;
   padding: $sidebar-item-padding;

@@ -74,6 +74,7 @@ PROP_PATTERNS = {
     "border_shorthand": r"^border\s*:",
     "border_color": r"^border-color\s*:",
     "background": r"^background(-color)?\s*:",
+    "color": r"^color\s*:",
     "image": r"^image\s*:",
     "padding_bottom": r"^padding-bottom\s*:",
     "margin_bottom": r"^margin-bottom\s*:",
@@ -301,6 +302,16 @@ def check_listview_and_tabbar(text: str) -> list[str]:
         failures.append(
             f"QListView::item [hover]: border -- {val} must resolve to `none`"
         )
+
+    item_colors = item_rules(text, "color")
+    for view in ("QListView", "QTreeView"):
+        for label, state in (("rest", set()), ("hover", {"hover"})):
+            win_color = _winner(item_colors, view, view, state)
+            if win_color:
+                failures.append(
+                    f"{view}::item [{label}]: `{win_color[6]}` sets `color: "
+                    f"{win_color[3]}`, overriding Qt::ForegroundRole colours from config.json"
+                )
 
     tab_pb = widget_rules(text, TAB, "padding_bottom")
     win_pb = _winner(tab_pb, "QTabBar", "QTabBar", {"top", "selected"})

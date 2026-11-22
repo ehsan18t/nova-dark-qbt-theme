@@ -32,7 +32,7 @@
     "Log.Critical": "#fa8991",
     "Log.BannedPeer": "#fa8991",
     "RSS.ReadArticle": "#b6bcd4",
-    "RSS.UnreadArticle": "#f2f4fb",
+    "RSS.UnreadArticle": "#86d6f3",
     "TransferList.Downloading": "#5da3fd",
     "TransferList.DownloadingMetadata": "#86d6f3",
     "TransferList.ForcedDownloading": "#f8b581",

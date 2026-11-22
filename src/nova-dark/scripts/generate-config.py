@@ -109,14 +109,12 @@ MAPPING = {
 
     # --- RSS -------------------------------------------------------------
     "RSS.ReadArticle": "text-1",
-    # $text-bright, NOT $accent. This is the only place the chrome accent was
-    # ever drawn as TEXT, and it has to stay readable on $panel in every
-    # palette. Graphite's accent is a neutral in the same band as $surface-3,
-    # which measures 3.56:1 there -- dimmer than the READ articles beside it,
-    # which inverts the one distinction the pair exists to make. Brightest text
-    # against $text-1 is the conventional unread treatment and holds in all
-    # every palette without the mapping having to know which one it is.
-    "RSS.UnreadArticle": "text-bright",
+    # $accent-info (#86d6f3), NOT $accent or $text-bright. Using a neutral
+    # text-bright left read and unread articles nearly indistinguishable
+    # (especially in -mono variants), while $accent in Graphite is a neutral
+    # grey. Matching Palette.Link gives unread items a crisp, legible hue across
+    # all four palettes, consistent with qBittorrent's QPalette::Link fallback.
+    "RSS.UnreadArticle": "accent-info",
 
     # --- Transfer list -----------------------------------------------------
     # Straight onto the shared state family in palettes/_states.scss, so a state
