@@ -953,6 +953,7 @@ QStatusBar QPushButton:hover {
 
 QStatusBar QPushButton:pressed {
   background-color: $nova-selection;
+  color: $text-0;
 }
 
 // ----------------------------------------------------------------------------
@@ -1500,6 +1501,8 @@ QPushButton:focus {
 
 QPushButton:pressed {
   background-color: $surface-1;
+  border-color: $surface-2;
+  color: $white;
 }
 
 // Primary/Default button style
@@ -1516,6 +1519,7 @@ QPushButton:default:hover {
 QPushButton:default:pressed {
   background-color: $surface-1;
   border-color: $accent;
+  color: $white;
 }
 
 QPushButton:disabled,

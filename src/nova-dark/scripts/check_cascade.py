@@ -205,6 +205,7 @@ def check_combobox(text: str) -> list[str]:
     hover_bg = _winner(backgrounds, "QComboBox", "QComboBox", {"hover"})
     hover_bc = _winner(border_colors, "QComboBox", "QComboBox", {"hover"})
     on_bg = _winner(backgrounds, "QComboBox", "QComboBox", {"on"})
+    on_bc = _winner(border_colors, "QComboBox", "QComboBox", {"on"})
     disabled_bg = _winner(backgrounds, "QComboBox", "QComboBox", {"disabled"})
 
     checks = [
@@ -212,6 +213,7 @@ def check_combobox(text: str) -> list[str]:
         (border_colors, "focus hover", {"focus", "hover"}, hover_bc, "border-color"),
         (backgrounds, "focus", {"focus"}, rest_bg, "background"),
         (backgrounds, "on focus hover", {"on", "focus", "hover"}, on_bg, "background"),
+        (border_colors, "on focus hover", {"on", "focus", "hover"}, on_bc, "border-color"),
         (backgrounds, "editable disabled", {"editable", "disabled"}, disabled_bg, "background"),
     ]
     for rules, label, state, expected, prop_name in checks:
@@ -224,11 +226,21 @@ def check_combobox(text: str) -> list[str]:
 def check_pushbutton(text: str) -> list[str]:
     """Verify QPushButton focus/pressed/default/disabled and status-bar priority."""
     backgrounds = widget_rules(text, PUSHBUTTON, "background")
+    border_colors = widget_rules(text, PUSHBUTTON, "border_color")
+    colors = widget_rules(text, PUSHBUTTON, "color")
     failures = []
 
     hover_bg = _winner(backgrounds, "QPushButton", "QPushButton", {"hover"})
     pressed_bg = _winner(backgrounds, "QPushButton", "QPushButton", {"pressed"})
+    pressed_bc = _winner(border_colors, "QPushButton", "QPushButton", {"pressed"})
+    pressed_fg = _winner(colors, "QPushButton", "QPushButton", {"pressed"})
+    rest_fg = _winner(colors, "QPushButton", "QPushButton", set())
     disabled_bg = _winner(backgrounds, "QPushButton", "QPushButton", {"disabled"})
+
+    if not pressed_bc:
+        failures.append("QPushButton [pressed]: missing explicit `border-color`")
+    if not pressed_fg or (rest_fg and pressed_fg[3] == rest_fg[3]):
+        failures.append("QPushButton [pressed]: missing highlight `color`")
 
     checks = [
         ("pressed focus", {"pressed", "focus"}, pressed_bg),
